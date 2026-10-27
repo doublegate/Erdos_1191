@@ -91,4 +91,7 @@ cargo test --no-default-features
 
 ## License
 
-Code and Lean 4 formalizations are dual-licensed under Apache-2.0 / MIT ([`LICENSE`](./LICENSE)).
+This repository uses **Split Licensing by File Type** (`Option A`):
+
+- **Software, Scripts & Lean 4 Formal Verification (`Erdos1191/`, `src/`, `scripts/`):** Dual-licensed under the **[Apache License, Version 2.0](./LICENSE-APACHE)** or the **[MIT License](./LICENSE-MIT)** ([`LICENSE`](./LICENSE)), at your option.
+- **Research Manuscripts, Companion Guides, Compendiums & Figures (`paper/`):** Licensed under the **[Creative Commons Attribution 4.0 International Public License (`CC BY 4.0`)](./LICENSE-PAPER)** ([`paper/LICENSE`](./paper/LICENSE)). Pursuant to Section 2(b)(2) of `CC BY 4.0`, no patent or trademark rights are licensed under `CC BY 4.0`.
