@@ -3035,8 +3035,7 @@ mod tests {
             if m == 3 {
                 assert!((rep.bilinear_dyadic_lhs - 2.75).abs() < 1e-12);
             }
-            let corrected_laplace_fejer_rhs =
-                (m as f64) + 1.0 - 2.0f64.powi(-((m as i32) - 1));
+            let corrected_laplace_fejer_rhs = (m as f64) + 1.0 - 2.0f64.powi(-((m as i32) - 1));
             assert!(
                 rep.bilinear_dyadic_lhs <= rep.bilinear_dyadic_rhs + 1e-12
                     && rep.bilinear_dyadic_lhs <= corrected_laplace_fejer_rhs + 1e-12
