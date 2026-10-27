@@ -24,13 +24,74 @@ Verifies via SymPy, mpmath, and exact integer arithmetic on Mian–Chowla (OEIS 
 
 import json
 import math
+
 import sympy as sp
 
 A005282_64 = [
-    1, 2, 4, 8, 13, 21, 31, 45, 66, 81, 97, 123, 148, 182, 204, 252,
-    290, 361, 401, 475, 565, 593, 662, 775, 822, 916, 970, 1016, 1159, 1312, 1395, 1523,
-    1572, 1821, 1896, 2029, 2254, 2379, 2510, 2780, 2925, 3155, 3354, 3591, 3797, 3998, 4297, 4433,
-    4779, 4922, 5299, 5426, 5889, 6138, 6395, 6822, 7209, 7469, 7766, 8154, 8456, 8991, 9325, 9868,
+    1,
+    2,
+    4,
+    8,
+    13,
+    21,
+    31,
+    45,
+    66,
+    81,
+    97,
+    123,
+    148,
+    182,
+    204,
+    252,
+    290,
+    361,
+    401,
+    475,
+    565,
+    593,
+    662,
+    775,
+    822,
+    916,
+    970,
+    1016,
+    1159,
+    1312,
+    1395,
+    1523,
+    1572,
+    1821,
+    1896,
+    2029,
+    2254,
+    2379,
+    2510,
+    2780,
+    2925,
+    3155,
+    3354,
+    3591,
+    3797,
+    3998,
+    4297,
+    4433,
+    4779,
+    4922,
+    5299,
+    5426,
+    5889,
+    6138,
+    6395,
+    6822,
+    7209,
+    7469,
+    7766,
+    8154,
+    8456,
+    8991,
+    9325,
+    9868,
 ]
 
 
@@ -51,7 +112,7 @@ def psi_lag(delta: float) -> float:
 
 def verify_symbolic_theorem_2_5():
     u = sp.Symbol("u", positive=True)
-    B = sp.exp(u)
+    sp.exp(u)
 
     # 1. Hyperbolic-tangent base-B shell efficiency law:
     #    Lambda(e^u) = (1 - e^{-u/2})^2 / ((1 - e^{-u}) * u) == tanh(u/4) / u
@@ -83,7 +144,11 @@ def verify_symbolic_theorem_2_5():
     assert sp.simplify(concavity_int - (2 * sp.log(2) - sp.Rational(1, 2))) == 0
 
     # Exact s = 0 dyadic concavity boost ratio ((psi(1/2) - 2^{-1/2} psi(1)) / (1 - 2^{-1/2}))^2 = 16/9
-    psi_half = sp.Rational(2, 3) * (1 - sp.Rational(1, 2) ** sp.Rational(3, 2)) / sp.Rational(1, 2)
+    psi_half = (
+        sp.Rational(2, 3)
+        * (1 - sp.Rational(1, 2) ** sp.Rational(3, 2))
+        / sp.Rational(1, 2)
+    )
     psi_one = sp.Rational(2, 3)
     ratio_s0 = (psi_half - psi_one / sp.sqrt(2)) / (1 - 1 / sp.sqrt(2))
     assert sp.simplify(ratio_s0 - sp.Rational(4, 3)) == 0
@@ -112,16 +177,20 @@ def verify_subadditivity_and_refinement_hierarchy():
     # Exhaustively verify L(S1 + S2, B1 + B2) <= L(S1, B1) + L(S2, B2) for small integers
     for b1 in range(1, 9):
         for b2 in range(1, 9):
-            for s1 in range(0, 25):
-                for s2 in range(0, 25):
-                    assert l_pigeon(s1 + s2, b1 + b2) <= l_pigeon(s1, b1) + l_pigeon(s2, b2)
+            for s1 in range(25):
+                for s2 in range(25):
+                    assert l_pigeon(s1 + s2, b1 + b2) <= l_pigeon(s1, b1) + l_pigeon(
+                        s2, b2
+                    )
 
     # Verify refinement hierarchy F_W^{joint}(A; B=2^{1/L}) across L = 1, 2, 4, 8 and F_W^{fiber}(A)
     # on Mian-Chowla up to N = 8192 (M = 13)
     m_scales = 13
     n_horizon = 1 << m_scales
     in_h = [x for x in A005282_64 if x <= n_horizon]
-    diffs = [in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h))]
+    diffs = [
+        in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h))
+    ]
 
     pref = [0] * (n_horizon + 1)
     idx = 0
@@ -158,13 +227,25 @@ def verify_subadditivity_and_refinement_hierarchy():
         blocks_l4 = refine_blocks(blocks_l2)
         blocks_l8 = refine_blocks(blocks_l4)
 
-        val_l1 = sum(l_pigeon(sum(win_c(u, w) for u in range(a, b + 1)), b - a + 1) for a, b in blocks_l1)
-        val_l2 = sum(l_pigeon(sum(win_c(u, w) for u in range(a, b + 1)), b - a + 1) for a, b in blocks_l2)
-        val_l4 = sum(l_pigeon(sum(win_c(u, w) for u in range(a, b + 1)), b - a + 1) for a, b in blocks_l4)
-        val_l8 = sum(l_pigeon(sum(win_c(u, w) for u in range(a, b + 1)), b - a + 1) for a, b in blocks_l8)
+        val_l1 = sum(
+            l_pigeon(sum(win_c(u, w) for u in range(a, b + 1)), b - a + 1)
+            for a, b in blocks_l1
+        )
+        val_l2 = sum(
+            l_pigeon(sum(win_c(u, w) for u in range(a, b + 1)), b - a + 1)
+            for a, b in blocks_l2
+        )
+        val_l4 = sum(
+            l_pigeon(sum(win_c(u, w) for u in range(a, b + 1)), b - a + 1)
+            for a, b in blocks_l4
+        )
+        val_l8 = sum(
+            l_pigeon(sum(win_c(u, w) for u in range(a, b + 1)), b - a + 1)
+            for a, b in blocks_l8
+        )
 
         # Co-moving shift-fiber bound F_W^{fiber}(A)
-        ks = [1 << s for s in range(0, m_scales - r + 1)]
+        ks = [1 << s for s in range(m_scales - r + 1)]
         val_fiber = 0
         for j in range(1, w + 1):
             c0 = pref[j]
@@ -179,17 +260,19 @@ def verify_subadditivity_and_refinement_hierarchy():
         cap = w * (w - 1) // 2
         assert val_l1 <= val_l2 <= val_l4 <= val_l8 <= exact_fejer <= cap
         assert val_fiber <= exact_fejer <= cap
-        rows.append({
-            "r": r,
-            "W": w,
-            "joint_L1_B2": val_l1,
-            "joint_L2_Bsqrt2": val_l2,
-            "joint_L4_B2pow025": val_l4,
-            "joint_L8_B2pow0125": val_l8,
-            "fiber_lhs": val_fiber,
-            "exact_fejer_rhs": exact_fejer,
-            "cap_binom_W": cap,
-        })
+        rows.append(
+            {
+                "r": r,
+                "W": w,
+                "joint_L1_B2": val_l1,
+                "joint_L2_Bsqrt2": val_l2,
+                "joint_L4_B2pow025": val_l4,
+                "joint_L8_B2pow0125": val_l8,
+                "fiber_lhs": val_fiber,
+                "exact_fejer_rhs": exact_fejer,
+                "cap_binom_W": cap,
+            }
+        )
     return rows
 
 
@@ -215,9 +298,13 @@ def verify_base_b_variational_envelope():
             q_p4_tail = 0.0
             q_p5_tail = 0.0
             for k in range(r0 + 1, m_val + 1):
-                alpha_k = 1.0 / math.sqrt(k * math.log(2.0)) - 1.0 / math.sqrt(2.0 * (k - 1) * math.log(2.0))
+                alpha_k = 1.0 / math.sqrt(k * math.log(2.0)) - 1.0 / math.sqrt(
+                    2.0 * (k - 1) * math.log(2.0)
+                )
                 s_k = max(0, k - 2) // 2
-                fejer_p4 = 1.0 + sum(2.0 / (1.0 + 2.0 ** (1 - s)) for s in range(1, s_k + 1))
+                fejer_p4 = 1.0 + sum(
+                    2.0 / (1.0 + 2.0 ** (1 - s)) for s in range(1, s_k + 1)
+                )
                 fejer_unsplit = 1.0 + 2.0 * s_k
                 q_p4_tail += fejer_p4 * alpha_k * alpha_k
                 q_p5_tail += scale_ratio * fejer_unsplit * alpha_k * alpha_k
@@ -243,26 +330,30 @@ def verify_base_b_variational_envelope():
                     boost_sq = (lag_inc / base_inc) ** 2
                     fejer_joint += (2.0 / (1.0 + 2.0 ** (1 - s))) * boost_sq
                 w_bil = 1.0 if k == m_val else 0.5
-                q_p5_joint += scale_ratio * fejer_joint * rho_sq_2k + (w_bil + 0.5 * kappa_pref) / (
-                    k * math.log(2.0)
-                )
+                q_p5_joint += scale_ratio * fejer_joint * rho_sq_2k + (
+                    w_bil + 0.5 * kappa_pref
+                ) / (k * math.log(2.0))
             c_p5_joint = math.sqrt(0.5 * (m_val + 2) / q_p5_joint)
             assert c_p5_joint < c_inf_b < c_p5_tail
 
-            m_table.append({
-                "M": m_val,
-                "c_p4_tail_b2": round(c_p4_tail, 6),
-                "c_p5_tail_star_b": round(c_p5_tail, 6),
-                "c_p5_joint_b": round(c_p5_joint, 6),
-                "c_inf_star_b": round(c_inf_b, 6),
-            })
+            m_table.append(
+                {
+                    "M": m_val,
+                    "c_p4_tail_b2": round(c_p4_tail, 6),
+                    "c_p5_tail_star_b": round(c_p5_tail, 6),
+                    "c_p5_joint_b": round(c_p5_joint, 6),
+                    "c_inf_star_b": round(c_inf_b, 6),
+                }
+            )
 
-        base_rows.append({
-            "B": round(b_val, 6),
-            "lambda_B": round(lam_b, 8),
-            "c_inf_star_B": round(c_inf_b, 6),
-            "horizons": m_table,
-        })
+        base_rows.append(
+            {
+                "B": round(b_val, 6),
+                "lambda_B": round(lam_b, 8),
+                "c_inf_star_B": round(c_inf_b, 6),
+                "horizons": m_table,
+            }
+        )
     return base_rows
 
 

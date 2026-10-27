@@ -59,6 +59,7 @@ Verifies:
 
 import json
 import math
+
 import sympy as sp
 
 
@@ -80,7 +81,9 @@ def beta_s_tau_sq(s: int, tau: float) -> float:
     return (lag_inc / base_inc) ** 2
 
 
-def beta_s_power_sq(s: int, r_exp: float, alpha: float = 0.0, n_simp: int = 64) -> float:
+def beta_s_power_sq(
+    s: int, r_exp: float, alpha: float = 0.0, n_simp: int = 64
+) -> float:
     """
     Compute the Power-Law / Haar-Weighted Cesàro–Fejér backward-lag amplification factor
       beta_s^{(r)}(alpha)^2 := ((r + 3) / (1 - alpha^{r+3})) * int_alpha^1 tau^{r+2} beta_s(tau)^2 d_tau
@@ -105,7 +108,9 @@ def beta_s_power_sq(s: int, r_exp: float, alpha: float = 0.0, n_simp: int = 64) 
         weight = 4.0 if (i % 2 == 1) else 2.0
         total += weight * eval_pt(tau)
     integral = (h / 3.0) * total
-    norm_factor = (r_exp + 3.0) / (1.0 - (alpha ** (r_exp + 3.0)) if alpha > 0.0 else 1.0)
+    norm_factor = (r_exp + 3.0) / (
+        1.0 - (alpha ** (r_exp + 3.0)) if alpha > 0.0 else 1.0
+    )
     return norm_factor * integral
 
 
@@ -122,7 +127,7 @@ def l_pigeon(s_val: int, bins: int) -> int:
 
 
 def verify_symbolic_theorem_2_10():
-    tau, theta, alpha, r, K = sp.symbols("tau theta alpha r K", positive=True)
+    tau, theta, alpha, _r, K = sp.symbols("tau theta alpha r K", positive=True)
     r_gen = sp.Symbol("r_gen", real=True)
 
     # 1. Theorem 2.10(a): Symbolic integration of Power-Law weighted main and integrality terms
@@ -166,18 +171,22 @@ def verify_symbolic_theorem_2_10():
     for label, r_val, exp_kappa, exp_c_inf in milestones_spec:
         k_val = sp.simplify(kappa_r_0.subs(r_gen, r_val))
         c_val = sp.simplify(c_inf_r_0.subs(r_gen, r_val))
-        assert k_val == exp_kappa, f"Mismatch in kappa at r={label}: {k_val} != {exp_kappa}"
+        assert k_val == exp_kappa, (
+            f"Mismatch in kappa at r={label}: {k_val} != {exp_kappa}"
+        )
         assert sp.simplify(c_val - exp_c_inf) == 0, (
             f"Mismatch in c_inf at r={label}: {c_val} != {exp_c_inf}"
         )
-        power_law_table.append({
-            "r_exponent": label,
-            "kappa_int_exact": str(k_val),
-            "kappa_int_float": round(float(k_val.evalf()), 8),
-            "mu_scale_float": round(float((2 * (1 + k_val)).evalf()), 8),
-            "c_infty_exact": str(exp_c_inf),
-            "c_infty_float": round(float(c_val.evalf()), 8),
-        })
+        power_law_table.append(
+            {
+                "r_exponent": label,
+                "kappa_int_exact": str(k_val),
+                "kappa_int_float": round(float(k_val.evalf()), 8),
+                "mu_scale_float": round(float((2 * (1 + k_val)).evalf()), 8),
+                "c_infty_exact": str(exp_c_inf),
+                "c_infty_float": round(float(c_val.evalf()), 8),
+            }
+        )
 
     # 2. Theorem 2.10(b): Symbolic limit r -> -1^+ (Scale-Invariant Haar Measure d_tau / tau)
     #    at alpha = 2^{-K}:
@@ -194,7 +203,9 @@ def verify_symbolic_theorem_2_10():
 
     c_inf_haar_sym = 2 / sp.sqrt(1 + expected_haar_sym)
     lim_c_inf_haar = sp.limit(c_inf_haar_sym, K, sp.oo)
-    assert lim_c_inf_haar == 0, f"Expected Haar c_infty limit 0 as K->oo, got {lim_c_inf_haar}"
+    assert lim_c_inf_haar == 0, (
+        f"Expected Haar c_infty limit 0 as K->oo, got {lim_c_inf_haar}"
+    )
 
     haar_cascade_table = []
     prev_k_haar = 0.0
@@ -206,12 +217,14 @@ def verify_symbolic_theorem_2_10():
         assert c_h < prev_c_haar
         prev_k_haar = kap_h
         prev_c_haar = c_h
-        haar_cascade_table.append({
-            "K_octaves": k_oct,
-            "kappa_int_haar": round(kap_h, 8),
-            "mu_scale_haar": round(2.0 * (1.0 + kap_h), 8),
-            "c_infty_haar": round(c_h, 8),
-        })
+        haar_cascade_table.append(
+            {
+                "K_octaves": k_oct,
+                "kappa_int_haar": round(kap_h, 8),
+                "mu_scale_haar": round(2.0 * (1.0 + kap_h), 8),
+                "c_infty_haar": round(c_h, 8),
+            }
+        )
 
     return {
         "power_law_kappa_formula": "((r + 3) / (6 * (r + 1))) * ((1 - alpha^(r+1)) / (1 - alpha^(r+3)))",
@@ -256,7 +269,9 @@ def verify_haar_weighted_identity_on_mian_chowla():
     m_scales = 10
     n_horizon = 1 << m_scales
     in_h = [x for x in mc if x <= n_horizon]
-    diffs = [in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h))]
+    diffs = [
+        in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h))
+    ]
 
     pref = [0] * (n_horizon + 1)
     idx = 0
@@ -314,19 +329,25 @@ def verify_haar_weighted_identity_on_mian_chowla():
         haar_rhs = 0
         for d in diffs:
             if d < w_cap:
-                psi_d = sum((w_cap // w) * (w - d) for w in range( max(w0 + 1, d + 1), w_cap + 1 ))
+                psi_d = sum(
+                    (w_cap // w) * (w - d) for w in range(max(w0 + 1, d + 1), w_cap + 1)
+                )
                 haar_rhs += psi_d
 
-        assert haar_win == haar_rhs, f"Haar identity mismatch at r={r}: {haar_win} != {haar_rhs}"
+        assert haar_win == haar_rhs, (
+            f"Haar identity mismatch at r={r}: {haar_win} != {haar_rhs}"
+        )
         assert haar_lb <= haar_rhs <= haar_cap
-        rows.append({
-            "r": r,
-            "W": w_cap,
-            "W0": w0,
-            "haar_pigeonhole_lb": haar_lb,
-            "haar_exact_rhs": haar_rhs,
-            "haar_ceiling": haar_cap,
-        })
+        rows.append(
+            {
+                "r": r,
+                "W": w_cap,
+                "W0": w0,
+                "haar_pigeonhole_lb": haar_lb,
+                "haar_exact_rhs": haar_rhs,
+                "haar_ceiling": haar_cap,
+            }
+        )
     return rows
 
 
@@ -357,14 +378,18 @@ def verify_haar_envelope_bounds():
                 b1_sq = beta_s_tau_sq(s, 1.0)
                 b_multi_sq = beta_s_power_sq(s, 0.0, 0.0)
                 b_haar_k3_sq = beta_s_power_sq(s, -1.0, 0.125)
-                k_oct_active = k - s  # W = 2^r = 2^{k-s} spans exactly r = k - s dyadic octaves [2^{-r}, 1]
+                k_oct_active = (
+                    k - s
+                )  # W = 2^r = 2^{k-s} spans exactly r = k - s dyadic octaves [2^{-r}, 1]
                 alpha_act = 2.0 ** (-k_oct_active)
                 b_haar_act_sq = beta_s_power_sq(s, -1.0, alpha_act)
 
                 g1 = b1_sq + (1.0 / 6.0) * (1.0 - 2.0 ** (-s))
                 g_p9 = b_multi_sq + 0.5 * (1.0 - 2.0 ** (-s))
                 g_h3 = b_haar_k3_sq + kappa_int_haar_k(3) * (1.0 - 2.0 ** (-s))
-                g_hadapt = b_haar_act_sq + kappa_int_haar_k(k_oct_active) * (1.0 - 2.0 ** (-s))
+                g_hadapt = b_haar_act_sq + kappa_int_haar_k(k_oct_active) * (
+                    1.0 - 2.0 ** (-s)
+                )
 
                 f9_multi += 2.0 * max(g1, g_p9)
                 f10_k3 += 2.0 * max(g1, g_h3)
@@ -402,14 +427,18 @@ def verify_haar_envelope_bounds():
                 b1_sq = beta_s_tau_sq(s, 1.0)
                 b_multi_sq = beta_s_power_sq(s, 0.0, 0.0)
                 b_haar_k3_sq = beta_s_power_sq(s, -1.0, 0.125)
-                k_oct_active = k - s  # W = 2^r = 2^{k-s} spans exactly r = k - s dyadic octaves [2^{-r}, 1]
+                k_oct_active = (
+                    k - s
+                )  # W = 2^r = 2^{k-s} spans exactly r = k - s dyadic octaves [2^{-r}, 1]
                 alpha_act = 2.0 ** (-k_oct_active)
                 b_haar_act_sq = beta_s_power_sq(s, -1.0, alpha_act)
 
                 g1 = b1_sq + (1.0 / 6.0) * (1.0 - 2.0 ** (-s))
                 g_p9 = b_multi_sq + 0.5 * (1.0 - 2.0 ** (-s))
                 g_h3 = b_haar_k3_sq + kappa_int_haar_k(3) * (1.0 - 2.0 ** (-s))
-                g_hadapt = b_haar_act_sq + kappa_int_haar_k(k_oct_active) * (1.0 - 2.0 ** (-s))
+                g_hadapt = b_haar_act_sq + kappa_int_haar_k(k_oct_active) * (
+                    1.0 - 2.0 ** (-s)
+                )
 
                 f9_multi += 2.0 * max(g1, g_p9)
                 f10_k3 += 2.0 * max(g1, g_h3)
@@ -431,16 +460,18 @@ def verify_haar_envelope_bounds():
         assert c_p10_adapt_full < c_p10_k3_full
         assert c_p10_k3_full < c_inf_haar_k3 < c_p10_k3_tail
 
-        rows.append({
-            "M": m_val,
-            "c_p9_multi_tail_b101": round(c_p9_tail, 6),
-            "c_p10_haar_k3_tail_b101": round(c_p10_k3_tail, 6),
-            "c_p10_haar_adapt_tail_b101": round(c_p10_adapt_tail, 6),
-            "c_p9_multi_full_b101": round(c_p9_full, 6),
-            "c_p10_haar_k3_full_b101": round(c_p10_k3_full, 6),
-            "c_p10_haar_adapt_full_b101": round(c_p10_adapt_full, 6),
-            "c_inf_haar_k3_limit": round(c_inf_haar_k3, 6),
-        })
+        rows.append(
+            {
+                "M": m_val,
+                "c_p9_multi_tail_b101": round(c_p9_tail, 6),
+                "c_p10_haar_k3_tail_b101": round(c_p10_k3_tail, 6),
+                "c_p10_haar_adapt_tail_b101": round(c_p10_adapt_tail, 6),
+                "c_p9_multi_full_b101": round(c_p9_full, 6),
+                "c_p10_haar_k3_full_b101": round(c_p10_k3_full, 6),
+                "c_p10_haar_adapt_full_b101": round(c_p10_adapt_full, 6),
+                "c_inf_haar_k3_limit": round(c_inf_haar_k3, 6),
+            }
+        )
 
     for r in rows:
         if r["M"] >= 12:

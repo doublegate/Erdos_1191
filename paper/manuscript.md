@@ -1,6 +1,6 @@
 # Exact Harmonic-Difference Conservation, Dyadic Budget Certificates, and $O(1)$ Bit-Shift GPU Branch-and-Bound for Erdős Problem #1191
 
-**Lucas Parobek** — Independent Researcher (`parobek@gmail.com` · `https://github.com/doublegate/erdos1191`)
+**Lucas Parobek** — Independent Researcher (`parobek@gmail.com` · `https://github.com/doublegate/Erdos_1191`)
 
 ## Abstract
 

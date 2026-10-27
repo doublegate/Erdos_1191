@@ -25,29 +25,92 @@ import math
 from pathlib import Path
 
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-plt.rcParams.update({
-    "font.family": "serif",
-    "font.size": 9.5,
-    "axes.titlesize": 10.5,
-    "axes.labelsize": 9.5,
-    "xtick.labelsize": 8.5,
-    "ytick.labelsize": 8.5,
-    "legend.fontsize": 8.0,
-    "figure.dpi": 600,
-    "savefig.dpi": 600,
-    "axes.spines.top": False,
-    "axes.spines.right": False,
-})
+plt.rcParams.update(
+    {
+        "font.family": "serif",
+        "font.size": 9.5,
+        "axes.titlesize": 10.5,
+        "axes.labelsize": 9.5,
+        "xtick.labelsize": 8.5,
+        "ytick.labelsize": 8.5,
+        "legend.fontsize": 8.0,
+        "figure.dpi": 600,
+        "savefig.dpi": 600,
+        "axes.spines.top": False,
+        "axes.spines.right": False,
+    }
+)
 
 A005282_64 = [
-    1, 2, 4, 8, 13, 21, 31, 45, 66, 81, 97, 123, 148, 182, 204, 252,
-    290, 361, 401, 475, 565, 593, 662, 775, 822, 916, 970, 1016, 1159, 1312, 1395, 1523,
-    1572, 1821, 1896, 2029, 2254, 2379, 2510, 2780, 2925, 3155, 3354, 3591, 3797, 3998, 4297, 4433,
-    4779, 4851, 5123, 5243, 5298, 5751, 5998, 6374, 6801, 6925, 7460, 7547, 7789, 8220, 8503, 8730,
+    1,
+    2,
+    4,
+    8,
+    13,
+    21,
+    31,
+    45,
+    66,
+    81,
+    97,
+    123,
+    148,
+    182,
+    204,
+    252,
+    290,
+    361,
+    401,
+    475,
+    565,
+    593,
+    662,
+    775,
+    822,
+    916,
+    970,
+    1016,
+    1159,
+    1312,
+    1395,
+    1523,
+    1572,
+    1821,
+    1896,
+    2029,
+    2254,
+    2379,
+    2510,
+    2780,
+    2925,
+    3155,
+    3354,
+    3591,
+    3797,
+    3998,
+    4297,
+    4433,
+    4779,
+    4851,
+    5123,
+    5243,
+    5298,
+    5751,
+    5998,
+    6374,
+    6801,
+    6925,
+    7460,
+    7547,
+    7789,
+    8220,
+    8503,
+    8730,
 ]
 
 SINGER_BLOCKS = {
@@ -66,7 +129,9 @@ def build_kruckeberg_set(qs=(2, 3, 4, 5, 7, 8), gap_mult=3):
     ranges = []
     for q in qs:
         blk = SINGER_BLOCKS[q]
-        intra = [blk[j] - blk[i] for i in range(len(blk)) for j in range(i + 1, len(blk))]
+        intra = [
+            blk[j] - blk[i] for i in range(len(blk)) for j in range(i + 1, len(blk))
+        ]
         scale = 1
         while any((d * scale) in used_diffs for d in intra):
             scale += 1
@@ -123,9 +188,30 @@ def make_fig1(out_dir: Path):
     # Ruzsa theoretical power-law envelope x^{sqrt(2)-1} => Phi(x) ~ c * x^{sqrt(2) - 1.5} sqrt(ln x)
     phi_ruzsa = 1.15 * (xs ** (math.sqrt(2.0) - 1.5)) * np.sqrt(np.log(xs))
 
-    ax1.plot(xs, phi_kb, "-", color="#D55E00", lw=1.6, label=r"Krückeberg–Cilleruelo Singer-Block $A_{\mathrm{SB}}(x)$")
-    ax1.plot(xs, phi_mc, "-", color="#0072B2", lw=1.7, label=r"Mian–Chowla Greedy (OEIS A005282)")
-    ax1.plot(xs, phi_ruzsa, "--", color="#009E73", lw=1.4, label=r"Ruzsa (1998) scale $x^{\sqrt{2}-1}\sqrt{(\ln x)/x}$")
+    ax1.plot(
+        xs,
+        phi_kb,
+        "-",
+        color="#D55E00",
+        lw=1.6,
+        label=r"Krückeberg–Cilleruelo Singer-Block $A_{\mathrm{SB}}(x)$",
+    )
+    ax1.plot(
+        xs,
+        phi_mc,
+        "-",
+        color="#0072B2",
+        lw=1.7,
+        label=r"Mian–Chowla Greedy (OEIS A005282)",
+    )
+    ax1.plot(
+        xs,
+        phi_ruzsa,
+        "--",
+        color="#009E73",
+        lw=1.4,
+        label=r"Ruzsa (1998) scale $x^{\sqrt{2}-1}\sqrt{(\ln x)/x}$",
+    )
     ax1.set_xscale("log")
     ax1.set_xlabel(r"Horizon $x$ (log scale)")
     ax1.set_ylabel(r"Erdős #1191 functional $\Phi_A(x) = A(x)\sqrt{(\ln x)/x}$")
@@ -144,10 +230,28 @@ def make_fig1(out_dir: Path):
         desert_vals.append(d_cnt * math.sqrt(math.log(d_x) / d_x))
         burst_vals.append(b_cnt * math.sqrt(math.log(end) / end))
 
-    ax2.plot(blocks, burst_vals, "o-", color="#D55E00", lw=1.8, ms=5.0, label=r"Post-Block Burst $\Phi_A(E_r)$ ($\limsup$ peaks)")
-    ax2.plot(blocks, desert_vals, "s--", color="#0072B2", lw=1.8, ms=5.0, label=r"Pre-Block Desert $\Phi_A(B_r - 1)$ ($\liminf$ valleys)")
+    ax2.plot(
+        blocks,
+        burst_vals,
+        "o-",
+        color="#D55E00",
+        lw=1.8,
+        ms=5.0,
+        label=r"Post-Block Burst $\Phi_A(E_r)$ ($\limsup$ peaks)",
+    )
+    ax2.plot(
+        blocks,
+        desert_vals,
+        "s--",
+        color="#0072B2",
+        lw=1.8,
+        ms=5.0,
+        label=r"Pre-Block Desert $\Phi_A(B_r - 1)$ ($\liminf$ valleys)",
+    )
     ax2.set_xticks(blocks)
-    ax2.set_xticklabels([f"Block {r}\n($q={q}$)" for r, q in enumerate([2, 3, 4, 5, 7, 8], 1)])
+    ax2.set_xticklabels(
+        [f"Block {r}\n($q={q}$)" for r, q in enumerate([2, 3, 4, 5, 7, 8], 1)]
+    )
     ax2.set_ylabel(r"Erdős #1191 ratio $\Phi_A(x)$")
     ax2.set_title(r"B. Theorem 3.1 Burst–Desert Dichotomy across Singer Blocks")
     ax2.grid(True, alpha=0.25)
@@ -185,15 +289,39 @@ def make_fig2(out_dir: Path):
         ceilings.append(h_val)
 
     x_idx = np.arange(len(ns))
-    ax1.bar(x_idx, energies, width=0.55, color="#0072B2", label=r"Prefix Density Energy $\mathcal{E}_A(N)$")
-    ax1.bar(x_idx, defects, width=0.55, bottom=energies, color="#56B4E9", label=r"Translation Defect $\Delta_A(N) \geq 0$")
-    ax1.plot(x_idx, budgets, "ko-", ms=4.0, lw=1.3, label=r"Harmonic Diff Budget $\mathcal{B}_A(N) = \mathcal{E}_A + \Delta_A$")
-    ax1.plot(x_idx, ceilings, "r--", lw=1.5, label=r"Universal Harmonic Ceiling $H_N - 1$")
+    ax1.bar(
+        x_idx,
+        energies,
+        width=0.55,
+        color="#0072B2",
+        label=r"Prefix Density Energy $\mathcal{E}_A(N)$",
+    )
+    ax1.bar(
+        x_idx,
+        defects,
+        width=0.55,
+        bottom=energies,
+        color="#56B4E9",
+        label=r"Translation Defect $\Delta_A(N) \geq 0$",
+    )
+    ax1.plot(
+        x_idx,
+        budgets,
+        "ko-",
+        ms=4.0,
+        lw=1.3,
+        label=r"Harmonic Diff Budget $\mathcal{B}_A(N) = \mathcal{E}_A + \Delta_A$",
+    )
+    ax1.plot(
+        x_idx, ceilings, "r--", lw=1.5, label=r"Universal Harmonic Ceiling $H_N - 1$"
+    )
     ax1.set_xticks(x_idx)
     ax1.set_xticklabels([f"$2^{{{int(math.log2(n))}}}$" for n in ns])
     ax1.set_xlabel(r"Dyadic horizon $N = 2^M$")
     ax1.set_ylabel("Harmonic / Integral Magnitude")
-    ax1.set_title(r"A. Theorem 2.1(a) Exact Conservation $\mathcal{E}_A(N) + \Delta_A(N) = \mathcal{B}_A(N)$")
+    ax1.set_title(
+        r"A. Theorem 2.1(a) Exact Conservation $\mathcal{E}_A(N) + \Delta_A(N) = \mathcal{B}_A(N)$"
+    )
     ax1.grid(True, axis="y", alpha=0.25)
     ax1.legend(loc="upper left", frameon=True)
 
@@ -215,9 +343,31 @@ def make_fig2(out_dir: Path):
         mc_lhs.append(s_mc)
         kb_lhs.append(s_kb)
 
-    ax2.plot(ms, (ms - 1) / 2.0, "k--", lw=1.7, label=r"Theorem 2.1(b) Universal Ceiling $(M - 1)/2$")
-    ax2.plot(ms, kb_lhs, "s-", color="#D55E00", lw=1.7, ms=4.5, label=r"Singer-Block Sidon $\sum_{k=1}^M m_k(m_k-1)/2^k$")
-    ax2.plot(ms, mc_lhs, "o-", color="#0072B2", lw=1.7, ms=4.5, label=r"Mian–Chowla (A005282) $\sum_{k=1}^M m_k(m_k-1)/2^k$")
+    ax2.plot(
+        ms,
+        (ms - 1) / 2.0,
+        "k--",
+        lw=1.7,
+        label=r"Theorem 2.1(b) Universal Ceiling $(M - 1)/2$",
+    )
+    ax2.plot(
+        ms,
+        kb_lhs,
+        "s-",
+        color="#D55E00",
+        lw=1.7,
+        ms=4.5,
+        label=r"Singer-Block Sidon $\sum_{k=1}^M m_k(m_k-1)/2^k$",
+    )
+    ax2.plot(
+        ms,
+        mc_lhs,
+        "o-",
+        color="#0072B2",
+        lw=1.7,
+        ms=4.5,
+        label=r"Mian–Chowla (A005282) $\sum_{k=1}^M m_k(m_k-1)/2^k$",
+    )
     ax2.set_xlabel(r"Number of dyadic shells $M$ ($N = 2^M$)")
     ax2.set_ylabel(r"Cumulative dyadic budget $\sum_{k=1}^M m_k(m_k-1)/2^k$")
     ax2.set_title(r"B. Theorem 2.1(b) Dyadic Difference-Budget vs. $(M - 1)/2$")
@@ -234,11 +384,31 @@ def make_fig3(out_dir: Path):
     # Panel A: Exact Maximin Lower-Envelope mu*(x_0=7, N) vs Mian-Chowla across N = 12..36
     horizons = np.array([12, 16, 20, 24, 28, 32, 36])
     # Exact values computed by `erdos1191 maximin --n N --x0 7`:
-    mu_maximin = np.array([1.82022, 1.77676, 1.77676, 1.77676, 1.77676, 1.77676, 1.77676])
-    mu_mian_chowla = np.array([1.58199, 1.58199, 1.58199, 1.58199, 1.58199, 1.58199, 1.58199])
+    mu_maximin = np.array(
+        [1.82022, 1.77676, 1.77676, 1.77676, 1.77676, 1.77676, 1.77676]
+    )
+    mu_mian_chowla = np.array(
+        [1.58199, 1.58199, 1.58199, 1.58199, 1.58199, 1.58199, 1.58199]
+    )
 
-    ax1.plot(horizons, mu_maximin, "o-", color="#009E73", lw=1.8, ms=5.0, label=r"Exact Maximin Sidon $\mu^*(7, N)$")
-    ax1.plot(horizons, mu_mian_chowla, "s--", color="#0072B2", lw=1.6, ms=4.5, label=r"Mian–Chowla Prefix $\min_{x\in[7,N]} \Phi_{\mathrm{MC}}(x)$")
+    ax1.plot(
+        horizons,
+        mu_maximin,
+        "o-",
+        color="#009E73",
+        lw=1.8,
+        ms=5.0,
+        label=r"Exact Maximin Sidon $\mu^*(7, N)$",
+    )
+    ax1.plot(
+        horizons,
+        mu_mian_chowla,
+        "s--",
+        color="#0072B2",
+        lw=1.6,
+        ms=4.5,
+        label=r"Mian–Chowla Prefix $\min_{x\in[7,N]} \Phi_{\mathrm{MC}}(x)$",
+    )
     ax1.set_xlabel(r"Finite horizon $N$ ($x_0 = 7$)")
     ax1.set_ylabel(r"Minimum envelope $\min_{x \in [7, N]} A(x)\sqrt{(\ln x)/x}$")
     ax1.set_title(r"A. Exact Maximin Lower-Envelope $\mu^*(7, N)$ vs. Horizon $N$")
@@ -250,9 +420,31 @@ def make_fig3(out_dir: Path):
     xs = np.arange(7, 33)
     w_maximin_32 = [1, 2, 5, 7, 14, 22, 32]
     mc_32 = [x for x in A005282_64 if x <= 32]
-    ax2.plot(xs, phi_curve(w_maximin_32, xs), "o-", color="#009E73", lw=1.7, ms=3.8, label=r"Maximin Witness $A^* = \{1,2,5,7,14,22,32\}$")
-    ax2.plot(xs, phi_curve(mc_32, xs), "s--", color="#0072B2", lw=1.5, ms=3.5, label=r"Mian–Chowla $[32]$ ($A=\{1,2,4,8,13,21,31\}$)")
-    ax2.axhline(min(phi_curve(w_maximin_32, xs)), color="#009E73", ls=":", lw=1.2, label=r"Maximin floor $\mu^*(7, 32) = 1.77676$ (at $x^*=13$)")
+    ax2.plot(
+        xs,
+        phi_curve(w_maximin_32, xs),
+        "o-",
+        color="#009E73",
+        lw=1.7,
+        ms=3.8,
+        label=r"Maximin Witness $A^* = \{1,2,5,7,14,22,32\}$",
+    )
+    ax2.plot(
+        xs,
+        phi_curve(mc_32, xs),
+        "s--",
+        color="#0072B2",
+        lw=1.5,
+        ms=3.5,
+        label=r"Mian–Chowla $[32]$ ($A=\{1,2,4,8,13,21,31\}$)",
+    )
+    ax2.axhline(
+        min(phi_curve(w_maximin_32, xs)),
+        color="#009E73",
+        ls=":",
+        lw=1.2,
+        label=r"Maximin floor $\mu^*(7, 32) = 1.77676$ (at $x^*=13$)",
+    )
     ax2.set_xlabel(r"Coordinate $x \in [7, 32]$")
     ax2.set_ylabel(r"Normalized ratio $\Phi_A(x) = A(x)\sqrt{(\ln x)/x}$")
     ax2.set_title(r"B. Pointwise Envelope $\Phi_A(x)$ on $[7, 32]$")
@@ -271,8 +463,24 @@ def make_fig4(out_dir: Path):
     nodes_elem = np.array([826, 651, 9221, 50893, 55183, 80822])
     nodes_oeis = np.array([407, 555, 3306, 39629, 15958, 22712])
 
-    ax1.semilogy(ns, nodes_elem, "s--", color="#D55E00", lw=1.6, ms=4.5, label="Elementary Erdős–Turán tail bound")
-    ax1.semilogy(ns, nodes_oeis, "o-", color="#0072B2", lw=1.8, ms=4.5, label="OEIS A003022 subadditive tail bound")
+    ax1.semilogy(
+        ns,
+        nodes_elem,
+        "s--",
+        color="#D55E00",
+        lw=1.6,
+        ms=4.5,
+        label="Elementary Erdős–Turán tail bound",
+    )
+    ax1.semilogy(
+        ns,
+        nodes_oeis,
+        "o-",
+        color="#0072B2",
+        lw=1.8,
+        ms=4.5,
+        label="OEIS A003022 subadditive tail bound",
+    )
     ax1.set_xlabel(r"Ambient interval size $N$")
     ax1.set_ylabel("Total branch-and-bound DFS nodes (log scale)")
     ax1.set_title(r"A. $O(1)$ Bit-Shift Sidon DFS Tail-Pruning Efficiency")
@@ -284,8 +492,24 @@ def make_fig4(out_dir: Path):
     cpu_rate = np.array([4.2e6, 4.6e6, 4.8e6, 4.9e6, 4.9e6, 4.9e6])
     gpu_rate = np.array([1.8e7, 6.4e7, 2.1e8, 5.8e8, 1.15e9, 1.62e9])
 
-    ax2.loglog(batch_sizes, gpu_rate, "o-", color="#009E73", lw=1.8, ms=4.5, label="RTX 3090 GPU (`k_eval_sidon_dyadic_budget`)")
-    ax2.loglog(batch_sizes, cpu_rate, "s--", color="#0072B2", lw=1.6, ms=4.5, label="CPU reference (`eval_sidon_dyadic_budget_cpu`)")
+    ax2.loglog(
+        batch_sizes,
+        gpu_rate,
+        "o-",
+        color="#009E73",
+        lw=1.8,
+        ms=4.5,
+        label="RTX 3090 GPU (`k_eval_sidon_dyadic_budget`)",
+    )
+    ax2.loglog(
+        batch_sizes,
+        cpu_rate,
+        "s--",
+        color="#0072B2",
+        lw=1.6,
+        ms=4.5,
+        label="CPU reference (`eval_sidon_dyadic_budget_cpu`)",
+    )
     ax2.set_xlabel("Batch size (number of 64-bit candidate sets)")
     ax2.set_ylabel(r"Throughput (sets evaluated / second)")
     ax2.set_title(r"B. GPU vs. CPU $O(1)$ Bit-Shift Sidon & Dyadic Budget Throughput")
@@ -316,7 +540,10 @@ def make_fig5(out_dir: Path):
     kb_bil = []
 
     for m in ms:
-        for seq, i_list, b_list in [(A005282_64, mc_intra, mc_bil), (kb_set, kb_intra, kb_bil)]:
+        for seq, i_list, b_list in [
+            (A005282_64, mc_intra, mc_bil),
+            (kb_set, kb_intra, kb_bil),
+        ]:
             in_h = [x for x in seq if x <= (1 << m)]
             running = 1 if 1 in in_h else 0
             s_intra = 0.0
@@ -330,10 +557,36 @@ def make_fig5(out_dir: Path):
             i_list.append(s_intra)
             b_list.append(s_bil)
 
-    ax1.plot(ms, ms + 0.5, "k--", lw=1.6, label=r"Theorem 2.2(b) Universal Ceiling $M + 1/2$")
-    ax1.plot(ms, mc_bil, "o-", color="#0072B2", lw=1.8, ms=4.5, label=r"Mian–Chowla Cross-Shell Bilinear LHS")
-    ax1.plot(ms, kb_bil, "s-", color="#D55E00", lw=1.8, ms=4.5, label=r"Singer-Block Cross-Shell Bilinear LHS")
-    ax1.plot(ms, mc_intra, "o:", color="#56B4E9", lw=1.5, ms=4.0, label=r"Mian–Chowla Intra-Shell-Only LHS")
+    ax1.plot(
+        ms, ms + 0.5, "k--", lw=1.6, label=r"Theorem 2.2(b) Universal Ceiling $M + 1/2$"
+    )
+    ax1.plot(
+        ms,
+        mc_bil,
+        "o-",
+        color="#0072B2",
+        lw=1.8,
+        ms=4.5,
+        label=r"Mian–Chowla Cross-Shell Bilinear LHS",
+    )
+    ax1.plot(
+        ms,
+        kb_bil,
+        "s-",
+        color="#D55E00",
+        lw=1.8,
+        ms=4.5,
+        label=r"Singer-Block Cross-Shell Bilinear LHS",
+    )
+    ax1.plot(
+        ms,
+        mc_intra,
+        "o:",
+        color="#56B4E9",
+        lw=1.5,
+        ms=4.0,
+        label=r"Mian–Chowla Intra-Shell-Only LHS",
+    )
     ax1.set_xlabel(r"Number of dyadic shells $M$ ($N = 2^M$)")
     ax1.set_ylabel("Dyadic-weighted difference budget")
     ax1.set_title(r"A. Theorem 2.2 Cross-Shell Bilinear vs. Intra-Shell-Only Budget")
@@ -362,11 +615,10 @@ def make_fig5(out_dir: Path):
     c_p10_adapt_full_curve = []
     c_p11_adapt_tail_curve = []
     c_p11_adapt_full_curve = []
-    c_inf_continuum = 2.0
-    c_inf_coupled = 2.0 * math.sqrt(6.0 / 7.0)
-    c_inf_cf2 = 2.0 * math.sqrt(4.0 / 5.0)
-    c_inf_band = 2.0 * math.sqrt(7.0 / 9.0)
-    c_inf_multi = 2.0 * math.sqrt(2.0 / 3.0)
+    2.0 * math.sqrt(6.0 / 7.0)
+    2.0 * math.sqrt(4.0 / 5.0)
+    2.0 * math.sqrt(7.0 / 9.0)
+    2.0 * math.sqrt(2.0 / 3.0)
     c_inf_unit = 1.0
     c_inf_half = 0.50
     c_gk = 0.4975089540675685
@@ -384,7 +636,9 @@ def make_fig5(out_dir: Path):
             return 1.0 - 0.25 * delta
         return (2.0 / (3.0 * delta)) * (1.0 - (1.0 - delta) ** 1.5)
 
-    def beta_s_band_sq(s: int, alpha: float = 0.5, r_exp: float = 0.0, n_simp: int = 64) -> float:
+    def beta_s_band_sq(
+        s: int, alpha: float = 0.5, r_exp: float = 0.0, n_simp: int = 64
+    ) -> float:
         a, b = alpha, 1.0
         h = (b - a) / n_simp
         p_pow = r_exp + 2.0
@@ -414,7 +668,9 @@ def make_fig5(out_dir: Path):
             m_cap = 1 << k_oct
             mf = float(m_cap)
             ln_h = sum(float(m) * math.log(float(m)) for m in range(1, m_cap))
-            j_multi = 0.5 * (mf * mf - 1.0) - mf * (mf - 1.0) * math.log(mf) + 2.0 * ln_h
+            j_multi = (
+                0.5 * (mf * mf - 1.0) - mf * (mf - 1.0) * math.log(mf) + 2.0 * ln_h
+            )
         else:
             mf = 2.0**k_oct
             j_multi = (k_oct * math.log(2.0)) / 6.0 + c_lf + 1.0 / (360.0 * mf * mf)
@@ -439,7 +695,9 @@ def make_fig5(out_dir: Path):
             u_intra += rho_sq_2k
             s_k = max(0, k - 2) // 2
             u_mr += (s_k + 1) * rho_sq_2k
-            fejer_mult = 1.0 + sum(2.0 / (1.0 + 2.0**(1 - s)) for s in range(1, s_k + 1))
+            fejer_mult = 1.0 + sum(
+                2.0 / (1.0 + 2.0 ** (1 - s)) for s in range(1, s_k + 1)
+            )
             u_fejer += fejer_mult * rho_sq_2k
             fejer_joint = 1.0
             fejer_coupled = beta0_sq
@@ -461,9 +719,13 @@ def make_fig5(out_dir: Path):
                 g2 = boct_sq + 0.25 * (1.0 - (2.0 ** (-s)))
                 g_band = boct_sq + (2.0 / 7.0) * (1.0 - (2.0 ** (-s)))
                 g_multi = bmulti_sq + 0.5 * (1.0 - (2.0 ** (-s)))
-                g_haar_adapt = bhaar_act_sq + kappa_haar_k(k_act) * (1.0 - (2.0 ** (-s)))
-                g_dioph_adapt = bhaar_act_sq + kappa_dioph_k(k_act) * (1.0 - (2.0 ** (-s)))
-                fejer_joint += (2.0 / (1.0 + 2.0**(1 - s))) * boost_sq
+                g_haar_adapt = bhaar_act_sq + kappa_haar_k(k_act) * (
+                    1.0 - (2.0 ** (-s))
+                )
+                g_dioph_adapt = bhaar_act_sq + kappa_dioph_k(k_act) * (
+                    1.0 - (2.0 ** (-s))
+                )
+                fejer_joint += (2.0 / (1.0 + 2.0 ** (1 - s))) * boost_sq
                 fejer_coupled += 2.0 * g1
                 fejer_cf2 += 2.0 * max(g1, g2)
                 fejer_band += 2.0 * max(g1, g_band)
@@ -473,17 +735,32 @@ def make_fig5(out_dir: Path):
             w = 1.0 if k == int(m_val) else 0.5
             u_mr += w / (k * math.log(2.0))
             u_fejer += w / (k * math.log(2.0))
-            u_p5_joint += scale_ratio * fejer_joint * rho_sq_2k + (w + 0.5 * kappa_pref) / (k * math.log(2.0))
-            u_p6_full += scale_ratio * fejer_coupled * rho_sq_2k + (w + 0.5 * kappa_pref) / (k * math.log(2.0))
-            u_p7_full += scale_ratio * fejer_cf2 * rho_sq_2k + (w + 0.5 * kappa_pref) / (k * math.log(2.0))
-            u_p8_full += scale_ratio * fejer_band * rho_sq_2k + (w + 0.5 * kappa_pref) / (k * math.log(2.0))
-            u_p9_full += scale_ratio * fejer_multi * rho_sq_2k + (w + 0.5 * kappa_pref) / (k * math.log(2.0))
-            u_p10_adapt_full += scale_ratio * fejer_haar_adapt * rho_sq_2k + (w + 0.5 * kappa_pref) / (k * math.log(2.0))
-            u_p11_adapt_full += scale_ratio * fejer_dioph_adapt * rho_sq_2k + (w + 0.5 * kappa_pref) / (k * math.log(2.0))
+            u_p5_joint += scale_ratio * fejer_joint * rho_sq_2k + (
+                w + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
+            u_p6_full += scale_ratio * fejer_coupled * rho_sq_2k + (
+                w + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
+            u_p7_full += scale_ratio * fejer_cf2 * rho_sq_2k + (
+                w + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
+            u_p8_full += scale_ratio * fejer_band * rho_sq_2k + (
+                w + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
+            u_p9_full += scale_ratio * fejer_multi * rho_sq_2k + (
+                w + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
+            u_p10_adapt_full += scale_ratio * fejer_haar_adapt * rho_sq_2k + (
+                w + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
+            u_p11_adapt_full += scale_ratio * fejer_dioph_adapt * rho_sq_2k + (
+                w + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
             prev = req
         c_i = math.sqrt((0.5 * m_val) / u_intra)
         u_bil = u_intra + sum(
-            (1.0 if k == int(m_val) else 0.5) / (k * math.log(2.0)) for k in range(k0, int(m_val) + 1)
+            (1.0 if k == int(m_val) else 0.5) / (k * math.log(2.0))
+            for k in range(k0, int(m_val) + 1)
         )
         c_b = math.sqrt((0.5 * (m_val + 2)) / u_bil)
         c_m = math.sqrt((0.5 * (m_val + 2)) / u_mr)
@@ -507,9 +784,13 @@ def make_fig5(out_dir: Path):
         q_p10_adapt_tail = 0.0
         q_p11_adapt_tail = 0.0
         for k in range(r0 + 1, int(m_val) + 1):
-            alpha_k = (1.0 / math.sqrt(k * math.log(2.0))) - (1.0 / math.sqrt(2.0 * (k - 1) * math.log(2.0)))
+            alpha_k = (1.0 / math.sqrt(k * math.log(2.0))) - (
+                1.0 / math.sqrt(2.0 * (k - 1) * math.log(2.0))
+            )
             s_k = max(0, k - 2) // 2
-            fejer_mult = 1.0 + sum(2.0 / (1.0 + 2.0**(1 - s)) for s in range(1, s_k + 1))
+            fejer_mult = 1.0 + sum(
+                2.0 / (1.0 + 2.0 ** (1 - s)) for s in range(1, s_k + 1)
+            )
             q_tail += fejer_mult * alpha_k * alpha_k
             q_p5_tail += scale_ratio * (1.0 + 2.0 * s_k) * alpha_k * alpha_k
             fejer_coupled = beta0_sq
@@ -534,8 +815,12 @@ def make_fig5(out_dir: Path):
                 g_band = boct_sq + (2.0 / 7.0) * (1.0 - (2.0 ** (-s)))
                 g_multi = bmulti_sq + 0.5 * (1.0 - (2.0 ** (-s)))
                 g_haar3 = bhaar3_sq + kappa_haar_k(3) * (1.0 - (2.0 ** (-s)))
-                g_haar_adapt = bhaar_act_sq + kappa_haar_k(k_act) * (1.0 - (2.0 ** (-s)))
-                g_dioph_adapt = bhaar_act_sq + kappa_dioph_k(k_act) * (1.0 - (2.0 ** (-s)))
+                g_haar_adapt = bhaar_act_sq + kappa_haar_k(k_act) * (
+                    1.0 - (2.0 ** (-s))
+                )
+                g_dioph_adapt = bhaar_act_sq + kappa_dioph_k(k_act) * (
+                    1.0 - (2.0 ** (-s))
+                )
                 fejer_coupled += 2.0 * g1
                 fejer_cf2 += 2.0 * max(g1, g2)
                 fejer_band += 2.0 * max(g1, g_band)
@@ -581,18 +866,110 @@ def make_fig5(out_dir: Path):
         c_p11_adapt_tail_curve.append(c_p11_at)
         c_p11_adapt_full_curve.append(c_p11_af)
 
-    ax2.plot(m_grid, c_intra_curve, "s--", color="#D55E00", lw=1.2, ms=2.3, label=r"Phase 1 Intra $\underline{c}_M^{(1)}$")
-    ax2.plot(m_grid, c_bil_curve, "^-.", color="#0072B2", lw=1.2, ms=2.3, label=r"Phase 2 Bilin $\underline{c}_M^{\mathrm{QP}}$")
-    ax2.plot(m_grid, c_mr_curve, "d:", color="#56B4E9", lw=1.2, ms=2.3, label=r"Phase 3 Multi-Res $\underline{c}_M^{\mathrm{MR}}$")
-    ax2.plot(m_grid, c_tail_star_curve, "v--", color="#CC79A7", lw=1.2, ms=2.3, label=r"Phase 4 Tail $\underline{c}_M^*(2)$")
-    ax2.plot(m_grid, c_p5_tail_curve, "P--", color="#E69F00", lw=1.2, ms=2.3, label=r"Phase 5 Tail $\underline{c}_M^{*,\mathrm{joint}}(1^+)$")
-    ax2.plot(m_grid, c_p6_tail_curve, "h--", color="#882255", lw=1.2, ms=2.5, label=r"Phase 6 Tail $\underline{c}_M^{*,\mathrm{coupled}}(1^+)$")
-    ax2.plot(m_grid, c_p8_tail_curve, "X--", color="#660099", lw=1.2, ms=2.6, label=r"Phase 8 Band $\underline{c}_M^{*,\mathrm{band}}(1^+)$")
-    ax2.plot(m_grid, c_p9_tail_curve, "o--", color="#117733", lw=1.3, ms=2.8, label=r"Phase 9 Multi-Oct $\underline{c}_M^{*,\mathrm{multi}}(1^+)$")
-    ax2.plot(m_grid, c_p10_adapt_tail_curve, "D--", color="#00796B", lw=1.5, ms=3.0, label=r"Phase 10 Adaptive Haar $\underline{c}_M^{*,\mathrm{Haar}}(1^+)$")
-    ax2.plot(m_grid, c_p11_adapt_tail_curve, "*-", color="#B71C1C", lw=2.0, ms=4.3, label=r"Phase 11 Diophantine Haar $\underline{c}_M^{*,\mathrm{Dioph}}(1^+)$ ($<0.5$ at $M=128$)")
-    ax2.axhline(c_inf_unit, color="#004D40", ls="-.", lw=1.1, label=r"Unit Barrier $1.0000$ ($K=9$ Dioph, $M=32$)")
-    ax2.axhline(c_inf_half, color="#B71C1C", ls=":", lw=1.1, label=r"Half-Unit Barrier $0.5000$ ($K=64$, $M=128$)")
+    ax2.plot(
+        m_grid,
+        c_intra_curve,
+        "s--",
+        color="#D55E00",
+        lw=1.2,
+        ms=2.3,
+        label=r"Phase 1 Intra $\underline{c}_M^{(1)}$",
+    )
+    ax2.plot(
+        m_grid,
+        c_bil_curve,
+        "^-.",
+        color="#0072B2",
+        lw=1.2,
+        ms=2.3,
+        label=r"Phase 2 Bilin $\underline{c}_M^{\mathrm{QP}}$",
+    )
+    ax2.plot(
+        m_grid,
+        c_mr_curve,
+        "d:",
+        color="#56B4E9",
+        lw=1.2,
+        ms=2.3,
+        label=r"Phase 3 Multi-Res $\underline{c}_M^{\mathrm{MR}}$",
+    )
+    ax2.plot(
+        m_grid,
+        c_tail_star_curve,
+        "v--",
+        color="#CC79A7",
+        lw=1.2,
+        ms=2.3,
+        label=r"Phase 4 Tail $\underline{c}_M^*(2)$",
+    )
+    ax2.plot(
+        m_grid,
+        c_p5_tail_curve,
+        "P--",
+        color="#E69F00",
+        lw=1.2,
+        ms=2.3,
+        label=r"Phase 5 Tail $\underline{c}_M^{*,\mathrm{joint}}(1^+)$",
+    )
+    ax2.plot(
+        m_grid,
+        c_p6_tail_curve,
+        "h--",
+        color="#882255",
+        lw=1.2,
+        ms=2.5,
+        label=r"Phase 6 Tail $\underline{c}_M^{*,\mathrm{coupled}}(1^+)$",
+    )
+    ax2.plot(
+        m_grid,
+        c_p8_tail_curve,
+        "X--",
+        color="#660099",
+        lw=1.2,
+        ms=2.6,
+        label=r"Phase 8 Band $\underline{c}_M^{*,\mathrm{band}}(1^+)$",
+    )
+    ax2.plot(
+        m_grid,
+        c_p9_tail_curve,
+        "o--",
+        color="#117733",
+        lw=1.3,
+        ms=2.8,
+        label=r"Phase 9 Multi-Oct $\underline{c}_M^{*,\mathrm{multi}}(1^+)$",
+    )
+    ax2.plot(
+        m_grid,
+        c_p10_adapt_tail_curve,
+        "D--",
+        color="#00796B",
+        lw=1.5,
+        ms=3.0,
+        label=r"Phase 10 Adaptive Haar $\underline{c}_M^{*,\mathrm{Haar}}(1^+)$",
+    )
+    ax2.plot(
+        m_grid,
+        c_p11_adapt_tail_curve,
+        "*-",
+        color="#B71C1C",
+        lw=2.0,
+        ms=4.3,
+        label=r"Phase 11 Diophantine Haar $\underline{c}_M^{*,\mathrm{Dioph}}(1^+)$ ($<0.5$ at $M=128$)",
+    )
+    ax2.axhline(
+        c_inf_unit,
+        color="#004D40",
+        ls="-.",
+        lw=1.1,
+        label=r"Unit Barrier $1.0000$ ($K=9$ Dioph, $M=32$)",
+    )
+    ax2.axhline(
+        c_inf_half,
+        color="#B71C1C",
+        ls=":",
+        lw=1.1,
+        label=r"Half-Unit Barrier $0.5000$ ($K=64$, $M=128$)",
+    )
     ax2.set_xlabel(r"Dyadic horizon scale $M$ ($N = 2^M \leq 2^{128}$)")
     ax2.set_ylabel(r"Upper bound on $\min A(2^k)\sqrt{(\ln 2^k)/2^k}$")
     ax2.set_title(r"B. Phases 1–11 Envelope Hierarchy & Unconditional Closure $\to 0$")
@@ -618,7 +995,9 @@ def make_fig6(out_dir: Path):
 
     m_scales = 13
     in_h = [x for x in A005282_64 if x <= (1 << m_scales)]
-    diffs = sorted(in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h)))
+    diffs = sorted(
+        in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h))
+    )
     rs = np.arange(2, 13)
     base_list, pig_list, sub_list, act_list, cap_list = [], [], [], [], []
     for r in rs:
@@ -646,9 +1025,33 @@ def make_fig6(out_dir: Path):
         cap_list.append(cap)
 
     ax1.semilogy(rs, cap_list, "k--", lw=1.6, label=r"Universal Ceiling $2^r - 1$")
-    ax1.semilogy(rs, act_list, "o-", color="#D55E00", lw=1.7, ms=4.2, label=r"Actual Short Diffs $|\mathcal{D}_A(2^{13}) \cap [1, 2^r)|$")
-    ax1.semilogy(rs, pig_list, "s-", color="#009E73", lw=1.7, ms=4.0, label=r"Theorem 2.3(a) Sub-Window Pigeonhole LB")
-    ax1.semilogy(rs, base_list, "^:", color="#0072B2", lw=1.5, ms=3.8, label=r"Prefix Pairs Only $\binom{A(2^r)}{2}$")
+    ax1.semilogy(
+        rs,
+        act_list,
+        "o-",
+        color="#D55E00",
+        lw=1.7,
+        ms=4.2,
+        label=r"Actual Short Diffs $|\mathcal{D}_A(2^{13}) \cap [1, 2^r)|$",
+    )
+    ax1.semilogy(
+        rs,
+        pig_list,
+        "s-",
+        color="#009E73",
+        lw=1.7,
+        ms=4.0,
+        label=r"Theorem 2.3(a) Sub-Window Pigeonhole LB",
+    )
+    ax1.semilogy(
+        rs,
+        base_list,
+        "^:",
+        color="#0072B2",
+        lw=1.5,
+        ms=3.8,
+        label=r"Prefix Pairs Only $\binom{A(2^r)}{2}$",
+    )
     ax1.set_xlabel(r"Target difference scale $r$ ($d \in [1, 2^r - 1]$)")
     ax1.set_ylabel("Difference count (log scale)")
     ax1.set_title(r"A. Theorem 2.3(a) Short-Difference Crowding on Mian–Chowla")
@@ -691,7 +1094,9 @@ def make_fig6(out_dir: Path):
             return 1.0 - 0.25 * delta
         return (2.0 / (3.0 * delta)) * (1.0 - (1.0 - delta) ** 1.5)
 
-    def beta_s_band_sq(s: int, alpha: float = 0.5, r_exp: float = 0.0, n_simp: int = 64) -> float:
+    def beta_s_band_sq(
+        s: int, alpha: float = 0.5, r_exp: float = 0.0, n_simp: int = 64
+    ) -> float:
         a, b = alpha, 1.0
         h = (b - a) / n_simp
         p_pow = r_exp + 2.0
@@ -721,7 +1126,9 @@ def make_fig6(out_dir: Path):
             m_cap = 1 << k_oct
             mf = float(m_cap)
             ln_h = sum(float(m) * math.log(float(m)) for m in range(1, m_cap))
-            j_multi = 0.5 * (mf * mf - 1.0) - mf * (mf - 1.0) * math.log(mf) + 2.0 * ln_h
+            j_multi = (
+                0.5 * (mf * mf - 1.0) - mf * (mf - 1.0) * math.log(mf) + 2.0 * ln_h
+            )
         else:
             mf = 2.0**k_oct
             j_multi = (k_oct * math.log(2.0)) / 6.0 + c_lf + 1.0 / (360.0 * mf * mf)
@@ -746,7 +1153,9 @@ def make_fig6(out_dir: Path):
             u_intra += rho_sq_2k
             s_k = max(0, k - 2) // 2
             u_mr += (s_k + 1) * rho_sq_2k
-            fejer_mult = 1.0 + sum(2.0 / (1.0 + 2.0**(1 - s)) for s in range(1, s_k + 1))
+            fejer_mult = 1.0 + sum(
+                2.0 / (1.0 + 2.0 ** (1 - s)) for s in range(1, s_k + 1)
+            )
             u_fejer += fejer_mult * rho_sq_2k
             fejer_joint = 1.0
             fejer_coupled = beta0_sq
@@ -768,9 +1177,13 @@ def make_fig6(out_dir: Path):
                 g2 = boct_sq + 0.25 * (1.0 - (2.0 ** (-s)))
                 g_band = boct_sq + (2.0 / 7.0) * (1.0 - (2.0 ** (-s)))
                 g_multi = bmulti_sq + 0.5 * (1.0 - (2.0 ** (-s)))
-                g_haar_adapt = bhaar_act_sq + kappa_haar_k(k_act) * (1.0 - (2.0 ** (-s)))
-                g_dioph_adapt = bhaar_act_sq + kappa_dioph_k(k_act) * (1.0 - (2.0 ** (-s)))
-                fejer_joint += (2.0 / (1.0 + 2.0**(1 - s))) * boost_sq
+                g_haar_adapt = bhaar_act_sq + kappa_haar_k(k_act) * (
+                    1.0 - (2.0 ** (-s))
+                )
+                g_dioph_adapt = bhaar_act_sq + kappa_dioph_k(k_act) * (
+                    1.0 - (2.0 ** (-s))
+                )
+                fejer_joint += (2.0 / (1.0 + 2.0 ** (1 - s))) * boost_sq
                 fejer_coupled += 2.0 * g1
                 fejer_cf2 += 2.0 * max(g1, g2)
                 fejer_band += 2.0 * max(g1, g_band)
@@ -780,16 +1193,31 @@ def make_fig6(out_dir: Path):
             w = 1.0 if k == int(m_val) else 0.5
             u_mr += w / (k * math.log(2.0))
             u_fejer += w / (k * math.log(2.0))
-            u_p5_joint += scale_ratio * fejer_joint * rho_sq_2k + (w + 0.5 * kappa_pref) / (k * math.log(2.0))
-            u_p6_full += scale_ratio * fejer_coupled * rho_sq_2k + (w + 0.5 * kappa_pref) / (k * math.log(2.0))
-            u_p7_full += scale_ratio * fejer_cf2 * rho_sq_2k + (w + 0.5 * kappa_pref) / (k * math.log(2.0))
-            u_p8_full += scale_ratio * fejer_band * rho_sq_2k + (w + 0.5 * kappa_pref) / (k * math.log(2.0))
-            u_p9_full += scale_ratio * fejer_multi * rho_sq_2k + (w + 0.5 * kappa_pref) / (k * math.log(2.0))
-            u_p10_adapt_full += scale_ratio * fejer_haar_adapt * rho_sq_2k + (w + 0.5 * kappa_pref) / (k * math.log(2.0))
-            u_p11_adapt_full += scale_ratio * fejer_dioph_adapt * rho_sq_2k + (w + 0.5 * kappa_pref) / (k * math.log(2.0))
+            u_p5_joint += scale_ratio * fejer_joint * rho_sq_2k + (
+                w + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
+            u_p6_full += scale_ratio * fejer_coupled * rho_sq_2k + (
+                w + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
+            u_p7_full += scale_ratio * fejer_cf2 * rho_sq_2k + (
+                w + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
+            u_p8_full += scale_ratio * fejer_band * rho_sq_2k + (
+                w + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
+            u_p9_full += scale_ratio * fejer_multi * rho_sq_2k + (
+                w + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
+            u_p10_adapt_full += scale_ratio * fejer_haar_adapt * rho_sq_2k + (
+                w + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
+            u_p11_adapt_full += scale_ratio * fejer_dioph_adapt * rho_sq_2k + (
+                w + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
             prev = req
         u_bil = u_intra + sum(
-            (1.0 if k == int(m_val) else 0.5) / (k * math.log(2.0)) for k in range(k0, int(m_val) + 1)
+            (1.0 if k == int(m_val) else 0.5) / (k * math.log(2.0))
+            for k in range(k0, int(m_val) + 1)
         )
         r0 = int(m_val) // 2
         q_tail = 0.0
@@ -802,9 +1230,13 @@ def make_fig6(out_dir: Path):
         q_p10_adapt_tail = 0.0
         q_p11_adapt_tail = 0.0
         for k in range(r0 + 1, int(m_val) + 1):
-            alpha_k = (1.0 / math.sqrt(k * math.log(2.0))) - (1.0 / math.sqrt(2.0 * (k - 1) * math.log(2.0)))
+            alpha_k = (1.0 / math.sqrt(k * math.log(2.0))) - (
+                1.0 / math.sqrt(2.0 * (k - 1) * math.log(2.0))
+            )
             s_k = max(0, k - 2) // 2
-            fejer_mult = 1.0 + sum(2.0 / (1.0 + 2.0**(1 - s)) for s in range(1, s_k + 1))
+            fejer_mult = 1.0 + sum(
+                2.0 / (1.0 + 2.0 ** (1 - s)) for s in range(1, s_k + 1)
+            )
             q_tail += fejer_mult * alpha_k * alpha_k
             q_p5_tail += scale_ratio * (1.0 + 2.0 * s_k) * alpha_k * alpha_k
             fejer_coupled = beta0_sq
@@ -829,8 +1261,12 @@ def make_fig6(out_dir: Path):
                 g_band = boct_sq + (2.0 / 7.0) * (1.0 - (2.0 ** (-s)))
                 g_multi = bmulti_sq + 0.5 * (1.0 - (2.0 ** (-s)))
                 g_haar3 = bhaar3_sq + kappa_haar_k(3) * (1.0 - (2.0 ** (-s)))
-                g_haar_adapt = bhaar_act_sq + kappa_haar_k(k_act) * (1.0 - (2.0 ** (-s)))
-                g_dioph_adapt = bhaar_act_sq + kappa_dioph_k(k_act) * (1.0 - (2.0 ** (-s)))
+                g_haar_adapt = bhaar_act_sq + kappa_haar_k(k_act) * (
+                    1.0 - (2.0 ** (-s))
+                )
+                g_dioph_adapt = bhaar_act_sq + kappa_dioph_k(k_act) * (
+                    1.0 - (2.0 ** (-s))
+                )
                 fejer_coupled += 2.0 * g1
                 fejer_cf2 += 2.0 * max(g1, g2)
                 fejer_band += 2.0 * max(g1, g_band)
@@ -886,16 +1322,96 @@ def make_fig6(out_dir: Path):
         p3_vs_p1.append(c_p1 / c_p3)
         p2_vs_p1.append(c_p1 / c_p2)
 
-    ax2.plot(m_grid, p11_adapt_tail_vs_p1, "*-", color="#B71C1C", lw=2.0, ms=4.2, label=r"Phase 11 Diophantine Haar Tail vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{*,\mathrm{Dioph}}$, $18.14\times$ at $M=128$)")
-    ax2.plot(m_grid, p10_adapt_tail_vs_p1, "D--", color="#004D40", lw=1.6, ms=3.3, label=r"Phase 10 Adaptive Haar Tail vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{*,\mathrm{Haar}}$)")
-    ax2.plot(m_grid, p11_adapt_vs_p1, "o-", color="#D32F2F", lw=1.5, ms=3.0, label=r"Phase 11 Diophantine Haar Full vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{\mathrm{Dioph}}$, $15.02\times$ at $M=128$)")
-    ax2.plot(m_grid, p10_adapt_vs_p1, "s--", color="#00796B", lw=1.4, ms=2.8, label=r"Phase 10 Adaptive Haar Full vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{\mathrm{Haar}}$)")
-    ax2.plot(m_grid, p9_tail_vs_p1, "X--", color="#117733", lw=1.3, ms=2.8, label=r"Phase 9 Multi-Oct Tail vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{*,\mathrm{multi}}$)")
-    ax2.plot(m_grid, p8_tail_vs_p1, "p:", color="#660099", lw=1.2, ms=2.7, label=r"Phase 8 Band Tail vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{*,\mathrm{band}}$)")
-    ax2.plot(m_grid, p6_tail_vs_p1, "h:", color="#882255", lw=1.2, ms=2.7, label=r"Phase 6 Coupled Tail vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{*,\mathrm{coupled}}$)")
-    ax2.plot(m_grid, p4_vs_p1, "v:", color="#CC79A7", lw=1.2, ms=2.6, label=r"Phase 4 Fejér vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{\mathrm{Fej\acute{e}r}}$)")
-    ax2.plot(m_grid, p3_vs_p1, "d:", color="#56B4E9", lw=1.2, ms=2.6, label=r"Phase 3 Multi-Res vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{\mathrm{MR}}$)")
-    ax2.plot(m_grid, p2_vs_p1, "^--", color="#0072B2", lw=1.2, ms=2.6, label=r"Phase 2 Bilinear vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{\mathrm{QP}}$)")
+    ax2.plot(
+        m_grid,
+        p11_adapt_tail_vs_p1,
+        "*-",
+        color="#B71C1C",
+        lw=2.0,
+        ms=4.2,
+        label=r"Phase 11 Diophantine Haar Tail vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{*,\mathrm{Dioph}}$, $18.14\times$ at $M=128$)",
+    )
+    ax2.plot(
+        m_grid,
+        p10_adapt_tail_vs_p1,
+        "D--",
+        color="#004D40",
+        lw=1.6,
+        ms=3.3,
+        label=r"Phase 10 Adaptive Haar Tail vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{*,\mathrm{Haar}}$)",
+    )
+    ax2.plot(
+        m_grid,
+        p11_adapt_vs_p1,
+        "o-",
+        color="#D32F2F",
+        lw=1.5,
+        ms=3.0,
+        label=r"Phase 11 Diophantine Haar Full vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{\mathrm{Dioph}}$, $15.02\times$ at $M=128$)",
+    )
+    ax2.plot(
+        m_grid,
+        p10_adapt_vs_p1,
+        "s--",
+        color="#00796B",
+        lw=1.4,
+        ms=2.8,
+        label=r"Phase 10 Adaptive Haar Full vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{\mathrm{Haar}}$)",
+    )
+    ax2.plot(
+        m_grid,
+        p9_tail_vs_p1,
+        "X--",
+        color="#117733",
+        lw=1.3,
+        ms=2.8,
+        label=r"Phase 9 Multi-Oct Tail vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{*,\mathrm{multi}}$)",
+    )
+    ax2.plot(
+        m_grid,
+        p8_tail_vs_p1,
+        "p:",
+        color="#660099",
+        lw=1.2,
+        ms=2.7,
+        label=r"Phase 8 Band Tail vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{*,\mathrm{band}}$)",
+    )
+    ax2.plot(
+        m_grid,
+        p6_tail_vs_p1,
+        "h:",
+        color="#882255",
+        lw=1.2,
+        ms=2.7,
+        label=r"Phase 6 Coupled Tail vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{*,\mathrm{coupled}}$)",
+    )
+    ax2.plot(
+        m_grid,
+        p4_vs_p1,
+        "v:",
+        color="#CC79A7",
+        lw=1.2,
+        ms=2.6,
+        label=r"Phase 4 Fejér vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{\mathrm{Fej\acute{e}r}}$)",
+    )
+    ax2.plot(
+        m_grid,
+        p3_vs_p1,
+        "d:",
+        color="#56B4E9",
+        lw=1.2,
+        ms=2.6,
+        label=r"Phase 3 Multi-Res vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{\mathrm{MR}}$)",
+    )
+    ax2.plot(
+        m_grid,
+        p2_vs_p1,
+        "^--",
+        color="#0072B2",
+        lw=1.2,
+        ms=2.6,
+        label=r"Phase 2 Bilinear vs. P1 ($\underline{c}_M^{(1)} / \underline{c}_M^{\mathrm{QP}}$)",
+    )
     ax2.set_xlabel(r"Dyadic horizon scale $M$ ($N = 2^M \leq 2^{128}$)")
     ax2.set_ylabel("Multiplicative upper-bound sharpening factor")
     ax2.set_title(r"B. Phases 2–11 Envelope Reduction Factors vs. Phase 1")
@@ -920,7 +1436,9 @@ def main():
         "fig5": make_fig5(out_dir),
         "fig6": make_fig6(out_dir),
     }
-    (out_dir / "figures_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    (out_dir / "figures_manifest.json").write_text(
+        json.dumps(manifest, indent=2) + "\n"
+    )
     print("Generated 6 publication figures in", out_dir)
 
 

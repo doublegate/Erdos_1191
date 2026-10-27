@@ -31,6 +31,7 @@ Verifies:
 
 import json
 import math
+
 import sympy as sp
 
 
@@ -79,7 +80,7 @@ def l_pigeon(s_val: int, bins: int) -> int:
 
 
 def verify_symbolic_theorem_2_7():
-    W, d, w, alpha, theta, tau = sp.symbols("W d w alpha theta tau", positive=True)
+    W, d, _w, alpha, theta, tau = sp.symbols("W d w alpha theta tau", positive=True)
 
     # 1. Theorem 2.7(a) Symbolic Proof of Hockey-Stick / Chu-Vandermonde Difference Sum
     #    for orders p = 2, 3, 4:
@@ -93,13 +94,17 @@ def verify_symbolic_theorem_2_7():
         weight_poly = sp.rf(m_rem - k_sub + 1, p_ord - 2) / sp.factorial(p_ord - 2)
         lhs_inner = sp.summation(sp.expand(weight_poly * k_sub), (k_sub, 1, m_rem))
         rhs_inner = sp.rf(m_rem, p_ord) / sp.factorial(p_ord)
-        assert sp.simplify(lhs_inner - rhs_inner) == 0, f"Inner hockey-stick failed at p={p_ord}"
+        assert sp.simplify(lhs_inner - rhs_inner) == 0, (
+            f"Inner hockey-stick failed at p={p_ord}"
+        )
 
         # Total RHS ceiling over d = 1..W-1 (i.e. m_rem = W - d running from 1 to W - 1):
         kernel_poly = sp.rf(W - d, p_ord) / sp.factorial(p_ord)
         lhs_ceil = sp.summation(sp.expand(kernel_poly), (d, 1, W - 1))
         rhs_ceil = sp.rf(W - 1, p_ord + 1) / sp.factorial(p_ord + 1)
-        assert sp.simplify(lhs_ceil - rhs_ceil) == 0, f"Outer hockey-stick ceiling failed at p={p_ord}"
+        assert sp.simplify(lhs_ceil - rhs_ceil) == 0, (
+            f"Outer hockey-stick ceiling failed at p={p_ord}"
+        )
 
     # 2. Theorem 2.7(b) Symbolic Proof of Universal RHS Ceiling Invariance for the
     #    Normalized Convex Combination Kernel Psi_alpha(d; W):
@@ -107,7 +112,9 @@ def verify_symbolic_theorem_2_7():
     psi_alpha = alpha * (W - d) + (1 - alpha) * sp.Rational(3, 1) / (W + 1) * psi_2
     total_psi_alpha = sp.summation(sp.expand(psi_alpha), (d, 1, W - 1))
     binom_W_2 = W * (W - 1) / 2
-    assert sp.simplify(total_psi_alpha - binom_W_2) == 0, "Normalized mixed kernel ceiling failed!"
+    assert sp.simplify(total_psi_alpha - binom_W_2) == 0, (
+        "Normalized mixed kernel ceiling failed!"
+    )
 
     # 3. Symbolic Proof of the Order-2 Cesàro–Fejér Integrality Constant kappa_int^{(2)} = 1/4
     #    and Order-2 Pinched Asymptotic Limit c_infty^{*,CF2}(1^+) = 4*sqrt(5)/5:
@@ -132,15 +139,17 @@ def verify_symbolic_theorem_2_7():
             assert g1 > g2
         else:
             assert g2 > g1
-        gamma_table.append({
-            "s": s,
-            "beta_s_order1_sq": round(b1_sq, 8),
-            "beta_s_oct_order2_sq": round(boct_sq, 8),
-            "gamma_s_order1": round(g1, 8),
-            "gamma_s_order2_oct": round(g2, 8),
-            "optimal_alpha_s": 1.0 if g1 >= g2 else 0.0,
-            "gamma_s_star": round(max(g1, g2), 8),
-        })
+        gamma_table.append(
+            {
+                "s": s,
+                "beta_s_order1_sq": round(b1_sq, 8),
+                "beta_s_oct_order2_sq": round(boct_sq, 8),
+                "gamma_s_order1": round(g1, 8),
+                "gamma_s_order2_oct": round(g2, 8),
+                "optimal_alpha_s": 1.0 if g1 >= g2 else 0.0,
+                "gamma_s_star": round(max(g1, g2), 8),
+            }
+        )
 
     return {
         "order_p_hockey_stick_verified_up_to_p4": True,
@@ -190,7 +199,9 @@ def verify_order2_cesaro_fejer_on_mian_chowla():
     m_scales = 10
     n_horizon = 1 << m_scales
     in_h = [x for x in mc if x <= n_horizon]
-    diffs = [in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h))]
+    diffs = [
+        in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h))
+    ]
 
     pref = [0] * (n_horizon + 1)
     idx = 0
@@ -241,8 +252,12 @@ def verify_order2_cesaro_fejer_on_mian_chowla():
                 oct_pigeon_lb += lb_w
                 oct_win_pairs += fw_exact
 
-        full_diff_rhs = sum((w_cap - d) * (w_cap - d + 1) // 2 for d in diffs if d < w_cap)
-        half_diff_rhs = sum((w_half - d) * (w_half - d + 1) // 2 for d in diffs if d < w_half)
+        full_diff_rhs = sum(
+            (w_cap - d) * (w_cap - d + 1) // 2 for d in diffs if d < w_cap
+        )
+        half_diff_rhs = sum(
+            (w_half - d) * (w_half - d + 1) // 2 for d in diffs if d < w_half
+        )
         oct_diff_rhs = full_diff_rhs - half_diff_rhs
 
         full_binom_cap = (w_cap - 1) * w_cap * (w_cap + 1) // 6
@@ -254,16 +269,18 @@ def verify_order2_cesaro_fejer_on_mian_chowla():
         assert full_pigeon_lb <= full_diff_rhs <= full_binom_cap
         assert oct_pigeon_lb <= oct_diff_rhs <= oct_binom_cap
 
-        rows.append({
-            "r": r,
-            "W": w_cap,
-            "cf2_full_pigeonhole_lb": full_pigeon_lb,
-            "cf2_full_exact_rhs": full_diff_rhs,
-            "cf2_full_binom_cap": full_binom_cap,
-            "cf2_oct_pigeonhole_lb": oct_pigeon_lb,
-            "cf2_oct_exact_rhs": oct_diff_rhs,
-            "cf2_oct_binom_cap": oct_binom_cap,
-        })
+        rows.append(
+            {
+                "r": r,
+                "W": w_cap,
+                "cf2_full_pigeonhole_lb": full_pigeon_lb,
+                "cf2_full_exact_rhs": full_diff_rhs,
+                "cf2_full_binom_cap": full_binom_cap,
+                "cf2_oct_pigeonhole_lb": oct_pigeon_lb,
+                "cf2_oct_exact_rhs": oct_diff_rhs,
+                "cf2_oct_binom_cap": oct_binom_cap,
+            }
+        )
     return rows
 
 
@@ -285,7 +302,9 @@ def verify_cesaro_fejer_order2_envelope_bounds():
         q_p7_cf2_tail = 0.0
 
         for k in range(r0 + 1, m_val + 1):
-            alpha_k = 1.0 / math.sqrt(k * math.log(2.0)) - 1.0 / math.sqrt(2.0 * (k - 1) * math.log(2.0))
+            alpha_k = 1.0 / math.sqrt(k * math.log(2.0)) - 1.0 / math.sqrt(
+                2.0 * (k - 1) * math.log(2.0)
+            )
             s_k = max(0, k - 2) // 2
             fejer_p5 = 1.0 + 2.0 * s_k
             fejer_p6 = beta0_sq
@@ -332,8 +351,12 @@ def verify_cesaro_fejer_order2_envelope_bounds():
                 fejer_p7 += 2.0 * max(g1, g2)
 
             w_bil = 1.0 if k == m_val else 0.5
-            q_p6_full += scale_ratio * fejer_p6 * rho_sq_2k + (w_bil + 0.5 * kappa_pref) / (k * math.log(2.0))
-            q_p7_full += scale_ratio * fejer_p7 * rho_sq_2k + (w_bil + 0.5 * kappa_pref) / (k * math.log(2.0))
+            q_p6_full += scale_ratio * fejer_p6 * rho_sq_2k + (
+                w_bil + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
+            q_p7_full += scale_ratio * fejer_p7 * rho_sq_2k + (
+                w_bil + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
 
         rhs_full = 0.5 * (m_val + 2)
         c_p6_full = math.sqrt(rhs_full / q_p6_full)
@@ -341,21 +364,25 @@ def verify_cesaro_fejer_order2_envelope_bounds():
         assert c_p7_full < c_p6_full
         assert c_p7_full < c_inf_cf2 < c_p7_cf2_tail
 
-        rows.append({
-            "M": m_val,
-            "c_p5_tail_b101": round(c_p5_tail, 6),
-            "c_p6_coupled_tail_b101": round(c_p6_tail, 6),
-            "c_p7_cf2_tail_b101": round(c_p7_cf2_tail, 6),
-            "c_p6_coupled_full_b101": round(c_p6_full, 6),
-            "c_p7_cf2_full_b101": round(c_p7_full, 6),
-            "c_inf_p6_limit": round(c_inf_p6, 6),
-            "c_inf_cf2_limit": round(c_inf_cf2, 6),
-        })
+        rows.append(
+            {
+                "M": m_val,
+                "c_p5_tail_b101": round(c_p5_tail, 6),
+                "c_p6_coupled_tail_b101": round(c_p6_tail, 6),
+                "c_p7_cf2_tail_b101": round(c_p7_cf2_tail, 6),
+                "c_p6_coupled_full_b101": round(c_p6_full, 6),
+                "c_p7_cf2_full_b101": round(c_p7_full, 6),
+                "c_inf_p6_limit": round(c_inf_p6, 6),
+                "c_inf_cf2_limit": round(c_inf_cf2, 6),
+            }
+        )
 
     # Verify sub-2.000000 breakthrough already at M >= 24 (down from M = 32 in Phase 6)
     for r in rows:
         if r["M"] >= 24:
-            assert r["c_p7_cf2_tail_b101"] < 2.0, f"Expected < 2.0 at M={r['M']}, got {r['c_p7_cf2_tail_b101']}"
+            assert r["c_p7_cf2_tail_b101"] < 2.0, (
+                f"Expected < 2.0 at M={r['M']}, got {r['c_p7_cf2_tail_b101']}"
+            )
 
     return rows
 

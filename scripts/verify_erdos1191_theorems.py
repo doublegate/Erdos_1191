@@ -22,20 +22,80 @@ Verifies:
      A005282) vs. Kruckeberg-Cilleruelo Dyadic Singer-Block Sidon sets.
 """
 
-from fractions import Fraction
 import json
 import math
-from pathlib import Path
+from fractions import Fraction
+
 try:
     import sympy as sp
 except ImportError:
     sp = None
 
 A005282_64 = [
-    1, 2, 4, 8, 13, 21, 31, 45, 66, 81, 97, 123, 148, 182, 204, 252,
-    290, 361, 401, 475, 565, 593, 662, 775, 822, 916, 970, 1016, 1159, 1312, 1395, 1523,
-    1572, 1821, 1896, 2029, 2254, 2379, 2510, 2780, 2925, 3155, 3354, 3591, 3797, 3998, 4297, 4433,
-    4779, 4851, 5123, 5243, 5298, 5751, 5998, 6374, 6801, 6925, 7460, 7547, 7789, 8220, 8503, 8730,
+    1,
+    2,
+    4,
+    8,
+    13,
+    21,
+    31,
+    45,
+    66,
+    81,
+    97,
+    123,
+    148,
+    182,
+    204,
+    252,
+    290,
+    361,
+    401,
+    475,
+    565,
+    593,
+    662,
+    775,
+    822,
+    916,
+    970,
+    1016,
+    1159,
+    1312,
+    1395,
+    1523,
+    1572,
+    1821,
+    1896,
+    2029,
+    2254,
+    2379,
+    2510,
+    2780,
+    2925,
+    3155,
+    3354,
+    3591,
+    3797,
+    3998,
+    4297,
+    4433,
+    4779,
+    4851,
+    5123,
+    5243,
+    5298,
+    5751,
+    5998,
+    6374,
+    6801,
+    6925,
+    7460,
+    7547,
+    7789,
+    8220,
+    8503,
+    8730,
 ]
 
 
@@ -83,7 +143,9 @@ def verify_exact_rational_conservation(seq, n):
     boundary_frac = Fraction(m * (m - 1), 2 * n)
     energy_frac = integral_frac + boundary_frac
 
-    sum_j_aj = sum((Fraction(j - 1, in_n[j - 1]) for j in range(2, m + 1)), Fraction(0, 1))
+    sum_j_aj = sum(
+        (Fraction(j - 1, in_n[j - 1]) for j in range(2, m + 1)), Fraction(0, 1)
+    )
     assert energy_frac == sum_j_aj, f"Energy {energy_frac} != sum_j_aj {sum_j_aj}"
 
     defect_frac = Fraction(0, 1)
@@ -96,7 +158,9 @@ def verify_exact_rational_conservation(seq, n):
             defect_frac += Fraction(ai - 1, (d + 1) * aj)
             budget_frac += Fraction(1, d + 1)
 
-    assert energy_frac + defect_frac == budget_frac, "Exact rational conservation failed!"
+    assert energy_frac + defect_frac == budget_frac, (
+        "Exact rational conservation failed!"
+    )
     h_n_minus_1 = sum((Fraction(1, k + 1) for k in range(1, n)), Fraction(0, 1))
     assert budget_frac <= h_n_minus_1, "Harmonic ceiling violated!"
     return {
@@ -113,7 +177,7 @@ def verify_step_decomposition_pointwise():
     checked = 0
     for k in range(2, 10):
         max_d = 1 << (k - 1)
-        for s_max in range(0, k):
+        for s_max in range(k):
             for d in range(1, max_d + 1):
                 lhs = Fraction(1, d)
                 rhs = Fraction(1, 1 << (k - 1))
@@ -121,7 +185,9 @@ def verify_step_decomposition_pointwise():
                     thresh = 1 << max(0, k - 1 - s)
                     if d <= thresh and k - s >= 0:
                         rhs += Fraction(1, 1 << (k - s))
-                assert lhs >= rhs, f"Step decomposition failed at k={k}, S={s_max}, d={d}"
+                assert lhs >= rhs, (
+                    f"Step decomposition failed at k={k}, S={s_max}, d={d}"
+                )
                 checked += 1
     return checked
 
@@ -196,14 +262,16 @@ def verify_theorem_2_2_cross_shell_bilinear():
         assert far_total == far_in_two
         assert bilinear_lhs >= intra_lhs
         assert bilinear_lhs <= Fraction(m_scales, 1) + Fraction(1, 2)
-        rows.append({
-            "M": m_scales,
-            "horizon": horizon,
-            "far_inter_pairs": far_total,
-            "far_in_two_shells": far_in_two,
-            "intra_only_lhs": float(intra_lhs),
-            "bilinear_lhs": float(bilinear_lhs),
-        })
+        rows.append(
+            {
+                "M": m_scales,
+                "horizon": horizon,
+                "far_inter_pairs": far_total,
+                "far_in_two_shells": far_in_two,
+                "intra_only_lhs": float(intra_lhs),
+                "bilinear_lhs": float(bilinear_lhs),
+            }
+        )
 
     qp_rows = []
     k0 = 3
@@ -223,12 +291,14 @@ def verify_theorem_2_2_cross_shell_bilinear():
             unit_bil += w / (k * math.log(2.0))
         c_bil = math.sqrt((0.5 * (m_scales + 2)) / unit_bil)
         assert c_bil < c_intra
-        qp_rows.append({
-            "M": m_scales,
-            "c_intra_only_upper": round(c_intra, 6),
-            "c_bilinear_qp_upper": round(c_bil, 6),
-            "reduction_factor": round(c_intra / c_bil, 4),
-        })
+        qp_rows.append(
+            {
+                "M": m_scales,
+                "c_intra_only_upper": round(c_intra, 6),
+                "c_bilinear_qp_upper": round(c_bil, 6),
+                "reduction_factor": round(c_intra / c_bil, 4),
+            }
+        )
 
     return rows, qp_rows
 
@@ -271,8 +341,10 @@ def verify_theorem_2_3_and_3_3_subwindow_multires():
         # 2. Geometric-Series Swap Identity:
         #    sum_{m=0}^{R-1} 2^m * (2^{-m} - 2^{-R}) = R - 1 + 2^{-R}
         R_sym, m_sym = sp.symbols("R m", integer=True, positive=True)
-        geom_swap_sym = sp.summation((2**m_sym) * (2**(-m_sym) - 2**(-R_sym)), (m_sym, 0, R_sym - 1))
-        assert sp.simplify(geom_swap_sym - (R_sym - 1 + 2**(-R_sym))) == 0
+        geom_swap_sym = sp.summation(
+            (2**m_sym) * (2 ** (-m_sym) - 2 ** (-R_sym)), (m_sym, 0, R_sym - 1)
+        )
+        assert sp.simplify(geom_swap_sym - (R_sym - 1 + 2 ** (-R_sym))) == 0
 
     # Exact rational verification of the Geometric-Series Swap for R = 2..12:
     for r_cap in range(2, 13):
@@ -287,7 +359,9 @@ def verify_theorem_2_3_and_3_3_subwindow_multires():
     m_scales = 13
     horizon = 1 << m_scales
     in_h = [x for x in A005282_64 if x <= horizon]
-    diffs = sorted(in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h)))
+    diffs = sorted(
+        in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h))
+    )
 
     def l_pigeon(balls, bins):
         if bins <= 0 or balls <= bins:
@@ -321,17 +395,19 @@ def verify_theorem_2_3_and_3_3_subwindow_multires():
         fejer_cap = w * (w - 1) // 2
         assert base_pairs <= pigeon_lb <= exact_sub <= actual_short <= cap
         assert fejer_pigeon_lb <= fejer_exact_rhs <= fejer_cap
-        subwindow_rows.append({
-            "r": r,
-            "cap_2r_minus_1": cap,
-            "prefix_pairs": base_pairs,
-            "pigeonhole_lhs": pigeon_lb,
-            "exact_subwindow_lhs": exact_sub,
-            "actual_short_diffs_rhs": actual_short,
-            "fejer_pigeonhole_lhs": fejer_pigeon_lb,
-            "fejer_exact_rhs": fejer_exact_rhs,
-            "fejer_cap_binom_2r": fejer_cap,
-        })
+        subwindow_rows.append(
+            {
+                "r": r,
+                "cap_2r_minus_1": cap,
+                "prefix_pairs": base_pairs,
+                "pigeonhole_lhs": pigeon_lb,
+                "exact_subwindow_lhs": exact_sub,
+                "actual_short_diffs_rhs": actual_short,
+                "fejer_pigeonhole_lhs": fejer_pigeon_lb,
+                "fejer_exact_rhs": fejer_exact_rhs,
+                "fejer_cap_binom_2r": fejer_cap,
+            }
+        )
 
     mr_rows = []
     k0 = 3
@@ -350,14 +426,17 @@ def verify_theorem_2_3_and_3_3_subwindow_multires():
             u_intra += rho_sq_2k
             s_k = max(0, k - 2) // 2
             u_mr += (s_k + 1) * rho_sq_2k
-            fejer_mult = 1.0 + sum(2.0 / (1.0 + 2.0**(1 - s)) for s in range(1, s_k + 1))
+            fejer_mult = 1.0 + sum(
+                2.0 / (1.0 + 2.0 ** (1 - s)) for s in range(1, s_k + 1)
+            )
             u_fejer += fejer_mult * rho_sq_2k
             w = 1.0 if k == m_val else 0.5
             u_mr += w / (k * math.log(2.0))
             u_fejer += w / (k * math.log(2.0))
         c_p1 = math.sqrt((0.5 * m_val) / u_intra)
         u_bil = u_intra + sum(
-            (1.0 if k == m_val else 0.5) / (k * math.log(2.0)) for k in range(k0, m_val + 1)
+            (1.0 if k == m_val else 0.5) / (k * math.log(2.0))
+            for k in range(k0, m_val + 1)
         )
         c_p2 = math.sqrt((0.5 * (m_val + 2)) / u_bil)
         c_p3 = math.sqrt((0.5 * (m_val + 2)) / u_mr)
@@ -366,9 +445,13 @@ def verify_theorem_2_3_and_3_3_subwindow_multires():
         r0 = m_val // 2
         q_tail = 0.0
         for k in range(r0 + 1, m_val + 1):
-            alpha_k = (1.0 / math.sqrt(k * math.log(2.0))) - (1.0 / math.sqrt(2.0 * (k - 1) * math.log(2.0)))
+            alpha_k = (1.0 / math.sqrt(k * math.log(2.0))) - (
+                1.0 / math.sqrt(2.0 * (k - 1) * math.log(2.0))
+            )
             s_k = max(0, k - 2) // 2
-            fejer_mult = 1.0 + sum(2.0 / (1.0 + 2.0**(1 - s)) for s in range(1, s_k + 1))
+            fejer_mult = 1.0 + sum(
+                2.0 / (1.0 + 2.0 ** (1 - s)) for s in range(1, s_k + 1)
+            )
             q_tail += fejer_mult * alpha_k * alpha_k
         c_p4_tail_star = math.sqrt(0.5 * (m_val - r0) / q_tail)
 
@@ -377,17 +460,19 @@ def verify_theorem_2_3_and_3_3_subwindow_multires():
         assert c_p4_fejer < c_inf_limit < c_p4_tail_star
         prev_tail_star = c_p4_tail_star
 
-        mr_rows.append({
-            "M": m_val,
-            "c_phase1_intra": round(c_p1, 6),
-            "c_phase2_bilinear": round(c_p2, 6),
-            "c_phase3_multires": round(c_p3, 6),
-            "c_phase4_fejer": round(c_p4_fejer, 6),
-            "c_phase4_tail_star": round(c_p4_tail_star, 6),
-            "c_asymptotic_fejer_limit": round(c_inf_limit, 6),
-            "p3_vs_p1": round(c_p1 / c_p3, 4),
-            "p4_vs_p1": round(c_p1 / c_p4_fejer, 4),
-        })
+        mr_rows.append(
+            {
+                "M": m_val,
+                "c_phase1_intra": round(c_p1, 6),
+                "c_phase2_bilinear": round(c_p2, 6),
+                "c_phase3_multires": round(c_p3, 6),
+                "c_phase4_fejer": round(c_p4_fejer, 6),
+                "c_phase4_tail_star": round(c_p4_tail_star, 6),
+                "c_asymptotic_fejer_limit": round(c_inf_limit, 6),
+                "p3_vs_p1": round(c_p1 / c_p3, 4),
+                "p4_vs_p1": round(c_p1 / c_p4_fejer, 4),
+            }
+        )
 
     return subwindow_rows, mr_rows
 

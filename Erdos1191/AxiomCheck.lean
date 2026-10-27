@@ -20,3 +20,5 @@ import Erdos1191.Proofs
 #print axioms Erdos1191.erdos_1191.variants.bitshift_sidon_difference_index
 #print axioms Erdos1191.maximinWitnessN32_is_sidon
 #print axioms Erdos1191.mianChowlaPrefix10_is_sidon
+#print axioms Erdos1191.erdos_1191.variants.cesaro_fejer_order2_step
+#print axioms Erdos1191.erdos_1191.variants.zero_liminf_excludes_pos

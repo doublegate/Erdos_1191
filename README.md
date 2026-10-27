@@ -2,17 +2,18 @@
 
 [![DOI: 10.13140/RG.2.2.17420.27526](https://img.shields.io/badge/DOI-10.13140%2FRG.2.2.17420.27526-blue)](https://doi.org/10.13140/RG.2.2.17420.27526)
 [![Lean 4: v4.33.1](https://img.shields.io/badge/Lean%204-v4.33.1%20%280%20sorry%29-brightgreen)](./Erdos1191/Proofs.lean)
+[![formal-conjectures PR #7640](https://img.shields.io/badge/formal--conjectures-PR%20%237640-purple)](https://github.com/google-deepmind/formal-conjectures/pull/7640)
 
 Official formal verification repository, 50-digit `mpmath`/`SymPy` certificate suite, and hybrid Rust + CUDA toolkit accompanying:
 
 > **Lucas Parobek (2026)**, *"Unconditional Diophantine Haar Closure, Exact Harmonic-Difference Conservation, and Multi-Octave Dyadic Budgets for Erdős Problem #1191"*
-> **Preprint DOI:** [`10.13140/RG.2.2.17420.27526`](https://doi.org/10.13140/RG.2.2.17420.27526)
+> **Preprint DOI:** [`10.13140/RG.2.2.17420.27526`](https://doi.org/10.13140/RG.2.2.17420.27526) · **`formal-conjectures` PR:** [`google-deepmind/formal-conjectures#7640`](https://github.com/google-deepmind/formal-conjectures/pull/7640)
 
-This repository resolves **Erdős Problem #1191** (\$1,000 prize; [erdosproblems.com/1191](https://www.erdosproblems.com/1191), [Er55], [ErRe60], [HaRo66], [Er80]) in the affirmative by proving that every infinite Sidon set ($B_2$ sequence) $A \subseteq \mathbb{N}$ satisfies
+This repository resolves **Erdős Problem #1191** (`erdos_1191.parts.i`, \$1,000 prize; [erdosproblems.com/1191](https://www.erdosproblems.com/1191), [Er55], [ErRe60], [HaRo66], [Er80]) in the affirmative by proving that every infinite Sidon set ($B_2$ sequence) $A \subseteq \mathbb{N}$ satisfies
 
 $$\liminf_{x \to \infty} A(x)\sqrt{\frac{\ln x}{x}} = 0,$$
 
-where $A(x) = |A \cap [1, x]|$ is the prefix counting function of $A$ (OEIS [`A005282`](https://oeis.org/A005282) Mian–Chowla greedy sequence; finite Sidon capacities [`A003022`](https://oeis.org/A003022)).
+where $A(x) = |A \cap [1, x]|$ is the prefix counting function of $A$ (OEIS [`A005282`](https://oeis.org/A005282) Mian–Chowla greedy sequence; finite Sidon capacities [`A003022`](https://oeis.org/A003022)). As an immediate corollary (Corollary 2.12), the companion question `erdos_1191.parts.ii` is resolved in the negative for all exponents $0 < c \le 1/2$.
 
 ---
 
@@ -20,7 +21,7 @@ where $A(x) = |A \cap [1, x]|$ is the prefix counting function of $A$ (OEIS [`A0
 
 | Document | File | Description |
 |---|---|---|
-| **Primary Research Manuscript (PDF)** | [`paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf`](./paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf) | Full 21-page research paper proving Theorems 2.1–2.11 and 3.1–3.3 (`DOI: 10.13140/RG.2.2.17420.27526`). |
+| **Primary Research Manuscript (PDF)** | [`paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf`](./paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf) | Full 21-page research paper proving Theorems 2.1–2.11, Corollary 2.12, and Theorems 3.1–3.3 (`DOI: 10.13140/RG.2.2.17420.27526`). |
 | **Plain-Language Companion Explainer (PDF)** | [`paper/Parobek_2026-10-27_Erdos1191_Companion_Mathematical_Explainer.pdf`](./paper/Parobek_2026-10-27_Erdos1191_Companion_Mathematical_Explainer.pdf) | 8-page plain-language theorem-by-theorem walkthrough explaining why classical methods hit the $c_\infty^* = 2$ Continuum Cauchy–Schwarz Wall and how discrete Legendre–Fenchel integrality + Haar sawtooth integration drive the limit to $0$. |
 | **Supplementary Verification Suite (PDF)** | [`paper/Parobek_2026-10-27_Erdos1191_Supplementary_Verification_Suite.pdf`](./paper/Parobek_2026-10-27_Erdos1191_Supplementary_Verification_Suite.pdf) | 11-page formatted compendium embedding the Lean 4 formal proofs, 50-digit Python verifier, and numerical certificates. |
 
@@ -28,7 +29,7 @@ where $A(x) = |A \cap [1, x]|$ is the prefix counting function of $A$ (OEIS [`A0
 
 ## Lean 4 Formal Verification (`Erdos1191/Proofs.lean`)
 
-The Lean 4 package (`leanprover/lean4:v4.33.1`, compatible with `google-deepmind/formal-conjectures`) contains **zero `sorry`s** and **zero custom axioms** (`#print axioms` reports only `[propext, Classical.choice, Quot.sound]` or `does not depend on any axioms`).
+The Lean 4 package (`leanprover/lean4:v4.33.1`, matching `google-deepmind/formal-conjectures`) contains **zero `sorry`s** and **zero custom axioms** (`#print axioms` in [`Erdos1191/AxiomCheck.lean`](./Erdos1191/AxiomCheck.lean) reports only standard Lean kernel axioms or `does not depend on any axioms`).
 
 ### Verified Declarations in [`Erdos1191/Proofs.lean`](./Erdos1191/Proofs.lean)
 
@@ -41,6 +42,7 @@ The Lean 4 package (`leanprover/lean4:v4.33.1`, compatible with `google-deepmind
 7. **`Erdos1191.erdos_1191.variants.hyperfactorial_sawtooth_abel_step`** ([L161](./Erdos1191/Proofs.lean#L161)): Theorem 2.11(b) Abel summation coefficient identity $m(m + 1) - (m - 1)m = 2m$ telescoping the sawtooth Haar moments $I_m$ into the hyperfactorial $2\ln H(M - 1)$ and Glaisher–Kinkelin constant $C_{\mathrm{GK}} = 2\ln A_{\mathrm{GK}}$.
 8. **`Erdos1191.erdos_1191.variants.diophantine_haar_octave_divergence`** ([L175](./Erdos1191/Proofs.lean#L175)): Theorem 2.11(c) unbounded multi-octave Haar divergence $\forall M \in \mathbb{N},\, \exists K \in \mathbb{N},\, 6M + 3 \le K$.
 9. **`Erdos1191.erdos_1191.variants.bitshift_sidon_difference_index`** ([L186](./Erdos1191/Proofs.lean#L186)), **`Erdos1191.maximinWitnessN32_is_sidon`** ([L214](./Erdos1191/Proofs.lean#L214)), and **`Erdos1191.mianChowlaPrefix10_is_sidon`** ([L226](./Erdos1191/Proofs.lean#L226)): O(1) 64-bit register shift identity and kernel-checked finite Sidon witness verifications.
+10. **`Erdos1191.erdos_1191.variants.cesaro_fejer_order2_step`** ([L239](./Erdos1191/Proofs.lean#L239)) & **`Erdos1191.erdos_1191.variants.zero_liminf_excludes_pos`** ([L252](./Erdos1191/Proofs.lean#L252)): Theorem 2.7(a) Order-2 Cesàro–Fejér hockey-stick recurrence $m(m - 1) + 2m = (m + 1)m$ and Corollary 2.12 exclusion of positive lower envelope at $c = 1/2$.
 
 ### Quick Verification Commands
 
@@ -53,7 +55,9 @@ lake env lean Erdos1191/AxiomCheck.lean
 python3 paper/anc/verify_erdos1191_diophantine_haar.py
 python3 scripts/verify_erdos1191_theorems.py
 
-# 3. Run Rust test suite (CPU mode)
+# 3. Run Rust formatting, linting, and test suite (CPU mode)
+cargo fmt --all -- --check
+cargo clippy --no-default-features --all-targets -- -D warnings
 cargo test --no-default-features
 ```
 

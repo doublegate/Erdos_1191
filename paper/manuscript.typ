@@ -13,7 +13,7 @@
   ]
   #v(0.6em)
   #text(size: 11pt)[Lucas Parobek] \
-  #text(size: 9.5pt, style: "italic")[Independent Researcher · `parobek@gmail.com` · `https://github.com/doublegate/erdos1191`] \
+  #text(size: 9.5pt, style: "italic")[Independent Researcher · `parobek@gmail.com` · `https://github.com/doublegate/Erdos_1191`] \
   #text(size: 9.5pt)[October 2026 · MSC 2020: Primary 11B75, 11B13; Secondary 05B10, 11Y55]
 ]
 

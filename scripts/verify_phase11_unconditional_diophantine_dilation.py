@@ -72,9 +72,9 @@ Proves and symbolically/numerically verifies (to 50 decimal digits via SymPy + m
 
 import json
 import math
+
 import mpmath as mp
 import sympy as sp
-
 
 mp.mp.dps = 50
 
@@ -132,12 +132,15 @@ def verify_symbolic_and_50digit_theorem_2_11():
     integrand_m = (u - m) * (m + 1 - u) / u
     im_sym = sp.simplify(sp.integrate(integrand_m, (u, m, m + 1)))
     expected_im = m + sp.Rational(1, 2) - m * (m + 1) * sp.log(1 + 1 / m)
-    assert sp.simplify(im_sym - expected_im) == 0, f"I_m mismatch: {im_sym} vs {expected_im}"
+    assert sp.simplify(im_sym - expected_im) == 0, (
+        f"I_m mismatch: {im_sym} vs {expected_im}"
+    )
 
     # Verify asymptotic alternating power series of I_m at m = oo up to O(m^{-9}):
     im_series = sp.series(expected_im, m, sp.oo, 9).removeO()
     expected_series = sum(
-        ((-1) ** (j - 1)) / (sp.Integer((j + 1) * (j + 2)) * (m**j)) for j in range(1, 9)
+        ((-1) ** (j - 1)) / (sp.Integer((j + 1) * (j + 2)) * (m**j))
+        for j in range(1, 9)
     )
     assert sp.simplify(im_series - expected_series) == 0, (
         f"Series mismatch: {im_series} vs {expected_series}"
@@ -215,15 +218,19 @@ def verify_symbolic_and_50digit_theorem_2_11():
         err_bound = 1 / (6 * mp.floor(u_lo)) + 1 / (360 * (mp.floor(u_lo) ** 2))
         assert j_exact >= rat_lb - mp.mpf("1e-45")
         assert abs(j_exact - target_haar) <= err_bound
-        dilation_rows.append({
-            "mu_1_label": label,
-            "mu_1_float": round(float(mu_val), 6),
-            "frac_mu_1": round(float(mu_val - mp.floor(mu_val)), 6),
-            "J_Haar_exact": round(float(j_exact), 10),
-            "target_K_ln2_over_6": round(float(target_haar), 10),
-            "rational_sandwich_lb": round(float(rat_lb), 10),
-            "abs_error_from_K_ln2_over_6": round(float(abs(j_exact - target_haar)), 10),
-        })
+        dilation_rows.append(
+            {
+                "mu_1_label": label,
+                "mu_1_float": round(float(mu_val), 6),
+                "frac_mu_1": round(float(mu_val - mp.floor(mu_val)), 6),
+                "J_Haar_exact": round(float(j_exact), 10),
+                "target_K_ln2_over_6": round(float(target_haar), 10),
+                "rational_sandwich_lb": round(float(rat_lb), 10),
+                "abs_error_from_K_ln2_over_6": round(
+                    float(abs(j_exact - target_haar)), 10
+                ),
+            }
+        )
 
     return {
         "I_0_fundamental_period": "1/2",
@@ -270,7 +277,9 @@ def verify_diophantine_haar_identity_on_mian_chowla():
     m_scales = 10
     n_horizon = 1 << m_scales
     in_h = [x for x in mc if x <= n_horizon]
-    diffs = [in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h))]
+    diffs = [
+        in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h))
+    ]
 
     pref = [0] * (n_horizon + 1)
     idx = 0
@@ -338,14 +347,16 @@ def verify_diophantine_haar_identity_on_mian_chowla():
             f"Diophantine Haar identity mismatch at r={r}: {dioph_win} != {dioph_rhs}"
         )
         assert dioph_lb <= dioph_rhs <= dioph_cap
-        rows.append({
-            "r": r,
-            "W": w_cap,
-            "W0": w0,
-            "dioph_pigeonhole_lb": dioph_lb,
-            "dioph_exact_rhs": dioph_rhs,
-            "dioph_ceiling": dioph_cap,
-        })
+        rows.append(
+            {
+                "r": r,
+                "W": w_cap,
+                "W0": w0,
+                "dioph_pigeonhole_lb": dioph_lb,
+                "dioph_exact_rhs": dioph_rhs,
+                "dioph_ceiling": dioph_cap,
+            }
+        )
     return rows
 
 
@@ -373,7 +384,9 @@ def kappa_int_dioph_k(k_oct: int) -> float:
     Theorem 2.11(c) Unconditional Diophantine K-Octave Haar Integrality Constant:
       kappa_int^Dioph(K) = (2 / (1 - 4^{-K})) * int_1^{2^K} ({u}(1-{u}))/u du + 4 ln(A_GK).
     """
-    return (2.0 * j_multi_period_haar(k_oct)) / (1.0 - 4.0 ** (-k_oct)) + 2.0 * C_GK_FLOAT
+    return (2.0 * j_multi_period_haar(k_oct)) / (
+        1.0 - 4.0 ** (-k_oct)
+    ) + 2.0 * C_GK_FLOAT
 
 
 def psi_lag(delta: float) -> float:
@@ -518,16 +531,18 @@ def verify_diophantine_haar_envelope_bounds():
         assert c_p11_adapt_full < c_p10_full
         assert c_p11_k3_full < c_p11_k3_tail and c_inf_dioph_k3 < c_p11_k3_tail
 
-        rows.append({
-            "M": m_val,
-            "c_p10_haar_adapt_tail_b101": round(c_p10_tail, 6),
-            "c_p11_dioph_k3_tail_b101": round(c_p11_k3_tail, 6),
-            "c_p11_dioph_adapt_tail_b101": round(c_p11_adapt_tail, 6),
-            "c_p10_haar_adapt_full_b101": round(c_p10_full, 6),
-            "c_p11_dioph_k3_full_b101": round(c_p11_k3_full, 6),
-            "c_p11_dioph_adapt_full_b101": round(c_p11_adapt_full, 6),
-            "c_inf_dioph_k3_limit": round(c_inf_dioph_k3, 6),
-        })
+        rows.append(
+            {
+                "M": m_val,
+                "c_p10_haar_adapt_tail_b101": round(c_p10_tail, 6),
+                "c_p11_dioph_k3_tail_b101": round(c_p11_k3_tail, 6),
+                "c_p11_dioph_adapt_tail_b101": round(c_p11_adapt_tail, 6),
+                "c_p10_haar_adapt_full_b101": round(c_p10_full, 6),
+                "c_p11_dioph_k3_full_b101": round(c_p11_k3_full, 6),
+                "c_p11_dioph_adapt_full_b101": round(c_p11_adapt_full, 6),
+                "c_inf_dioph_k3_limit": round(c_inf_dioph_k3, 6),
+            }
+        )
 
     for r in rows:
         if r["M"] >= 8:

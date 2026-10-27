@@ -27,6 +27,7 @@ Verifies:
 
 import json
 import math
+
 import sympy as sp
 
 
@@ -47,11 +48,21 @@ def l_pigeon(s_val: int, bins: int) -> int:
 
 def verify_symbolic_theorem_2_6():
     # 1. Exact symbolic closed form for Delta_tot
-    kappa_pref_sym = sp.Rational(5, 2) - sp.Rational(3, 2) * sp.sqrt(2) + sp.Rational(1, 2) * sp.log(1 + sp.sqrt(2))
+    kappa_pref_sym = (
+        sp.Rational(5, 2)
+        - sp.Rational(3, 2) * sp.sqrt(2)
+        + sp.Rational(1, 2) * sp.log(1 + sp.sqrt(2))
+    )
     lag_int_sym = 2 * sp.log(2) - sp.Rational(1, 2)
-    delta_tot_sym = sp.simplify(sp.Rational(1, 2) * kappa_pref_sym + sp.Rational(1, 4) * lag_int_sym)
-    expected_delta_tot = (9 - 6 * sp.sqrt(2) + 2 * sp.log(1 + sp.sqrt(2)) + 4 * sp.log(2)) / 8
-    assert sp.simplify(delta_tot_sym - expected_delta_tot) == 0, f"Mismatch: {delta_tot_sym}"
+    delta_tot_sym = sp.simplify(
+        sp.Rational(1, 2) * kappa_pref_sym + sp.Rational(1, 4) * lag_int_sym
+    )
+    expected_delta_tot = (
+        9 - 6 * sp.sqrt(2) + 2 * sp.log(1 + sp.sqrt(2)) + 4 * sp.log(2)
+    ) / 8
+    assert sp.simplify(delta_tot_sym - expected_delta_tot) == 0, (
+        f"Mismatch: {delta_tot_sym}"
+    )
 
     # 2. Exact Symbolic Proof of Theorem 2.6(b): Discrete Legendre-Fenchel Integrality Identity
     B, q = sp.symbols("B q", positive=True)
@@ -60,7 +71,9 @@ def verify_symbolic_theorem_2_6():
     t = B * theta
     l_discrete = B * q * (q - 1) / 2 + t * q
     l_decomp = (B / 2) * mu * (mu - 1) + (B / 2) * theta * (1 - theta)
-    assert sp.simplify(l_discrete - l_decomp) == 0, "Discrete Legendre-Fenchel identity failed"
+    assert sp.simplify(l_discrete - l_decomp) == 0, (
+        "Discrete Legendre-Fenchel identity failed"
+    )
 
     # Also verify piecewise-linear tangent form: for mu in [q, q+1],
     # L(B*mu, B) = B * (q * mu - q*(q+1)/2) = max_{m in Z_{>=1}} B * (m * mu - m*(m+1)/2)
@@ -118,7 +131,9 @@ def verify_discrete_integrality_excess_on_mian_chowla():
     m_scales = 13
     n_horizon = 1 << m_scales
     in_h = [x for x in mc if x <= n_horizon]
-    diffs = [in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h))]
+    diffs = [
+        in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h))
+    ]
 
     pref = [0] * (n_horizon + 1)
     idx = 0
@@ -167,14 +182,16 @@ def verify_discrete_integrality_excess_on_mian_chowla():
         exact_fejer = sum(w - d for d in diffs if d < w)
         assert exact_l_sum <= exact_fejer
         assert integrality_excess_sum >= -1e-12
-        rows.append({
-            "r": r,
-            "W": w,
-            "continuous_parabola_lb": round(continuous_parabola_sum, 4),
-            "discrete_integrality_excess": round(integrality_excess_sum, 4),
-            "exact_pigeonhole_lb": exact_l_sum,
-            "exact_fejer_rhs": exact_fejer,
-        })
+        rows.append(
+            {
+                "r": r,
+                "W": w,
+                "continuous_parabola_lb": round(continuous_parabola_sum, 4),
+                "discrete_integrality_excess": round(integrality_excess_sum, 4),
+                "exact_pigeonhole_lb": exact_l_sum,
+                "exact_fejer_rhs": exact_fejer,
+            }
+        )
     return rows
 
 
@@ -196,9 +213,13 @@ def verify_coupled_lag_envelope_bounds():
         q_p6_coupled_tail = 0.0
 
         for k in range(r0 + 1, m_val + 1):
-            alpha_k = 1.0 / math.sqrt(k * math.log(2.0)) - 1.0 / math.sqrt(2.0 * (k - 1) * math.log(2.0))
+            alpha_k = 1.0 / math.sqrt(k * math.log(2.0)) - 1.0 / math.sqrt(
+                2.0 * (k - 1) * math.log(2.0)
+            )
             s_k = max(0, k - 2) // 2
-            fejer_p4 = 1.0 + sum(2.0 / (1.0 + 2.0 ** (1 - s)) for s in range(1, s_k + 1))
+            fejer_p4 = 1.0 + sum(
+                2.0 / (1.0 + 2.0 ** (1 - s)) for s in range(1, s_k + 1)
+            )
             fejer_p5_unsplit = 1.0 + 2.0 * s_k
 
             # Phase 6 (Theorem 2.6(a)-(b)):
@@ -248,8 +269,12 @@ def verify_coupled_lag_envelope_bounds():
                 fejer_p6 += 2.0 * (boost_sq + int_gain)
 
             w_bil = 1.0 if k == m_val else 0.5
-            q_p5_joint += scale_ratio * fejer_p5 * rho_sq_2k + (w_bil + 0.5 * kappa_pref) / (k * math.log(2.0))
-            q_p6_full += scale_ratio * fejer_p6 * rho_sq_2k + (w_bil + 0.5 * kappa_pref) / (k * math.log(2.0))
+            q_p5_joint += scale_ratio * fejer_p5 * rho_sq_2k + (
+                w_bil + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
+            q_p6_full += scale_ratio * fejer_p6 * rho_sq_2k + (
+                w_bil + 0.5 * kappa_pref
+            ) / (k * math.log(2.0))
 
         rhs_full = 0.5 * (m_val + 2)
         c_p5_joint = math.sqrt(rhs_full / q_p5_joint)
@@ -257,20 +282,24 @@ def verify_coupled_lag_envelope_bounds():
         assert c_p6_full < c_p5_joint
         assert c_p6_full < c_inf_coupled < c_p6_coupled_tail
 
-        rows.append({
-            "M": m_val,
-            "c_p4_tail_b2": round(c_p4_tail, 6),
-            "c_p5_tail_b101": round(c_p5_tail, 6),
-            "c_p6_coupled_tail_b101": round(c_p6_coupled_tail, 6),
-            "c_p5_joint_b101": round(c_p5_joint, 6),
-            "c_p6_coupled_full_b101": round(c_p6_full, 6),
-            "c_inf_coupled_limit": round(c_inf_coupled, 6),
-        })
+        rows.append(
+            {
+                "M": m_val,
+                "c_p4_tail_b2": round(c_p4_tail, 6),
+                "c_p5_tail_b101": round(c_p5_tail, 6),
+                "c_p6_coupled_tail_b101": round(c_p6_coupled_tail, 6),
+                "c_p5_joint_b101": round(c_p5_joint, 6),
+                "c_p6_coupled_full_b101": round(c_p6_full, 6),
+                "c_inf_coupled_limit": round(c_inf_coupled, 6),
+            }
+        )
 
     # Verify sub-2.000000 breakthrough for M >= 32
     for r in rows:
         if r["M"] >= 32:
-            assert r["c_p6_coupled_tail_b101"] < 2.0, f"Expected < 2.0 at M={r['M']}, got {r['c_p6_coupled_tail_b101']}"
+            assert r["c_p6_coupled_tail_b101"] < 2.0, (
+                f"Expected < 2.0 at M={r['M']}, got {r['c_p6_coupled_tail_b101']}"
+            )
 
     return rows
 

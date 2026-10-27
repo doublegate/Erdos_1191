@@ -1,12 +1,12 @@
 [package]
 name = "erdos1191"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2021"
 authors = ["Lucas Parobek <parobek@gmail.com>"]
-description = "GPU-accelerated quantitative analysis of Erdős Problem #1191 ($1,000 open prize: lower-envelope fluctuations liminf A(x) sqrt(log x / x) of infinite Sidon sets): exact harmonic-difference conservation identities, dyadic difference-budget bounds, Mian–Chowla vs. Singer-block analysis, and O(1) bit-shift CUDA branch-and-bound"
-license = "MIT"
-repository = "https://github.com/doublegate/erdos1191"
-homepage = "https://github.com/doublegate/erdos1191"
+description = "Unconditional Diophantine Haar closure, exact harmonic-difference conservation identities, multi-octave dyadic budgets, Lean 4 formal verification, and O(1) bit-shift CPU+CUDA solver for Erdős Problem #1191 ($1,000 prize)"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/doublegate/Erdos_1191"
+homepage = "https://github.com/doublegate/Erdos_1191"
 readme = "README.md"
 keywords = ["erdos", "sidon-sets", "b2-sequences", "mian-chowla", "cuda"]
 categories = ["mathematics", "algorithms", "science"]

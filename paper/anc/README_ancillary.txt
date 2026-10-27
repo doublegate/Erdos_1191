@@ -1,9 +1,11 @@
 ================================================================================
-arXiv Ancillary Verification Suite — Erdős Problem #1191 ($1,000 Prize)
+arXiv & ResearchGate Ancillary Verification Suite — Erdős Problem #1191 ($1,000 Prize)
 Paper: "Unconditional Diophantine Haar Closure, Exact Harmonic-Difference
         Conservation, and Multi-Octave Dyadic Budgets for Erdős Problem #1191"
 Author: Lucas Parobek (parobek@gmail.com)
-Repository: https://github.com/doublegate/Erdos/tree/main/erdos1191
+DOI:    10.13140/RG.2.2.17420.27526
+Repository: https://github.com/doublegate/Erdos_1191
+formal-conjectures PR: https://github.com/google-deepmind/formal-conjectures/pull/7640
 
 Contents of anc/:
   1. verify_erdos1191_diophantine_haar.py
@@ -28,6 +30,8 @@ Contents of anc/:
      80-digit Euler-Maclaurin verification residuals, and the M=8..128
      multi-octave Diophantine Haar bounds.
 
-  3. 1191.lean
-     Lean 4 / Mathlib formalization blueprint for google-deepmind/formal-conjectures.
+  3. 1191.lean (and 1191.lean.txt for plain-text viewers)
+     Self-contained Lean 4 (v4.33.1) formal verification module (zero `sorry`s,
+     zero custom axioms) matching `Erdos1191/Proofs.lean` and referenced by
+     `google-deepmind/formal-conjectures` PR #7640.
 ================================================================================

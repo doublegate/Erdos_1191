@@ -38,6 +38,7 @@ Verifies:
 
 import json
 import math
+
 import sympy as sp
 
 
@@ -95,7 +96,9 @@ def verify_symbolic_theorem_2_8():
     #    and Non-Vanishing Octave-Matched Limit lim_{s->infty} max_{p>=1} beta_s^{(p)} = 1/4:
     psi_tilde = (p + 1) * (1 - u) ** p
     norm_total = sp.integrate(psi_tilde, (u, 0, 1))
-    assert sp.simplify(norm_total - 1) == 0, "Normalized kernel integral over [0, 1] != 1"
+    assert sp.simplify(norm_total - 1) == 0, (
+        "Normalized kernel integral over [0, 1] != 1"
+    )
 
     u_lo = sp.Rational(1, 1) / (2**s)
     u_hi = sp.Rational(1, 1) / (2 ** (s - 1))
@@ -135,16 +138,20 @@ def verify_symbolic_theorem_2_8():
                 best_p = p_cand
         if s_idx >= 2:
             assert best_val > 0.25, f"M_{s_idx} = {best_val} <= 0.25"
-            assert best_val < prev_m_s, f"M_{s_idx} = {best_val} >= M_{s_idx-1} = {prev_m_s}"
+            assert best_val < prev_m_s, (
+                f"M_{s_idx} = {best_val} >= M_{s_idx - 1} = {prev_m_s}"
+            )
             prev_m_s = best_val
-        octave_table.append({
-            "s": s_idx,
-            "p_star": best_p,
-            "asymptotic_2s_ln2": round((2**s_idx) * math.log(2.0), 4),
-            "M_s_max_beta": round(best_val, 8),
-            "beta_s_order1": round((a_val**2) - (b_val**2), 8),
-            "beta_s_order2": round((a_val**3) - (b_val**3), 8),
-        })
+        octave_table.append(
+            {
+                "s": s_idx,
+                "p_star": best_p,
+                "asymptotic_2s_ln2": round((2**s_idx) * math.log(2.0), 4),
+                "M_s_max_beta": round(best_val, 8),
+                "beta_s_order1": round((a_val**2) - (b_val**2), 8),
+                "beta_s_order2": round((a_val**3) - (b_val**3), 8),
+            }
+        )
 
     # 2. Theorem 2.8(b) Symbolic Proof of the Band-Restricted Cesàro–Fejér Ceiling
     #    and Exact Band-Restricted Integrality Constant kappa_int^{band}(alpha):
@@ -163,7 +170,8 @@ def verify_symbolic_theorem_2_8():
     inner_theta = sp.integrate(theta * (1 - theta), (theta, 0, 1))
     assert inner_theta == sp.Rational(1, 6)
     kappa_band_alpha = sp.simplify(
-        (sp.Rational(3, 1) / (1 - alpha**3)) * sp.integrate(inner_theta, (tau, alpha, 1))
+        (sp.Rational(3, 1) / (1 - alpha**3))
+        * sp.integrate(inner_theta, (tau, alpha, 1))
     )
     expected_kappa_band = sp.Rational(1, 2) / (1 + alpha + alpha**2)
     assert sp.simplify(kappa_band_alpha - expected_kappa_band) == 0
@@ -187,12 +195,14 @@ def verify_symbolic_theorem_2_8():
         g_p8 = bband_sq + (2.0 / 7.0) * (1.0 - 2.0 ** (-s_idx))
         # In Phase 8, g_p8 strictly dominates g1 and g_p7 for EVERY s >= 1 (including s = 1)!
         assert g_p8 > g_p7 >= g1, f"Phase 8 weight failed to dominate at s={s_idx}"
-        gamma_comparison.append({
-            "s": s_idx,
-            "gamma_s_order1": round(g1, 8),
-            "gamma_s_phase7": round(g_p7, 8),
-            "gamma_s_phase8_band": round(g_p8, 8),
-        })
+        gamma_comparison.append(
+            {
+                "s": s_idx,
+                "gamma_s_order1": round(g1, 8),
+                "gamma_s_phase7": round(g_p7, 8),
+                "gamma_s_phase8_band": round(g_p8, 8),
+            }
+        )
 
     return {
         "normalized_kernel_integral_one": True,
@@ -238,7 +248,9 @@ def verify_band_restricted_cesaro_on_mian_chowla():
     m_scales = 10
     n_horizon = 1 << m_scales
     in_h = [x for x in mc if x <= n_horizon]
-    diffs = [in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h))]
+    diffs = [
+        in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h))
+    ]
 
     pref = [0] * (n_horizon + 1)
     idx = 0
@@ -291,7 +303,7 @@ def verify_band_restricted_cesaro_on_mian_chowla():
                 lb_tq += lb_w
                 win_tq += fw_exact
 
-        def kernel_band_sum(w0: int) -> int:
+        def kernel_band_sum(w0: int, w_cap: int = w_cap) -> int:
             tot = 0
             for d in diffs:
                 if d < w_cap:
@@ -307,25 +319,29 @@ def verify_band_restricted_cesaro_on_mian_chowla():
 
         cap_w = (w_cap - 1) * w_cap * (w_cap + 1) // 6
         cap_half = cap_w - (w_half - 1) * w_half * (w_half + 1) // 6
-        cap_tq = cap_w - (w_three_quarter - 1) * w_three_quarter * (w_three_quarter + 1) // 6
+        cap_tq = (
+            cap_w - (w_three_quarter - 1) * w_three_quarter * (w_three_quarter + 1) // 6
+        )
 
         assert win_half == rhs_half, f"Band identity failed at r={r}, W0=W/2"
         assert win_tq == rhs_tq, f"Band identity failed at r={r}, W0=3W/4"
         assert lb_half <= rhs_half <= cap_half
         assert lb_tq <= rhs_tq <= cap_tq
 
-        rows.append({
-            "r": r,
-            "W": w_cap,
-            "W0_half": w_half,
-            "band_half_pigeonhole_lb": lb_half,
-            "band_half_exact_rhs": rhs_half,
-            "band_half_binom_cap": cap_half,
-            "W0_three_quarter": w_three_quarter,
-            "band_tq_pigeonhole_lb": lb_tq,
-            "band_tq_exact_rhs": rhs_tq,
-            "band_tq_binom_cap": cap_tq,
-        })
+        rows.append(
+            {
+                "r": r,
+                "W": w_cap,
+                "W0_half": w_half,
+                "band_half_pigeonhole_lb": lb_half,
+                "band_half_exact_rhs": rhs_half,
+                "band_half_binom_cap": cap_half,
+                "W0_three_quarter": w_three_quarter,
+                "band_tq_pigeonhole_lb": lb_tq,
+                "band_tq_exact_rhs": rhs_tq,
+                "band_tq_binom_cap": cap_tq,
+            }
+        )
     return rows
 
 
@@ -412,24 +428,26 @@ def verify_band_restricted_envelope_bounds():
         assert c_p8_full < c_p7_full
         assert c_p8_full < c_inf_p8 < c_p8_tail
 
-        rows.append({
-            "M": m_val,
-            "c_p6_coupled_tail_b101": round(c_p6_tail, 6),
-            "c_p7_cf2_tail_b101": round(c_p7_tail, 6),
-            "c_p8_band_tail_b101": round(c_p8_tail, 6),
-            "c_p7_cf2_full_b101": round(c_p7_full, 6),
-            "c_p8_band_full_b101": round(c_p8_full, 6),
-            "c_inf_p6_limit": round(c_inf_p6, 6),
-            "c_inf_p7_limit": round(c_inf_p7, 6),
-            "c_inf_p8_limit": round(c_inf_p8, 6),
-        })
+        rows.append(
+            {
+                "M": m_val,
+                "c_p6_coupled_tail_b101": round(c_p6_tail, 6),
+                "c_p7_cf2_tail_b101": round(c_p7_tail, 6),
+                "c_p8_band_tail_b101": round(c_p8_tail, 6),
+                "c_p7_cf2_full_b101": round(c_p7_full, 6),
+                "c_p8_band_full_b101": round(c_p8_full, 6),
+                "c_inf_p6_limit": round(c_inf_p6, 6),
+                "c_inf_p7_limit": round(c_inf_p7, 6),
+                "c_inf_p8_limit": round(c_inf_p8, 6),
+            }
+        )
 
     # Verify sub-2.000000 breakthrough already at M >= 20 (down from M = 24 in Phase 7)
     for r in rows:
         if r["M"] >= 20:
-            assert (
-                r["c_p8_band_tail_b101"] < 2.0
-            ), f"Expected < 2.0 at M={r['M']}, got {r['c_p8_band_tail_b101']}"
+            assert r["c_p8_band_tail_b101"] < 2.0, (
+                f"Expected < 2.0 at M={r['M']}, got {r['c_p8_band_tail_b101']}"
+            )
 
     return rows
 

@@ -50,6 +50,7 @@ Verifies:
 
 import json
 import math
+
 import sympy as sp
 
 
@@ -99,7 +100,7 @@ def l_pigeon(s_val: int, bins: int) -> int:
 
 
 def verify_symbolic_theorem_2_9():
-    N, W, tau, theta, alpha, K = sp.symbols("N W tau theta alpha K", positive=True)
+    N, W, tau, theta, alpha, _K = sp.symbols("N W tau theta alpha K", positive=True)
 
     # 1. Theorem 2.9(a) Symbolic Proof of Scale-Invariant Block-Window Conservation:
     #    w(tau) = tau * W, B(tau) = N / (tau * W) => w(tau) * B(tau) == N,
@@ -107,11 +108,15 @@ def verify_symbolic_theorem_2_9():
     w_tau = tau * W
     B_tau = N / (tau * W)
     product_w_B = sp.simplify(w_tau * B_tau)
-    assert product_w_B == N, f"Scale-invariant product w(tau)*B(tau) != N: {product_w_B}"
+    assert product_w_B == N, (
+        f"Scale-invariant product w(tau)*B(tau) != N: {product_w_B}"
+    )
 
     E_int_tau = sp.simplify(B_tau * (w_tau / 2) * theta * (1 - theta))
     expected_E_int = (N / 2) * theta * (1 - theta)
-    assert sp.simplify(E_int_tau - expected_E_int) == 0, "E_int(w) scale invariance failed!"
+    assert sp.simplify(E_int_tau - expected_E_int) == 0, (
+        "E_int(w) scale invariance failed!"
+    )
 
     # 2. Theorem 2.9(b) Symbolic Proof of the K-Octave Integrality Cascade:
     inner_avg = sp.integrate(theta * (1 - theta), (theta, 0, 1))
@@ -162,16 +167,18 @@ def verify_symbolic_theorem_2_9():
         assert c_f < prev_c_val and c_f > float(c_inf_multi.evalf())
         prev_k_val = kap_f
         prev_c_val = c_f
-        cascade_table.append({
-            "K_octaves": k_oct,
-            "alpha": f"1/{2**k_oct}",
-            "kappa_int_exact": str(kap_k),
-            "kappa_int_float": round(kap_f, 8),
-            "mu_scale_exact": str(mu_k),
-            "mu_scale_float": round(float(mu_k.evalf()), 8),
-            "c_infty_exact": str(c_inf_k),
-            "c_infty_float": round(c_f, 8),
-        })
+        cascade_table.append(
+            {
+                "K_octaves": k_oct,
+                "alpha": f"1/{2**k_oct}",
+                "kappa_int_exact": str(kap_k),
+                "kappa_int_float": round(kap_f, 8),
+                "mu_scale_exact": str(mu_k),
+                "mu_scale_float": round(float(mu_k.evalf()), 8),
+                "c_infty_exact": str(c_inf_k),
+                "c_infty_float": round(c_f, 8),
+            }
+        )
 
     # 3. Compare per-scale weights gamma_s across Phase 6 (Order-1), Phase 7 (CF2),
     #    Phase 8 (K=1 Band), and Phase 9 (K=2, K=3, and K->infty Multi-Octave)
@@ -190,23 +197,25 @@ def verify_symbolic_theorem_2_9():
         g_p9_k3_raw = b_k3_sq + (32.0 / 73.0) * (1.0 - 2.0 ** (-s_idx))
         g_p9_inf = b_inf_sq + 0.5 * (1.0 - 2.0 ** (-s_idx))
 
-        assert (
-            g_p7_raw < g_p8_k1_raw < g_p9_k2_raw < g_p9_k3_raw < g_p9_inf
-        ), f"Strict K-octave monotonicity of Order-2 weight failed at s={s_idx}!"
+        assert g_p7_raw < g_p8_k1_raw < g_p9_k2_raw < g_p9_k3_raw < g_p9_inf, (
+            f"Strict K-octave monotonicity of Order-2 weight failed at s={s_idx}!"
+        )
         assert g_p9_inf > g_p9_k3_raw > max(g_p6, g_p8_k1_raw), (
             f"Multi-octave K>=3 failed to strictly dominate Order-1 and Phase 8 at s={s_idx}!"
         )
-        scale_weight_rows.append({
-            "s": s_idx,
-            "beta_s_k1_sq": round(b_k1_sq, 8),
-            "beta_s_inf_sq": round(b_inf_sq, 8),
-            "gamma_s_p6_order1": round(g_p6, 8),
-            "gamma_s_p7_cf2_raw": round(g_p7_raw, 8),
-            "gamma_s_p8_k1_raw": round(g_p8_k1_raw, 8),
-            "gamma_s_p9_k2_raw": round(g_p9_k2_raw, 8),
-            "gamma_s_p9_k3_raw": round(g_p9_k3_raw, 8),
-            "gamma_s_p9_multi_inf": round(g_p9_inf, 8),
-        })
+        scale_weight_rows.append(
+            {
+                "s": s_idx,
+                "beta_s_k1_sq": round(b_k1_sq, 8),
+                "beta_s_inf_sq": round(b_inf_sq, 8),
+                "gamma_s_p6_order1": round(g_p6, 8),
+                "gamma_s_p7_cf2_raw": round(g_p7_raw, 8),
+                "gamma_s_p8_k1_raw": round(g_p8_k1_raw, 8),
+                "gamma_s_p9_k2_raw": round(g_p9_k2_raw, 8),
+                "gamma_s_p9_k3_raw": round(g_p9_k3_raw, 8),
+                "gamma_s_p9_multi_inf": round(g_p9_inf, 8),
+            }
+        )
 
     return {
         "scale_invariant_product_w_times_B_eq_N": True,
@@ -249,7 +258,9 @@ def verify_multioctave_cascade_on_mian_chowla():
     m_scales = 10
     n_horizon = 1 << m_scales
     in_h = [x for x in mc if x <= n_horizon]
-    diffs = [in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h))]
+    diffs = [
+        in_h[j] - in_h[i] for i in range(len(in_h)) for j in range(i + 1, len(in_h))
+    ]
 
     pref = [0] * (n_horizon + 1)
     idx = 0
@@ -299,7 +310,8 @@ def verify_multioctave_cascade_on_mian_chowla():
             for w in range(w0 + 1, w_cap + 1):
                 lb_w = refined_pigeon_lb_for_w(w, r, ref_levels=2)
                 fw_exact = sum(
-                    win_c(u, w) * (win_c(u, w) - 1) // 2 for u in range(1, n_horizon + w)
+                    win_c(u, w) * (win_c(u, w) - 1) // 2
+                    for u in range(1, n_horizon + w)
                 )
                 assert lb_w <= fw_exact
                 lb_k += lb_w
@@ -424,26 +436,28 @@ def verify_multioctave_envelope_bounds():
         assert c_p9_multi_full < c_p8_full
         assert c_p9_multi_full < c_inf_p9_multi < c_p9_multi_tail
 
-        rows.append({
-            "M": m_val,
-            "c_p8_band_tail_b101": round(c_p8_tail, 6),
-            "c_p9_k2_tail_b101": round(c_p9_k2_tail, 6),
-            "c_p9_k3_tail_b101": round(c_p9_k3_tail, 6),
-            "c_p9_multi_tail_b101": round(c_p9_multi_tail, 6),
-            "c_p8_band_full_b101": round(c_p8_full, 6),
-            "c_p9_multi_full_b101": round(c_p9_multi_full, 6),
-            "c_inf_p8_limit": round(c_inf_p8, 6),
-            "c_inf_p9_k2_limit": round(c_inf_p9_k2, 6),
-            "c_inf_p9_k3_limit": round(c_inf_p9_k3, 6),
-            "c_inf_p9_multi_limit": round(c_inf_p9_multi, 6),
-        })
+        rows.append(
+            {
+                "M": m_val,
+                "c_p8_band_tail_b101": round(c_p8_tail, 6),
+                "c_p9_k2_tail_b101": round(c_p9_k2_tail, 6),
+                "c_p9_k3_tail_b101": round(c_p9_k3_tail, 6),
+                "c_p9_multi_tail_b101": round(c_p9_multi_tail, 6),
+                "c_p8_band_full_b101": round(c_p8_full, 6),
+                "c_p9_multi_full_b101": round(c_p9_multi_full, 6),
+                "c_inf_p8_limit": round(c_inf_p8, 6),
+                "c_inf_p9_k2_limit": round(c_inf_p9_k2, 6),
+                "c_inf_p9_k3_limit": round(c_inf_p9_k3, 6),
+                "c_inf_p9_multi_limit": round(c_inf_p9_multi, 6),
+            }
+        )
 
     # Verify sub-2.000000 breakthrough already at M >= 16 (down from M = 20 in Phase 8)
     for r in rows:
         if r["M"] >= 16:
-            assert (
-                r["c_p9_multi_tail_b101"] < 2.0
-            ), f"Expected < 2.0 at M={r['M']}, got {r['c_p9_multi_tail_b101']}"
+            assert r["c_p9_multi_tail_b101"] < 2.0, (
+                f"Expected < 2.0 at M={r['M']}, got {r['c_p9_multi_tail_b101']}"
+            )
 
     return rows
 

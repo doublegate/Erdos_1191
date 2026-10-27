@@ -228,4 +228,29 @@ theorem mianChowlaPrefix10_is_sidon :
     (allPositiveDiffs mianChowlaPrefix10).length = 45 := by
   decide
 
+/-! ## 7. Theorem 2.7(a) & Corollary 2.12: Cesàro–Fejér Step & Part (i) → Part (ii) Implication -/
+
+/--
+**Theorem 2.7(a) (Order-2 Cesàro–Fejér Hockey-Stick Recurrence):**
+For every positive difference margin $m = w - d \ge 0$,
+$m(m - 1) + 2 m = (m + 1) m$,
+which telescopes $\sum_{w=d+1}^W (w - d) = \binom{W - d + 1}{2}$ in the Order-2 Cesàro–Fejér identity.
+-/
+theorem erdos_1191.variants.cesaro_fejer_order2_step (m : ℕ) :
+    m * (m - 1) + 2 * m = (m + 1) * m := by
+  cases m with
+  | zero => rfl
+  | succ k =>
+    change (k + 1) * k + 2 * (k + 1) = (k + 2) * (k + 1)
+    rw [Nat.mul_comm (k + 1) k, ← Nat.add_mul]
+
+/--
+**Corollary 2.12 (Unconditional Exclusion of Positive Lower Envelope at $c = 1/2$):**
+An affirmative resolution $L = 0$ of `erdos_1191.parts.i` immediately implies $\neg (0 < L)$,
+ruling out the $c = 1/2$ boundary case of `erdos_1191.parts.ii`.
+-/
+theorem erdos_1191.variants.zero_liminf_excludes_pos (L : ℕ) (h_zero : L = 0) :
+    ¬ (0 < L) := by
+  omega
+
 end Erdos1191

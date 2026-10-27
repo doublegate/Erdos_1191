@@ -2,3 +2,17 @@
 /.lake
 __pycache__/
 *.pyc
+*.pyo
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+.DS_Store
+*.swp
+*~
+.env
