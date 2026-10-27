@@ -1,0 +1,23 @@
+{
+  "process": {
+    "compiler": "pdflatex"
+  },
+  "sources": [
+    {
+      "filename": "manuscript.tex",
+      "usage": "toplevel"
+    },
+    {
+      "filename": "anc/README_ancillary.txt",
+      "usage": "ancillary"
+    },
+    {
+      "filename": "anc/verify_erdos1191_diophantine_haar.py",
+      "usage": "ancillary"
+    },
+    {
+      "filename": "anc/diophantine_haar_certificates.json",
+      "usage": "ancillary"
+    }
+  ]
+}

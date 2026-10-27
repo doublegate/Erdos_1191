@@ -1,0 +1,145 @@
+{
+  "problem": "Erdos Problem #1191",
+  "prize_usd": 1000,
+  "status": "PROVED (Unconditional Diophantine Haar Closure)",
+  "theorem_2_1_harmonic_conservation": {
+    "N": 260,
+    "m": 16,
+    "E_A": 2.975399311591,
+    "Delta_A": 1.081115075859,
+    "B_A": 4.05651438745,
+    "residual": 0.0
+  },
+  "theorem_2_6_legendre_fenchel_integrality": {
+    "pairs_verified": 2880,
+    "max_abs_error": 0.0
+  },
+  "theorem_2_11_diophantine_haar_closure": {
+    "C_GK": 0.4975089540675685,
+    "C_LF": -0.002491045932431475,
+    "sawtooth_verifications": [
+      {
+        "M": 2,
+        "F_Haar_exact": 0.613705638880109,
+        "F_Haar_asymptotic": 0.613703127018036,
+        "abs_error": 2.511862073780692e-06
+      },
+      {
+        "M": 4,
+        "F_Haar_exact": 0.728730120809752,
+        "F_Haar_asymptotic": 0.728730075266122,
+        "abs_error": 4.554363023655515e-08
+      },
+      {
+        "M": 8,
+        "F_Haar_exact": 0.844125850988802,
+        "F_Haar_asymptotic": 0.844125850244119,
+        "abs_error": 7.446838210978744e-10
+      },
+      {
+        "M": 16,
+        "F_Haar_exact": 0.959617919092012,
+        "F_Haar_asymptotic": 0.959617919080235,
+        "abs_error": 1.1777667118125234e-11
+      },
+      {
+        "M": 32,
+        "F_Haar_exact": 1.075134316829543,
+        "F_Haar_asymptotic": 1.075134316829359,
+        "abs_error": 1.8459517283751669e-13
+      },
+      {
+        "M": 64,
+        "F_Haar_exact": 1.190656812772267,
+        "F_Haar_asymptotic": 1.190656812772264,
+        "abs_error": 2.8865374750125747e-15
+      },
+      {
+        "M": 128,
+        "F_Haar_exact": 1.30618083426146,
+        "F_Haar_asymptotic": 1.30618083426146,
+        "abs_error": 4.5110904407599034e-17
+      },
+      {
+        "M": 256,
+        "F_Haar_exact": 1.421705237199595,
+        "F_Haar_asymptotic": 1.421705237199595,
+        "abs_error": 7.048921001645853e-19
+      }
+    ],
+    "envelopes": [
+      {
+        "M": 8,
+        "K_opt": 2,
+        "c_phase1": 6.453339,
+        "c_haar_full": 2.114568,
+        "c_haar_tail": 1.988887,
+        "c_dioph_full": 2.025814,
+        "c_dioph_tail": 1.908343
+      },
+      {
+        "M": 16,
+        "K_opt": 4,
+        "c_phase1": 6.03899,
+        "c_haar_full": 1.564631,
+        "c_haar_tail": 1.410687,
+        "c_dioph_full": 1.487918,
+        "c_dioph_tail": 1.345553
+      },
+      {
+        "M": 24,
+        "K_opt": 6,
+        "c_phase1": 6.070671,
+        "c_haar_full": 1.273812,
+        "c_haar_tail": 1.124372,
+        "c_dioph_full": 1.208926,
+        "c_dioph_tail": 1.070276
+      },
+      {
+        "M": 32,
+        "K_opt": 9,
+        "c_phase1": 6.147462,
+        "c_haar_full": 1.09778,
+        "c_haar_tail": 0.969349,
+        "c_dioph_full": 1.04199,
+        "c_dioph_tail": 0.923641
+      },
+      {
+        "M": 48,
+        "K_opt": 16,
+        "c_phase1": 6.319323,
+        "c_haar_full": 0.916327,
+        "c_haar_tail": 0.813355,
+        "c_dioph_full": 0.86985,
+        "c_dioph_tail": 0.775358
+      },
+      {
+        "M": 64,
+        "K_opt": 25,
+        "c_phase1": 6.488369,
+        "c_haar_full": 0.829591,
+        "c_haar_tail": 0.701665,
+        "c_dioph_full": 0.785989,
+        "c_dioph_tail": 0.667674
+      },
+      {
+        "M": 96,
+        "K_opt": 44,
+        "c_phase1": 6.797797,
+        "c_haar_full": 0.713853,
+        "c_haar_tail": 0.570112,
+        "c_dioph_full": 0.668941,
+        "c_dioph_tail": 0.541628
+      },
+      {
+        "M": 128,
+        "K_opt": 64,
+        "c_phase1": 7.210099,
+        "c_haar_full": 0.646159,
+        "c_haar_tail": 0.492634,
+        "c_dioph_full": 0.580061,
+        "c_dioph_tail": 0.480049
+      }
+    ]
+  }
+}

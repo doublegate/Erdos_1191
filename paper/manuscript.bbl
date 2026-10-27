@@ -1,0 +1,40 @@
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\begin{thebibliography}{12}
+
+\bibitem{Cilleruelo2014}
+J.~Cilleruelo, \emph{Infinite {Sidon} sequences}, Combinatorica \textbf{34} (2014), no.~2, 241--246.
+
+\bibitem{ErdosRenyi1960}
+P.~Erd{\H{o}}s and A.~R{\'e}nyi, \emph{Additive properties of random sequences of positive integers}, Acta Arith. \textbf{6} (1960), no.~1, 83--110.
+
+\bibitem{ErdosSarkozySos1994}
+P.~Erd{\H{o}}s, A.~S{\'a}rk{\"o}zy, and V.~T.~S{\'o}s, \emph{On sum sets of {Sidon} sets, {I}}, J. Number Theory \textbf{47} (1994), no.~3, 329--347.
+
+\bibitem{ErdosTuran1941}
+P.~Erd{\H{o}}s and P.~Tur{\'a}n, \emph{On a problem of {Sidon} in additive number theory, and on some related problems}, J. London Math. Soc. \textbf{s1-16} (1941), no.~4, 212--215.
+
+\bibitem{HalberstamRoth1966}
+H.~Halberstam and K.~F.~Roth, \emph{Sequences}, Clarendon Press, Oxford, 1966.
+
+\bibitem{Kassis2026}
+T.~Kassis, V.~Agarwal, Y.~He, D.~Patel, and A.~M.~Brueckner, \emph{Scientific Agent Skills: A library of procedural knowledge for research agents}, arXiv preprint arXiv:2609.00065 (2026).
+
+\bibitem{Kruckeberg1961}
+F.~Kr{\"u}ckeberg, \emph{$B_2$-{Folgen} und verwandte {Zahlenfolgen}}, J. Reine Angew. Math. \textbf{206} (1961), 53--60.
+
+\bibitem{MianChowla1944}
+A.~M.~Mian and S.~Chowla, \emph{On the $B_2$ sequences of {Sidon}}, Proc. Nat. Acad. Sci. India Sect. A \textbf{14} (1944), 3--4.
+
+\bibitem{OBryant2004}
+K.~O'Bryant, \emph{A complete annotated bibliography of work related to {Sidon} sequences}, Electron. J. Combin. \textbf{DS11} (2004), 1--39.
+
+\bibitem{Ruzsa1998}
+I.~Z.~Ruzsa, \emph{An infinite {Sidon} sequence}, J. Number Theory \textbf{68} (1998), no.~1, 63--71.
+
+\bibitem{Singer1938}
+J.~Singer, \emph{A theorem in finite projective geometry and some applications to number theory}, Trans. Amer. Math. Soc. \textbf{43} (1938), no.~3, 377--385.
+
+\bibitem{Stohr1955}
+A.~St{\"o}hr, \emph{Gel{\"o}ste und ungel{\"o}ste {Fragen} {\"u}ber {Basen} der nat{\"u}rlichen {Zahlenreihe}. {II}}, J. Reine Angew. Math. \textbf{194} (1955), 111--140.
+
+\end{thebibliography}
