@@ -592,15 +592,18 @@ pub fn solve_cross_shell_qp_envelope(m_scales: usize, k0: usize) -> QpEnvelopeCo
     //    and furthermore by weighting difference shell D_r by alpha_r = 2^{-(r-1)} (discrete
     //    harmonic / Laplace-Fejér weight):
     //      * Every intra-shell difference inside I_k lies in (0, 2^{k-1}), contributing >= 2^{-(k-2)}
-    //        (weight 2 / 2^k on m_k^2).
+    //        (weight 2 / 2^k on m_k(m_k - 1), or 1 / 2^k after dividing both sides by 2).
     //      * Every far inter-shell difference (j <= k - 2) lies in D_{k-1} cup D_k, contributing >= 2^{-(k-1)}
-    //        (weight 1 / 2^k on 2 m_j m_k), and adjacent inter-shell differences (j = k - 1) lie in (0, 2^k),
-    //        contributing >= 2^{-(k-1)}.
-    //    Thus the weighted bilinear form satisfies:
-    //        Q_bil(m) := sum_{k=1}^M (2 m_k^2 + 2 m_k A(2^{k-1})) / 2^k
-    //                  = sum_{k=1}^M (m_k^2 + A(2^k)^2 - A(2^{k-1})^2) / 2^k
-    //                  = A(2^M)^2 / 2^M + sum_{k=1}^{M-1} A(2^k)^2 / 2^{k+1} + sum_{k=1}^M m_k^2 / 2^k
-    //                 <= M / 2 + 1 = (M + 2) / 2.
+    //        (weight 1 / 2^k on 2 m_j m_k, or 1 / 2^k on m_j m_k after dividing both sides by 2), and
+    //        adjacent inter-shell differences (j = k - 1) lie in (0, 2^k), contributing >= 2^{-(k-1)}.
+    //    Because |D_r| * 2^{-(r-1)} = 2^{r-1} * 2^{-(r-1)} = 1, the unnormalized Laplace-Fejér
+    //    bilinear sum satisfies:
+    //        sum_{k=1}^M [ 2 m_k(m_k - 1) + 2 m_k A(2^{k-1}) ] / 2^k <= M + 1 - 2^{-(M-1)} < M + 1,
+    //    and dividing both sides by 2 yields the normalized quadratic form:
+    //        (1/2) Q_bil(m) := sum_{k=1}^M (m_k^2 + m_k A(2^{k-1})) / 2^k
+    //                        = (1/2) [ A(2^M)^2 / 2^M + sum_{k=1}^{M-1} A(2^k)^2 / 2^{k+1} + sum_{k=1}^M m_k^2 / 2^k ]
+    //                       <= (M + 1 - 2^{-(M-1)}) / 2 < (M + 1) / 2 < (M + 2) / 2,
+    //    so Q_bil(m) / (M + 1) <= 1 (and a fortiori Q_bil(m) / (M + 2) <= 1).
     let mut unit_bilinear_cost = unit_intra_cost;
     for k in k_start..=m_scales {
         let a_k_sq_over_2k = 1.0 / ((k as f64) * std::f64::consts::LN_2);
@@ -3011,6 +3014,51 @@ mod tests {
             prev_tail = env.c_dioph_adapt_tail_star;
             assert!(env.phase11_adapt_vs_phase1_factor > 2.15);
             assert!(env.phase11_adapt_vs_phase10_factor > 1.02);
+        }
+    }
+
+    #[test]
+    fn remark_2_3_powers_of_two_sidon_verifies_corrected_bilinear_bound_and_lemma_2_4_kkt() {
+        // 1. Powers of two A = {2^n : 0 <= n <= 13} is a valid Sidon set with m_k = 1, A(2^{k-1}) = k.
+        let pow2: Vec<u64> = (0..=13).map(|n| 1u64 << n).collect();
+        assert!(is_sidon_cpu(&pow2));
+        for m in 1..=13usize {
+            let rep = evaluate_cross_shell_bilinear(&pow2, m);
+            let exact_closed_form = 4.0 - (2.0 * (m as f64) + 4.0) / ((1u64 << m) as f64);
+            assert!(
+                (rep.bilinear_dyadic_lhs - exact_closed_form).abs() < 1e-12,
+                "Powers-of-two bilinear sum {} != closed form {} at M={m}",
+                rep.bilinear_dyadic_lhs,
+                exact_closed_form
+            );
+            // At M = 3: sum_{k=1}^3 2k / 2^k = 11/4 = 2.75 <= M + 1/2 = 3.5 <= M + 1 - 2^{-(M-1)} = 15/4 = 3.75
+            if m == 3 {
+                assert!((rep.bilinear_dyadic_lhs - 2.75).abs() < 1e-12);
+            }
+            let corrected_laplace_fejer_rhs =
+                (m as f64) + 1.0 - 2.0f64.powi(-((m as i32) - 1));
+            assert!(
+                rep.bilinear_dyadic_lhs <= rep.bilinear_dyadic_rhs + 1e-12
+                    && rep.bilinear_dyadic_lhs <= corrected_laplace_fejer_rhs + 1e-12
+            );
+        }
+
+        // 2. Lemma 2.4 (KKT Convex-Cone Increment Positivity):
+        //    Verify that for all k >= 3, 2 * rho_k - rho_{k+1} > 0, so the KKT multipliers
+        //    lambda_k = 2^{1-k}(2 rho_k - rho_{k+1}) are strictly positive and x_k^* = f_k
+        //    (m_k^* = f_k - f_{k-1} = c * rho_k) is the unique global minimizer on x_k >= f_k.
+        let f_val = |k: usize| -> f64 {
+            ((2.0f64.powi(k as i32)) / ((k as f64) * std::f64::consts::LN_2)).sqrt()
+        };
+        for k in 3..=256usize {
+            let rho_k = f_val(k) - f_val(k - 1);
+            let rho_kp1 = f_val(k + 1) - f_val(k);
+            let kkt_num = 2.0 * rho_k - rho_kp1;
+            assert!(
+                kkt_num > 0.0,
+                "KKT multiplier numerator 2*rho_{k} - rho_{} = {kkt_num} <= 0",
+                k + 1
+            );
         }
     }
 }
