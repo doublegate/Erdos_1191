@@ -99,7 +99,7 @@ theorem erdos_1191.variants.legendre_fenchel_squared_identity (B q r : ℕ)
   rw [h_expand, Nat.add_assoc, h_r, Nat.mul_comm r B]
 
 /--
-**Theorem 2.6(a) (Karamata Integer Convexity / Robin-Hood Smoothing Step):**
+**Theorem 2.6(c) (Karamata Integer Convexity / Robin-Hood Smoothing Step):**
 Whenever two buckets have occupancies $x_1 \ge x_2 + 2$, transferring one element from the
 heavier bucket ($x_1 - 1$) to the lighter bucket ($x_2 + 1$) preserves the sum and strictly
 reduces the ordered-pair count $x_1(x_1 - 1) + x_2(x_2 - 1)$ by $2(x_1 - x_2 - 1) \ge 2$.
@@ -125,7 +125,7 @@ theorem erdos_1191.variants.robin_hood_pair_smoothing (x1 x2 : ℕ) (h_gap : x2 
   rw [h_step1, h_step2]
   omega
 
-/-! ## 4. Theorem 2.9(a): Scale-Invariant Block-Window Conservation -/
+/-! ## 4. Theorem 2.9(a)–(b): Scale-Invariant Block-Window Conservation -/
 
 /--
 **Theorem 2.9(a) (Scale-Invariant Block-Window Exponent Identity):**
@@ -139,7 +139,7 @@ theorem erdos_1191.variants.scale_invariant_block_window_exponents (k s r : ℕ)
   omega
 
 /--
-**Theorem 2.9(a) (Scale-Invariant Block-Window Product Identity):**
+**Theorem 2.9(b) (Scale-Invariant Block-Window Product Identity):**
 For any shell index $k$, scale depth $s$, and octave offset $r$ with $1 \le s + r \le k$,
 the sliding-window width $w = 2^{k - s - r}$ and sub-block count $B = 2^{s + r - 1}$
 satisfy $w \cdot B = 2^{k - 1} = |I_k|$ identically across all scales $s$ and octaves $r$.
