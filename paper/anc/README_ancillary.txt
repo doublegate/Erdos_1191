@@ -3,7 +3,7 @@ arXiv & ResearchGate Ancillary Verification Suite — Erdős Problem #1191 ($1,0
 Paper: "Unconditional Diophantine Haar Closure, Exact Harmonic-Difference
         Conservation, and Multi-Octave Dyadic Budgets for Erdős Problem #1191"
 Author: Lucas Parobek (parobek@gmail.com)
-DOI:    10.13140/RG.2.2.17420.27526
+Paper PDF: https://github.com/doublegate/Erdos_1191/blob/main/paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf
 Repository: https://github.com/doublegate/Erdos_1191
 formal-conjectures PR: https://github.com/google-deepmind/formal-conjectures/pull/7640
 

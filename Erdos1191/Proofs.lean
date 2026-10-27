@@ -9,7 +9,7 @@ You may obtain a copy of the License at
 # Erdős Problem #1191 — Lean 4 Formal Verification Suite
 Paper: "Unconditional Diophantine Haar Closure, Exact Harmonic-Difference Conservation,
         and Multi-Octave Dyadic Budgets for Erdős Problem #1191" (Parobek, 2026)
-DOI:   10.13140/RG.2.2.17420.27526
+Repo:  https://github.com/doublegate/Erdos_1191
 
 This self-contained Lean 4 module (zero `sorry`s, zero custom axioms) machine-checks the
 discrete algebraic, dyadic cross-shell, Legendre–Fenchel sawtooth, Karamata integer convexity,

@@ -3,7 +3,7 @@
 - **Companion Expository Guide to:** *"Unconditional Diophantine Haar Closure, Exact Harmonic-Difference Conservation, and Multi-Octave Dyadic Budgets for Erdős Problem #1191"*
 - **Author:** Lucas Parobek (`parobek@gmail.com`)
 - **Date:** October 27, 2026
-- **Preprint DOI:** [`10.13140/RG.2.2.17420.27526`](https://doi.org/10.13140/RG.2.2.17420.27526)
+- **Preprint PDF:** [`Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf`](https://github.com/doublegate/Erdos_1191/blob/main/paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf)
 - **Prize Status:** \$1,000 Erdős Bounty (Unconditionally Resolved)
 
 > **Purpose of This Companion Document:** The primary research manuscript resolves **Erdős Problem #1191** (\$1,000 prize) in the affirmative by proving that every infinite Sidon set $A \subseteq \mathbb{N}$ satisfies $\liminf_{x \to \infty} A(x)\sqrt{(\ln x)/x} = 0$. Because the formal proof combines harmonic analysis, discrete convex geometry (Legendre–Fenchel duality), scale-invariant Haar integration across $K$ dyadic octaves, and hyperfactorial / Glaisher–Kinkelin asymptotic analysis, the underlying intuition can be obscured by the technical machinery. This companion guide explains **in plain terms**:
