@@ -21,9 +21,9 @@ where $A(x) = |A \cap [1, x]|$ is the prefix counting function of $A$ (OEIS [`A0
 
 | Document | File | Description |
 |---|---|---|
-| **Primary Research Manuscript (PDF)** | [`paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf`](./paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf) | Full 21-page research paper proving Theorems 2.1–2.11, Corollary 2.12, and Theorems 3.1–3.3 (`DOI: 10.13140/RG.2.2.17420.27526`). |
+| **Primary Research Manuscript (PDF)** | [`paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf`](./paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf) | Full 24-page research paper proving Theorems 2.1–2.12 and Theorems 3.1–4.1 (`DOI: 10.13140/RG.2.2.17420.27526`). |
 | **Plain-Language Companion Explainer (PDF)** | [`paper/Parobek_2026-10-27_Erdos1191_Companion_Mathematical_Explainer.pdf`](./paper/Parobek_2026-10-27_Erdos1191_Companion_Mathematical_Explainer.pdf) | 8-page plain-language theorem-by-theorem walkthrough explaining why classical methods hit the $c_\infty^* = 2$ Continuum Cauchy–Schwarz Wall and how discrete Legendre–Fenchel integrality + Haar sawtooth integration drive the limit to $0$. |
-| **Supplementary Verification Suite (PDF)** | [`paper/Parobek_2026-10-27_Erdos1191_Supplementary_Verification_Suite.pdf`](./paper/Parobek_2026-10-27_Erdos1191_Supplementary_Verification_Suite.pdf) | 11-page formatted compendium embedding the Lean 4 formal proofs, 50-digit Python verifier, and numerical certificates. |
+| **Supplementary Verification Suite (PDF)** | [`paper/Parobek_2026-10-27_Erdos1191_Supplementary_Verification_Suite.pdf`](./paper/Parobek_2026-10-27_Erdos1191_Supplementary_Verification_Suite.pdf) | 12-page formatted compendium embedding the Lean 4 formal proofs, 50-digit Python verifier, and numerical certificates. |
 
 ---
 

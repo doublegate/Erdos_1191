@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Standalone Lean 4 (`v4.33.1`) Formal Verification Suite (`Erdos1191/Proofs.lean`, `Erdos1191/AxiomCheck.lean`):**
   - Added self-contained, zero-`sorry`, zero-warning Lean 4 formal proofs for all 14 core discrete algebraic, combinatorial, Legendre–Fenchel, Cesàro–Fejér, scale-invariant block-window, hyperfactorial Abel telescoping, and bit-shift Sidon identities, aligned with Google DeepMind's `formal-conjectures` (`PR #7640`).
 - **Companion Mathematical Explainer & Supplementary Verification Compendium (`paper/`):**
-  - Added 8-page plain-language companion guide (`paper/Parobek_2026-10-27_Erdos1191_Companion_Mathematical_Explainer.pdf`, `paper/Companion_Explainer_Erdos1191.typ`, `paper/Companion_Explainer_Erdos1191.md`) and 11-page supplementary verification compendium (`paper/Parobek_2026-10-27_Erdos1191_Supplementary_Verification_Suite.pdf`).
+  - Added 8-page plain-language companion guide (`paper/Parobek_2026-10-27_Erdos1191_Companion_Mathematical_Explainer.pdf`, `paper/Companion_Explainer_Erdos1191.typ`, `paper/Companion_Explainer_Erdos1191.md`) and 12-page supplementary verification compendium (`paper/Parobek_2026-10-27_Erdos1191_Supplementary_Verification_Suite.pdf`, `paper/Supplementary_Verification_Suite_Erdos1191.typ`).
 - **GitHub Actions Multi-Stage Verification CI (`.github/workflows/ci.yml`):**
   - Configured automated CI jobs for `lean4-verification` (`lake --wfail build` + `AxiomCheck.lean`), `python-50digit-verification`, and `rust-suite` (`cargo fmt --check`, `cargo clippy`, `cargo test`).
 

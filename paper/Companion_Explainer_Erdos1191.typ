@@ -4,10 +4,12 @@
   numbering: "1 of 1",
   header: context {
     if counter(page).get().first() > 1 [
-      #set text(size: 8.5pt, fill: luma(90))
-      *Erdős Problem \#1191 — Companion Mathematical Explainer & Proof Architecture Guide*
-      #h(1fr)
-      *DOI: 10.13140/RG.2.2.17420.27526*
+      #set text(size: 8pt, fill: luma(90))
+      #grid(
+        columns: (1fr, auto),
+        [*Erdős Problem \#1191 — Companion Mathematical Explainer & Proof Architecture Guide*],
+        [*DOI: 10.13140/RG.2.2.17420.27526*],
+      )
       #v(-4pt)
       #line(length: 100%, stroke: 0.4pt + luma(160))
     ]
@@ -201,19 +203,22 @@ Look at the numerator and denominator of that fraction:
 - The *denominator is $sqrt(1 + (K ln 2) / (3(1 - 4^(-K))))$*, which grows like $sqrt(K)$ without bound as you include more octaves $K$!
 
 #figure(
-  table(
-    columns: (auto, auto, auto, auto, auto),
-    align: (center, center, center, center, left),
-    stroke: 0.5pt,
-    [*Dyadic Horizon $M$*], [*Active Octaves $K$*], [*Haar Boost $kappa_"int"^"Dioph" (K)$*], [*Certified Tail Bound $underline(c)_M^(*,"Dioph") (1.01)$*], [*Milestone / Barrier Broken*],
-    [$M = 8$], [$K = 2$], [$+0.4930$], [*$1.908343 < 2.00$*], [Breaks the $2.00$ Continuum Cauchy–Schwarz Wall],
-    [$M = 16$], [$K = 4$], [$+0.9278$], [$1.345553 < 1.35$], [Breaks the $sqrt(2) approx 1.414$ Cross-Shell Wall],
-    [$M = 32$], [$K = 9$], [$+2.0794$], [*$0.923641 < 1.00$*], [Breaks the $1.00$ Unit Density Barrier],
-    [$M = 64$], [$K = 25$], [$+5.7762$], [$0.667674 < 0.70$], [$9.72 times$ sharper than Phase 1 ($6.4884$)],
-    [$M = 128$], [$K = 64$], [$+14.7871$], [*$0.480049 < 0.50$*], [Breaks the $0.50$ Half-Unit Barrier ($13.52 times$ reduction)],
-    [$M = 2048$], [$K = 1000$], [$+231.0491$], [$0.131306 < 0.14$], [Denominator exceeds $sqrt(232) approx 15.23$],
-    [$M -> infinity$], [$K -> infinity$], [$-> +infinity$], [*$0.000000$ (Exact Limit)*], [*Unconditional Closure: $liminf_(x -> infinity) Phi_A (x) = 0$*],
-  ),
+  {
+    set par(justify: false)
+    table(
+      columns: (0.85fr, 0.85fr, 0.95fr, 1.35fr, 1.95fr),
+      align: (center + horizon, center + horizon, center + horizon, center + horizon, left + horizon),
+      stroke: 0.5pt,
+      [*Dyadic \ Horizon $M$*], [*Active \ Octaves $K$*], [*Haar Boost \ $kappa_"int"^"Dioph" (K)$*], [*Certified Tail Bound \ $underline(c)_M^(*,"Dioph") (1.01)$*], [*Milestone / Barrier Broken*],
+      [$M = 8$], [$K = 2$], [$+0.4930$], [*$1.908343 < 2.00$*], [Breaks the $2.00$ Continuum Cauchy–Schwarz Wall],
+      [$M = 16$], [$K = 4$], [$+0.9278$], [$1.345553 < 1.35$], [Breaks the $sqrt(2) approx 1.414$ Cross-Shell Wall],
+      [$M = 32$], [$K = 9$], [$+2.0794$], [*$0.923641 < 1.00$*], [Breaks the $1.00$ Unit Density Barrier],
+      [$M = 64$], [$K = 25$], [$+5.7762$], [$0.667674 < 0.70$], [$9.72 times$ sharper than Phase 1 ($6.4884$)],
+      [$M = 128$], [$K = 64$], [$+14.7871$], [*$0.480049 < 0.50$*], [Breaks the $0.50$ Half-Unit Barrier ($13.52 times$ reduction)],
+      [$M = 2048$], [$K = 1000$], [$+231.0491$], [$0.131306 < 0.14$], [Denominator exceeds $sqrt(232) approx 15.23$],
+      [$M -> infinity$], [$K -> infinity$], [$-> +infinity$], [*$0.000000$ \ (Exact Limit)*], [*Unconditional Closure:* \ $liminf_(x -> infinity) Phi_A (x) = 0$],
+    )
+  },
   caption: [How the explicit closed-form denominator $1 + kappa_"int"^"Dioph" (K) = 1 + (K ln 2)/(3(1-4^(-K)))$ crushes the sustainable lower-envelope constant $c$ to $0$ as $M, K -> infinity$.],
 )
 
@@ -224,20 +229,23 @@ $ liminf_(x -> infinity) A(x) sqrt((ln x) / x) = 0. $
 = Summary Matrix: How the Breakthroughs Fit Together ("Lock & Key")
 
 #figure(
-  table(
-    columns: (auto, auto, auto, auto),
-    align: (left, left, left, center),
-    stroke: 0.5pt,
-    [*Obstacle That Blocked Prior Work*], [*Key Breakthrough in This Paper*], [*Mathematical Mechanism*], [*Asymptotic Ceiling $c_infinity^*$*],
-    [Asymptotic $O(dot)$ slack in Erdős (1955)], [*Thm. 2.1:* Harmonic-Integral Conservation], [Exact finite identity $integral binom(A(t), 2) t^(-2) d t + Delta_A = sum 1/(d+1)$], [$2 sqrt(2 ln 2) approx 2.3548$],
-    [Ignoring pairs between different shells], [*Thm. 2.2:* Cross-Shell Bilinear Packing], [$y - x in D_(k-1) union D_k => binom(m_k, 2) + m_k A(2^(k-1)) < 2^k$], [$approx 2.12$],
-    [Fixed box boundaries miss nearby pairs], [*Thm. 2.4:* Sliding-Window Fejér Identity], [Sliding window of width $W$ gives triangle weight $W - d$], [$(1+sqrt(2))sqrt(ln 2) approx 2.0100$],
-    [Dyadic $B=2$ discretization waste], [*Thm. 2.5:* Hyperbolic-Tangent Shell Law], [$Lambda(B) = (tanh((ln B)/4))/(ln B) arrow.t 1/4$ as $B -> 1^+$ (Continuum Wall)], [*$2.0000$ (Continuum Wall)*],
-    [*Treating window counts as continuous reals*], [*Thm. 2.6:* Discrete Legendre–Fenchel Excess], [Integer pigeonhole tax $(B/2) theta(1-theta)$ with $integral_0^1 theta(1-theta) d theta = 1/6$], [*$2 sqrt(6/7) approx 1.8516 < 2.00$*],
-    [Single-scale window width $W$], [*Thms. 2.7–2.8:* Band-Restricted Cesàro–Fejér], [Order-$p$ polynomial kernels & golden-ratio band $alpha^* = (3-sqrt(5))/2$], [$1.7638$],
-    [Single-octave integrality extraction], [*Thm. 2.9:* Scale-Invariant Conservation], [$w(tau) dot B(tau) equiv N$ cancels scale factor across $K$ octaves], [$(2 sqrt(6))/3 approx 1.6330$],
-    [Uniform $d tau$ underweights small scales], [*Thm. 2.10:* Logarithmic Haar Measure $d tau / tau$], [Equal weight $ln 2$ per octave while RHS $integral tau d tau <= 1/2$ stays finite], [*$sqrt(12 / (K ln 2)) -> 0$*],
-    [*Possible Diophantine resonance for fixed $mu_1$*], [*Thm. 2.11:* Hyperfactorial Sawtooth Identity], [$u = tau mu_1 => F_"Haar" (M) = 1/6 ln M + 2 ln A_"GK" + O(M^(-2))$ pointwise], [*$0.0000$ (Unconditional)*],
-  ),
+  {
+    set par(justify: false)
+    table(
+      columns: (1.1fr, 1.15fr, 1.45fr, 1.0fr),
+      align: (left + horizon, left + horizon, left + horizon, center + horizon),
+      stroke: 0.5pt,
+      [*Obstacle That Blocked Prior Work*], [*Key Breakthrough in This Paper*], [*Mathematical Mechanism*], [*Asymptotic Ceiling $c_infinity^*$*],
+      [Asymptotic $O(dot)$ slack in Erdős (1955)], [*Thm. 2.1:* Harmonic-Integral Conservation], [Exact finite identity $integral binom(A(t), 2) t^(-2) d t + Delta_A = sum 1/(d+1)$], [$2 sqrt(2 ln 2) approx 2.3548$],
+      [Ignoring pairs between different shells], [*Thm. 2.2:* Cross-Shell Bilinear Packing], [$y - x in D_(k-1) union D_k => binom(m_k, 2) + m_k A(2^(k-1)) < 2^k$], [$approx 2.12$],
+      [Fixed box boundaries miss nearby pairs], [*Thm. 2.4:* Sliding-Window Fejér Identity], [Sliding window of width $W$ gives triangle weight $W - d$], [$(1+sqrt(2))sqrt(ln 2) approx 2.0100$],
+      [Dyadic $B=2$ discretization waste], [*Thm. 2.5:* Hyperbolic-Tangent Shell Law], [$Lambda(B) = (tanh((ln B)/4))/(ln B) arrow.t 1/4$ as $B -> 1^+$ (Continuum Wall)], [*$2.0000$ \ (Continuum Wall)*],
+      [*Treating window counts as continuous reals*], [*Thm. 2.6:* Discrete Legendre–Fenchel Excess], [Integer pigeonhole tax $(B/2) theta(1-theta)$ with $integral_0^1 theta(1-theta) d theta = 1/6$], [*$2 sqrt(6/7) approx 1.8516 < 2.00$*],
+      [Single-scale window width $W$], [*Thms. 2.7–2.8:* Band-Restricted Cesàro–Fejér], [Order-$p$ polynomial kernels & golden-ratio band $alpha^* = (3-sqrt(5))/2$], [$1.7638$],
+      [Single-octave integrality extraction], [*Thm. 2.9:* Scale-Invariant Conservation], [$w(tau) dot B(tau) equiv N$ cancels scale factor across $K$ octaves], [$(2 sqrt(6))/3 approx 1.6330$],
+      [Uniform $d tau$ underweights small scales], [*Thm. 2.10:* Logarithmic Haar Measure $d tau / tau$], [Equal weight $ln 2$ per octave while RHS $integral tau d tau <= 1/2$ stays finite], [*$sqrt(12 / (K ln 2)) -> 0$*],
+      [*Possible Diophantine resonance for fixed $mu_1$*], [*Thm. 2.11:* Hyperfactorial Sawtooth Identity], [$u = tau mu_1 => F_"Haar" (M) = 1/6 ln M + 2 ln A_"GK" + O(M^(-2))$ pointwise], [*$0.0000$ \ (Unconditional)*],
+    )
+  },
   caption: [Complete architectural map from Erdős's 1955 baseline ($2.3548$) through the Continuum Wall ($2.0000$) to the unconditional Haar–Glaisher–Kinkelin closure ($0.0000$).],
 )
