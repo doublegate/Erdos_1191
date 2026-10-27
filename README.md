@@ -1,6 +1,6 @@
 # Erdos_1191 — Unconditional Diophantine Haar Closure & Formal Verification for Erdős Problem #1191
 
-[![DOI: 10.13140/RG.2.2.17420.27526](https://img.shields.io/badge/DOI-10.13140%2FRG.2.2.17420.27526-blue)](https://doi.org/10.13140/RG.2.2.17420.27526)
+[![Manuscript PDF](https://img.shields.io/badge/Manuscript-PDF%20%2824%20pp.%29-blue)](./paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf)
 [![Lean 4: v4.33.1](https://img.shields.io/badge/Lean%204-v4.33.1%20%280%20sorry%29-brightgreen)](./Erdos1191/Proofs.lean)
 [![formal-conjectures PR #7640](https://img.shields.io/badge/formal--conjectures-PR%20%237640-purple)](https://github.com/google-deepmind/formal-conjectures/pull/7640)
 [![teorth/erdosproblems PR #511](https://img.shields.io/badge/teorth%2Ferdosproblems-PR%20%23511-teal)](https://github.com/teorth/erdosproblems/pull/511)
@@ -9,7 +9,7 @@
 Official formal verification repository, 50-digit `mpmath`/`SymPy` certificate suite, and hybrid Rust + CUDA toolkit accompanying:
 
 > **Lucas Parobek (2026)**, *"Unconditional Diophantine Haar Closure, Exact Harmonic-Difference Conservation, and Multi-Octave Dyadic Budgets for Erdős Problem #1191"*
-> **Preprint DOI:** [`10.13140/RG.2.2.17420.27526`](https://doi.org/10.13140/RG.2.2.17420.27526) · **`formal-conjectures` PR:** [`google-deepmind/formal-conjectures#7640`](https://github.com/google-deepmind/formal-conjectures/pull/7640) · **`erdosproblems` PR:** [`teorth/erdosproblems#511`](https://github.com/teorth/erdosproblems/pull/511) · **`we-solve` Submission:** [`We-Solve/research#881`](https://github.com/We-Solve/research/issues/881)
+> **Manuscript PDF:** [`Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf`](./paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf) · **`formal-conjectures` PR:** [`google-deepmind/formal-conjectures#7640`](https://github.com/google-deepmind/formal-conjectures/pull/7640) · **`erdosproblems` PR:** [`teorth/erdosproblems#511`](https://github.com/teorth/erdosproblems/pull/511) · **`we-solve` Submission:** [`We-Solve/research#881`](https://github.com/We-Solve/research/issues/881)
 
 This repository resolves **Erdős Problem #1191** (`erdos_1191.parts.i`, 1,000 USD prize; [erdosproblems.com/1191](https://www.erdosproblems.com/1191), [Er55], [ErRe60], [HaRo66], [Er80]) in the affirmative by proving that every infinite Sidon set ( $B_2$ sequence ) $A \subseteq \mathbb{N}$ satisfies
 
@@ -23,7 +23,7 @@ where $A(x) = |A \cap [1, x]|$ is the prefix counting function of $A$ (OEIS [`A0
 
 | Document | PDF Link | Description |
 |---|---|---|
-| **Primary Research Manuscript** | [Unconditional Diophantine Haar Closure for Erdős Problem #1191 (PDF)](./paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf) | Full 24-page research paper proving Theorems 2.1–2.12 and Theorems 3.1–4.1 (`DOI: 10.13140/RG.2.2.17420.27526`). |
+| **Primary Research Manuscript** | [Unconditional Diophantine Haar Closure for Erdős Problem #1191 (PDF)](./paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf) | Full 24-page research paper proving Theorems 2.1–2.12 and Theorems 3.1–4.1. |
 | **Plain-Language Companion Explainer** | [Companion Mathematical Explainer — Erdős Problem #1191 (PDF)](./paper/Parobek_2026-10-27_Erdos1191_Companion_Mathematical_Explainer.pdf) | 8-page plain-language theorem-by-theorem walkthrough explaining why classical methods hit the $c_\infty^\ast = 2$ Continuum Cauchy–Schwarz Wall and how discrete Legendre–Fenchel integrality + Haar sawtooth integration drive the limit to $0$. |
 | **Supplementary Verification Suite** | [Supplementary Verification Compendium — Erdős Problem #1191 (PDF)](./paper/Parobek_2026-10-27_Erdos1191_Supplementary_Verification_Suite.pdf) | 12-page formatted compendium embedding the Lean 4 formal proofs, 50-digit Python verifier, and numerical certificates. |
 | **LaTeX & BibTeX Source Archive** | [LaTeX, BibTeX & Figures Source Archive (ZIP)](./paper/ERDOS_1191_tex_bib_figures.zip) | Standalone source bundle containing [`manuscript.tex`](./paper/manuscript.tex), [`references.bib`](./paper/references.bib), and `figures/fig1..fig6.png`. |
