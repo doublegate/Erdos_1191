@@ -27,15 +27,13 @@ Let $A(x) = |A \cap [1, x]|$ denote how many elements of $A$ lie in the interval
 - **On an infinite ruler $\mathbb{N}$:** Can an infinite Sidon set maintain $A(x) \approx c\sqrt{x}$ at *every* scale $x$?
   In 1955, Paul Erdős proved the answer is **no**: any infinite Sidon set must repeatedly dip down to at most $O(\sqrt{x / \ln x})$. Specifically, Erdős proved there is an absolute constant $C \gt 0$ such that
 
-  $$\liminf _ {x \to \infty} \Phi _ A(x) \le C \lt \infty, \qquad \text{where} \qquad \Phi _ A(x) := A(x)\sqrt{\frac{\ln x}{x}}.$$
-
+  $\displaystyle \liminf _ {x \to \infty} \Phi _ A(x) \le C \lt \infty, \qquad \text{where} \qquad \Phi _ A(x) := A(x)\sqrt{\frac{\ln x}{x}}.$
 ### 1.2 Why Does the $\sqrt{\ln x}$ Factor Appear?
 Suppose an infinite Sidon set tried to maintain $A(x) \approx c\sqrt{x / \ln x}$ at every scale $x$. Look at the dyadic shells $I _ k = (2^{k-1}, 2^k]$ for $k = 1, 2, \dots, M$.
 - If $I _ k$ contains $m _ k$ elements of $A$, those $m _ k$ elements create $\binom{m _ k}{2} \approx m _ k^2 / 2$ differences of size $\lt 2^{k-1}$.
 - If you weight each difference $d = a _ j - a _ i$ by $1/d$, the sum over *all* distinct differences up to $N = 2^M$ cannot exceed the harmonic series:
 
-  $$\sum _ {d \in \mathcal{D} _ A(2^M)} \frac{1}{d} \le \sum _ {d=1}^{2^M} \frac{1}{d} \approx \ln(2^M) = M \ln 2.$$
-
+  $\displaystyle \sum _ {d \in \mathcal{D} _ A(2^M)} \frac{1}{d} \le \sum _ {d=1}^{2^M} \frac{1}{d} \approx \ln(2^M) = M \ln 2.$
 - Meanwhile, each shell $I _ k$ contributes roughly $(m _ k^2 / 2) / 2^k$ to that harmonic sum. Since there are $M$ shells and their sum is at most $M \ln 2$, the average shell can only have $m _ k^2 / 2^k \approx O(1)$, which forces $m _ k \approx O(\sqrt{2^k / M}) = O(\sqrt{x / \ln x})$ at *some* scale.
 
 ### 1.3 The 1,000 USD Question (Erdős Problem #1191)
@@ -59,8 +57,7 @@ Suppose an adversary claims to have a Sidon set satisfying $A(t) \ge c\sqrt{t / 
 - When you relax integer counts $x _ r \in \mathbb{Z} _ {\ge 0}$ to continuous real numbers $x _ r \in \mathbb{R} _ {\ge 0}$, Cauchy–Schwarz says that distributing $S$ points across $B$ boxes of width $w$ creates at least $\frac{B}{2}\mu(\mu - 1)$ differences.
 - As we prove in **Theorem 2.5(b)**, even when you optimize over *all possible continuous shell bases* $B \gt 1$, *all backward lags*, and *exact unsplit Fejér sliding windows*, the continuous shell efficiency obeys the exact law
 
-  $$\Lambda(B) = \frac{\tanh((\ln B)/4)}{\ln B} \uparrow \frac{1}{4} \qquad (B \to 1^+),$$
-
+  $\displaystyle \Lambda(B) = \frac{\tanh((\ln B)/4)}{\ln B} \uparrow \frac{1}{4} \qquad (B \to 1^+),$
   which pinches the continuous lower bound at the **exact barrier $c _ \infty^\ast (1^+) = 1 / \sqrt{1/4} = 2.000000$**!
 - Why does every continuous relaxation stall at $c = 2$? Because if $c \lt 2$, a *continuous* density distribution can spread fractional amounts of points (like $0.03$ of a point per sub-window) smoothly across every scale so that $\mu(\mu - 1)$ is negative or negligible on small windows, never exceeding the difference budget!
 
@@ -79,16 +76,14 @@ The paper is organized as a **staircase of 11 analytical theorems (Theorems 2.1�
 1. **Theorem 2.1 — Exact Harmonic-Integral Conservation & Single-Scale Dyadic Budget:**
    - **Plain-Language Idea:** Erdős's 1955 proof used rough asymptotic inequalities ( $O(\cdot)$ ) that threw away boundary terms and inter-shell interactions. Theorem 2.1 replaces Erdős's inequality with an **exact accounting identity** at every finite integer $N$:
 
-     $$\int _ 1^N \frac{A(t)(A(t)-1)}{2t^2}\thinspace dt + \frac{A(N)(A(N)-1)}{2N} + \sum _ {i \lt j} \frac{a _ i - 1}{(a _ j - a _ i + 1)a _ j} = \sum _ {d \in \mathcal{D} _ A(N)} \frac{1}{d + 1} \le H _ N - 1.$$
-
+     $\displaystyle \int _ 1^N \frac{A(t)(A(t)-1)}{2t^2}\thinspace dt + \frac{A(N)(A(N)-1)}{2N} + \sum _ {i \lt j} \frac{a _ i - 1}{(a _ j - a _ i + 1)a _ j} = \sum _ {d \in \mathcal{D} _ A(N)} \frac{1}{d + 1} \le H _ N - 1.$
      It also partitions $(1, 2^M]$ into $M$ dyadic shells $I _ k = (2^{k-1}, 2^k]$ of count $m _ k = |A \cap I _ k|$ and proves that the differences formed *within* each shell obey $\sum _ {k=1}^M m _ k(m _ k - 1)/2^k \le (M - 1)/2$.
    - **What It Achieves:** Establishes the baseline rigorous finite-horizon certificate ( $c \le 6.488$ at $M = 64$, asymptotic $2\sqrt{2\ln 2} \approx 2.3548$ ).
 
 2. **Theorem 2.2 — Cross-Shell Bilinear Packing ( $y - x \in D _ {k-1} \cup D _ k$ ):**
    - **Plain-Language Idea:** Theorem 2.1 only counted differences $y - x$ where *both* $x$ and $y$ came from the *same* shell $I _ k$. What if $x$ is in an earlier shell $I _ j$ ( $x \le 2^{k-1}$ ) and $y$ is in $I _ k$ ( $2^{k-1} \lt y \le 2^k$ )? Theorem 2.2 proves that all such cross-shell pairs $(x, y)$ have differences $y - x \lt 2^k$ that pack **disjointly** alongside the intra-shell pairs of $I _ k$:
 
-     $$\binom{m _ k}{2} + m _ k A(2^{k-1}) \le 2^k - 1.$$
-
+     $\displaystyle \binom{m _ k}{2} + m _ k A(2^{k-1}) \le 2^k - 1.$
    - **What It Achieves:** Adding the cross-shell term $2m _ k A(2^{k-1}) / 2^k$ doubles the quadratic weight on sustained floors and cuts the bound by a factor of $\sqrt{2}$ (down to $3.012$ at $M = 64$ ).
 
 3. **Theorem 2.3 — Sub-Window Short-Difference Projection:**
@@ -104,8 +99,7 @@ The paper is organized as a **staircase of 11 analytical theorems (Theorems 2.1�
    - **Plain-Language Idea:** What if doubling shell sizes ( $B = 2$ ) is slightly wasteful, and we instead use finer geometric shells $t _ k = B^k$ with $B \to 1^+$ (e.g., $B = 1.01$ ), while pairing complementary prefix windows with zero boundary leakage?
      Theorem 2.5 derives the **exact closed-form formula** for the shell efficiency at any base $B \gt 1$:
 
-     $$\Lambda(B) = \frac{(1 - B^{-1/2})^2}{(1 - B^{-1})\ln B} = \frac{\tanh((\ln B)/4)}{\ln B} = \frac{1}{4} - \frac{(\ln B)^2}{192} + O\bigl((\ln B)^4\bigr) \uparrow \frac{1}{4} \qquad (B \to 1^+).$$
-
+     $\displaystyle \Lambda(B) = \frac{(1 - B^{-1/2})^2}{(1 - B^{-1})\ln B} = \frac{\tanh((\ln B)/4)}{\ln B} = \frac{1}{4} - \frac{(\ln B)^2}{192} + O\bigl((\ln B)^4\bigr) \uparrow \frac{1}{4} \qquad (B \to 1^+).$
    - **What It Achieves:** Proves that as $B \to 1^+$, the continuous bound converges to $c _ \infty^\ast (1^+) = 1 / \sqrt{1/4} = 2.000000$. More importantly, it proves *why* classical continuous methods got stuck: $1/4$ is the absolute ceiling of $\tanh(u)/u$, so **no smooth continuous relaxation can ever go below $c = 2$**.
 
 ### Stage II: Breaking the $2.00$ Continuum Wall via Discrete Integrality
@@ -114,8 +108,7 @@ The paper is organized as a **staircase of 11 analytical theorems (Theorems 2.1�
    - **Plain-Language Idea:** Here is where we break through the $c = 2$ brick wall. Suppose $S$ integer points of $A$ are distributed across $B$ sub-windows. Let the average number of points per window be $\mu = S / B = q + \theta$, where $q = \lfloor \mu \rfloor \in \mathbb{Z} _ {\ge 0}$ is the integer part and $\theta = \lbrace \mu\rbrace \in [0, 1)$ is the fractional part ( $t = S \bmod B = B\theta$ ).
      To minimize pairs $\binom{x _ r}{2}$ inside the windows, the pigeonhole principle forces you to put $q+1$ points in $t$ windows and $q$ points in $B - t$ windows. A 3-line algebraic calculation (machine-checked in `1191.lean` as `legendre_fenchel_integrality_identity`) shows:
 
-     $$L(S, B) := (B - t)\binom{q}{2} + t\binom{q + 1}{2} = \underbrace{\frac{B}{2}\mu(\mu - 1)} _ {\text{Smooth C–S}} + \underbrace{\frac{B}{2}\theta(1 - \theta)} _ {\text{Integrality Tax } \ge 0}.$$
-
+     $\displaystyle L(S, B) := (B - t)\binom{q}{2} + t\binom{q + 1}{2} = \underbrace{\frac{B}{2}\mu(\mu - 1)} _ {\text{Smooth C–S}} + \underbrace{\frac{B}{2}\theta(1 - \theta)} _ {\text{Integrality Tax } \ge 0}.$
      Notice the second term: **$\frac{B}{2}\theta(1 - \theta)$ is strictly positive whenever $\mu$ is not an exact integer!** Across a unit transition cycle $\theta \in [0, 1]$, the average of $\theta(1 - \theta)$ is $\int _ 0^1 \theta(1 - \theta) d\theta = 1/6$.
    - **What It Achieves:** Boosts the per-scale multiplier by $1 + 1/6 = 7/6$, breaking the $2.000000$ continuum barrier down to $c _ \infty^{\ast,\mathrm{coupled}}(1^+) = 2\sqrt{6/7} \approx 1.851640$ (and pushing finite horizons below $2.00$ for all $M \ge 32$ ).
 
@@ -146,8 +139,7 @@ The paper is organized as a **staircase of 11 analytical theorems (Theorems 2.1�
       - Meanwhile, on the right-hand side, integrating the $\tau^2$ difference capacity against $d\tau / \tau$ gives $\int _ {2^{-K}}^1 \tau^2 \frac{d\tau}{\tau} = \int _ {2^{-K}}^1 \tau\thinspace d\tau = \frac{1 - 4^{-K}}{2} \le \frac{1}{2} \lt \infty$—**the right-hand side stays bounded by $1/2$ forever, while the left-hand side adds $+\frac{\ln 2}{6}$ for every single octave $j = 1, 2, \dots, K$**!
     - **What It Achieves:** Breaks the $1.00$ unit barrier at power-law exponent $r = -15/17$ (`0.9965 < 1.00`), and under Haar measure $d\tau / \tau$ gives the diverging $K$-octave integrality boost:
 
-      $$\kappa _ {\mathrm{int}}^{\mathrm{Haar}}(K) = \frac{K\ln 2}{3(1 - 4^{-K})} \xrightarrow{K \to \infty} \infty.$$
-
+      $\displaystyle \kappa _ {\mathrm{int}}^{\mathrm{Haar}}(K) = \frac{K\ln 2}{3(1 - 4^{-K})} \xrightarrow{K \to \infty} \infty.$
 11. **Theorem 2.11 — The Unconditional Diophantine Linear-Dilation Sawtooth Identity (Closing the Final Loophole):**
     - **Plain-Language Idea:** Theorem 2.10 used the unit-interval average $\int _ 0^1 \theta(1-\theta) d\theta = 1/6$ across each octave. A rigorous referee will immediately ask the ultimate question:
       > "Wait—you don't get to average over $\mu _ 1$! An adversary gives you ONE fixed Sidon set with ONE fixed number of elements $\mu _ 1$ in the shell. What if that specific number $\mu _ 1$ conspires with $\tau$ so that $\lbrace \tau \mu _ 1\rbrace (1 - \lbrace \tau \mu _ 1\rbrace )$ is unusually small across your $K$ octaves?"
@@ -156,17 +148,14 @@ The paper is organized as a **staircase of 11 analytical theorems (Theorems 2.1�
       1. Take *any single fixed number* $\mu _ 1 \gt 2^K$ (even an adversarial integer multiple of $2^K$ ).
       2. In the Haar integral $\int _ {2^{-K}}^1 \lbrace \tau \mu _ 1\rbrace (1 - \lbrace \tau \mu _ 1\rbrace ) \frac{d\tau}{\tau}$, perform the elementary calculus substitution **$u = \tau \mu _ 1$**. Because $\frac{du}{u} = \frac{\mu _ 1 d\tau}{\tau \mu _ 1} = \frac{d\tau}{\tau}$, the parameter $\mu _ 1$ **disappears completely from the integrand** and moves into the integration limits $M _ 0 = \mu _ 1 2^{-K}$ and $M _ 1 = \mu _ 1$:
 
-         $$\int _ {2^{-K}}^1 \lbrace \tau \mu _ 1\rbrace \bigl(1 - \lbrace \tau \mu _ 1\rbrace \bigr) \frac{d\tau}{\tau} = \int _ {\mu _ 1 2^{-K}}^{\mu _ 1} \frac{\lbrace u\rbrace (1 - \lbrace u\rbrace )}{u}\thinspace du.$$
-
+         $\displaystyle \int _ {2^{-K}}^1 \lbrace \tau \mu _ 1\rbrace \bigl(1 - \lbrace \tau \mu _ 1\rbrace \bigr) \frac{d\tau}{\tau} = \int _ {\mu _ 1 2^{-K}}^{\mu _ 1} \frac{\lbrace u\rbrace (1 - \lbrace u\rbrace )}{u}\thinspace du.$
       3. Now there is nowhere for an adversary to hide! As the variable $u$ sweeps continuously from $M _ 0 = \mu _ 1 2^{-K}$ to $M _ 1 = \mu _ 1$, it **must** traverse every unit interval $[m, m+1)$ between $M _ 0$ and $M _ 1$. On each unit interval $[m, m+1)$, $u = m + \theta$ with $\theta \in [0, 1)$, so $\lbrace u\rbrace (1 - \lbrace u\rbrace ) = \theta(1 - \theta)$ is an arch of height $1/4$ and area $1/6$.
       4. Even better, integrating $\int _ m^{m+1} \frac{\theta(1-\theta)}{m+\theta} d\theta$ by parts telescope-sums into an **exact closed-form formula** in terms of the hyperfactorial $H(M-1) = \prod _ {m=1}^{M-1} m^m$ and the **Glaisher–Kinkelin constant $A _ {\mathrm{GK}} \approx 1.2824271291$**:
 
-         $$F _ {\mathrm{Haar}}(M) := \int _ 0^M \frac{\lbrace u\rbrace (1 - \lbrace u\rbrace )}{u}\thinspace du = \frac{M^2}{2} - M(M - 1)\ln M + 2\ln H(M - 1) = \frac{1}{6}\ln M + 2\ln A _ {\mathrm{GK}} + \frac{1}{360 M^2} - O(M^{-4}).$$
-
+         $\displaystyle F _ {\mathrm{Haar}}(M) := \int _ 0^M \frac{\lbrace u\rbrace (1 - \lbrace u\rbrace )}{u}\thinspace du = \frac{M^2}{2} - M(M - 1)\ln M + 2\ln H(M - 1) = \frac{1}{6}\ln M + 2\ln A _ {\mathrm{GK}} + \frac{1}{360 M^2} - O(M^{-4}).$
       5. Subtracting $F _ {\mathrm{Haar}}(M _ 0)$ from $F _ {\mathrm{Haar}}(M _ 1)$ for $M _ 1 = \mu _ 1$ and $M _ 0 = \mu _ 1 2^{-K}$, the constant $2\ln A _ {\mathrm{GK}}$ and $\ln \mu _ 1$ **cancel out identically**:
 
-         $$\int _ {2^{-K}}^1 \lbrace \tau \mu _ 1\rbrace \bigl(1 - \lbrace \tau \mu _ 1\rbrace \bigr) \frac{d\tau}{\tau} = F _ {\mathrm{Haar}}(\mu _ 1) - F _ {\mathrm{Haar}}(\mu _ 1 2^{-K}) = \frac{K \ln 2}{6} + R _ {\mathrm{Dioph}}(\mu _ 1, K),$$
-
+         $\displaystyle \int _ {2^{-K}}^1 \lbrace \tau \mu _ 1\rbrace \bigl(1 - \lbrace \tau \mu _ 1\rbrace \bigr) \frac{d\tau}{\tau} = F _ {\mathrm{Haar}}(\mu _ 1) - F _ {\mathrm{Haar}}(\mu _ 1 2^{-K}) = \frac{K \ln 2}{6} + R _ {\mathrm{Dioph}}(\mu _ 1, K),$
          where $|R _ {\mathrm{Dioph}}(\mu _ 1, K)| \lt \frac{1}{6\lfloor \mu _ 1 2^{-K}\rfloor} + \frac{1}{360\lfloor \mu _ 1 2^{-K}\rfloor^2} \to 0$.
 
 ---
