@@ -187,7 +187,8 @@ The paper is organized as a *staircase of 11 analytical theorems (Theorems 2.1â€
      $ integral_(2^(-K))^1 {tau mu_1}(1 - {tau mu_1}) (d tau) / tau = integral_(mu_1 2^(-K))^(mu_1) ({u}(1 - {u})) / u d u. $
   3. Now there is nowhere for an adversary to hide! As the variable $u$ sweeps continuously from $M_0 = mu_1 2^(-K)$ to $M_1 = mu_1$, it *must* traverse every unit interval $[m, m+1)$ between $M_0$ and $M_1$. On each unit interval $[m, m+1)$, $u = m + theta$ with $theta in [0, 1)$, so ${u}(1 - {u}) = theta(1 - theta)$ is an arch of height $1/4$ and area $1/6$.
   4. Even better, integrating $integral_m^(m+1) theta(1-theta)/(m+theta) d theta$ by parts telescope-sums into an *exact closed-form formula* in terms of the hyperfactorial $H(M-1) = product_(m=1)^(M-1) m^m$ and the *Glaisherâ€“Kinkelin constant $A_"GK" approx 1.2824271291$*:
-     $ F_"Haar" (M) := integral_0^M ({u}(1 - {u})) / u d u = M^2 / 2 - M(M - 1) ln M + 2 ln H(M - 1) = 1/6 ln M + 2 ln A_"GK" + 1 / (360 M^2) - O(M^(-4)). $
+     $ F_"Haar" (M) := integral_0^M ({u}(1 - {u})) / u d u &= M^2 / 2 - M(M - 1) ln M + 2 ln H(M - 1) \
+       &= 1/6 ln M + 2 ln A_"GK" + 1 / (360 M^2) - O(M^(-4)). $
   5. Subtracting $F_"Haar" (M_0)$ from $F_"Haar" (M_1)$ for $M_1 = mu_1$ and $M_0 = mu_1 2^(-K)$, the constant $2 ln A_"GK"$ and $ln mu_1$ *cancel out identically*:
      $ integral_(2^(-K))^1 {tau mu_1}(1 - {tau mu_1}) (d tau) / tau = F_"Haar" (mu_1) - F_"Haar" (mu_1 2^(-K)) = (K ln 2) / 6 + R_"Dioph" (mu_1, K), $
      where $|R_"Dioph" (mu_1, K)| < 1 / (6 floor(mu_1 2^(-K))) + 1 / (360 floor(mu_1 2^(-K))^2) -> 0$.

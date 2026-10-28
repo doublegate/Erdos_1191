@@ -101,7 +101,8 @@ Why does the classical intra-shell dyadic inequality stop at $liminf_(x->infinit
 2. _*(Exact Bilinear Cross-Shell Quadratic Form Inequality)* Summing with dyadic weights $2^(1-k)$ across $k = 1, dots, M$ and applying summation by parts yields_
    $ sum_(k=1)^M (m_k (m_k - 1)) / 2^k + sum_(k=1)^M (2 m_k A(2^(k-1))) / 2^k = (A(2^M)(A(2^M) - 1)) / 2^M + sum_(k=1)^(M-1) (A(2^k)(A(2^k) - 1)) / 2^(k+1) <= M + 1 / 2. $
    _Moreover, weighting each difference shell $D_r$ by the Laplace–Fejér / harmonic weight $alpha_r = 2^(-(r-1))$ (where $|D_r| dot 2^(-(r-1)) = 1$) proves the exact unnormalized and $1\/2$-normalized bilinear inequalities_
-   $ sum_(k=1)^M (2 m_k (m_k - 1) + 2 m_k A(2^(k-1))) / 2^k <= M + 1 - 2^(-(M-1)) < M + 1, quad sum_(k=1)^M (m_k (m_k - 1) + m_k A(2^(k-1))) / 2^k <= (M + 1 - 2^(-(M-1))) / 2 < (M + 1) / 2 < (M + 2) / 2. $
+   $ sum_(k=1)^M (2 m_k (m_k - 1) + 2 m_k A(2^(k-1))) / 2^k &<= M + 1 - 2^(-(M-1)) < M + 1, \
+     sum_(k=1)^M (m_k (m_k - 1) + m_k A(2^(k-1))) / 2^k &<= (M + 1 - 2^(-(M-1))) / 2 < (M + 1) / 2 < (M + 2) / 2. $
 
 *Proof.* For (1), if $x in I_j$ and $y in I_k$ with $1 <= j <= k - 2$, then $x <= 2^j <= 2^(k-2)$ and $y > 2^(k-1)$, so $2^(k-2) < y - x < 2^k$, placing $y - x in D_(k-1) union D_k$. Partitioning the $binom(A(2^k), 2)$ distinct differences of $A inter [1, 2^k]$ by the shell of the larger element gives $binom(A(2^k), 2) - binom(A(2^(k-1)), 2) = binom(m_k, 2) + m_k A(2^(k-1))$. For (2), let $B_k := binom(A(2^k), 2) <= 2^k - 1$ (with $B_1 <= 1$). Abel summation on $2(B_k - B_(k-1))\/2^k$ gives $2 B_M\/2^M + sum_(k=1)^(M-1) B_k\/2^k <= M + 1\/2$, and summing the shell weights $w(d) = 2^(-(r-1))$ over $D_r$ ($|D_r| = 2^(r-1)$, $d = 2^M in.not cal(D)_A (2^M)$) yields $M + 1 - 2^(-(M-1)) < M + 1$ (and $< (M+1)\/2$ after dividing by $2$). #h(1fr) *Q.E.D.*
 
@@ -367,23 +368,23 @@ All 17 discrete algebraic, cross-shell localization, powers-of-two bilinear veri
       align: (center + horizon, left + horizon, left + horizon, left + horizon),
       stroke: 0.5pt,
       [*\#*], [*Lean 4 Declaration (`Erdos1191/Proofs.lean`)*], [*Paper Ref.*], [*Verified Mathematical Identity / Property*],
-      [1], [`harmonic_conservation_numerator` (`#L35`)], [Thm. 2.1(a)], [$(d + 1) + (a_i - 1) = a_j$ for $d = a_j - a_i$ ($1 <= a_i < a_j$)],
-      [2], [`two_shell_difference_localization` (`#L50`)], [Thm. 2.2(a)], [$2^(k-2) < y - x < 2^k$ for $x in I_j$ ($j <= k - 2$), $y in I_k$],
-      [3], [`powers_of_two_bilinear_identity` (`#L75`)], [Thm. 2.2(b), Rem. 2.3], [$(sum_(k=1)^M k dot 2^(M-k+1)) + 2 M + 4 = 2^(M+2)$ on $A = {2^n}$],
-      [4], [`powers_of_two_satisfies_corrected_bilinear_bound` (`#L92`)], [Thm. 2.2(b), Rem. 2.3], [$sum_(k=1)^M k dot 2^(M-k+1) <= (M + 1) 2^M - 2$ ($22 <= 30$ at $M = 3$)],
-      [5], [`kkt_increment_convexity_k_ge_4` (`#L115`)], [Lemma 2.4], [$16 k^2 + 2(k^2 - 9) = 18(k^2 - 1)$ and $16 k^2 < 18(k^2 - 1)$ for $k >= 4$],
-      [6], [`binary_subblock_variance_refinement` (`#L132`)], [Thm. 2.5(b), 2.11(c)], [$2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + |S_1 - S_2|^2 >= (S_1 + S_2)^2$],
-      [7], [`discrete_legendre_fenchel_excess` (`#L220`)], [Thm. 2.6(a)], [$(B - r)q(q - 1) + r(q + 1)q = B q(q - 1) + 2 r q$],
-      [8], [`legendre_fenchel_squared_identity` (`#L239`)], [Thm. 2.6(b)], [$B(B q^2 + 2 r q) + B r = (B q + r)^2 + r(B - r)$],
-      [9], [`robin_hood_pair_smoothing` (`#L262`)], [Thm. 2.6(c)], [Robin-Hood transfer reduces pair count by $2(x_1 - x_2 - 1) >= 2$],
-      [10], [`normalized_integrality_excess_bound` (`#L293`)], [Thm. 2.6(d), 2.11(c)], [$4 r(B - r) + |2 r - B|^2 = B^2$, proving $r(B - r)\/S^2 <= 1\/(4 mu^2)$],
-      [11], [`cesaro_fejer_order2_step` (`#L362`)], [Thm. 2.7(a)], [$m(m - 1) + 2 m = (m + 1) m$ (Order-2 Cesàro–Fejér recurrence)],
-      [12], [`scale_invariant_block_window_exponents` (`#L378`)], [Thm. 2.9(a)], [$(k - (s + r)) + ((s + r) - 1) = k - 1$ for $1 <= s + r <= k$],
-      [13], [`scale_invariant_block_window_product` (`#L389`)], [Thm. 2.9(b)], [$2^(k-(s+r)) dot 2^((s+r)-1) = 2^(k-1) = |I_k|$ across all scales],
-      [14], [`hyperfactorial_sawtooth_abel_step` (`#L403`)], [Thm. 2.11(b)], [$m(m + 1) - (m - 1) m = 2 m$ (hyperfactorial Abel telescoping)],
-      [15], [`bitshift_sidon_difference_index` (`#L418`)], [Section 4], [$(63 - a) - (63 - x) = x - a$ for $a < x <= 63$],
-      [16], [`mianChowlaPrefix10_is_sidon` (`#L446`)], [Section 4 / Table 1], [Kernel `decide` proof for 10-term Mian–Chowla prefix ($45$ diffs)],
-      [17], [`maximinWitnessN32_is_sidon` (`#L458`)], [Section 4 / Table 2], [Kernel `decide` proof for maximin witness $[1,2,5,7,14,22,32]$],
+      [1], [`harmonic_conservation_numerator` (`#L34`)], [Thm. 2.1(a)], [$(d + 1) + (a_i - 1) = a_j$ for $d = a_j - a_i$ ($1 <= a_i < a_j$)],
+      [2], [`two_shell_difference_localization` (`#L48`)], [Thm. 2.2(a)], [$2^(k-2) < y - x < 2^k$ for $x in I_j$ ($j <= k - 2$), $y in I_k$],
+      [3], [`powers_of_two_bilinear_identity` (`#L72`)], [Thm. 2.2(b), Rem. 2.3], [$(sum_(k=1)^M k dot 2^(M-k+1)) + 2 M + 4 = 2^(M+2)$ on $A = {2^n}$],
+      [4], [`powers_of_two_satisfies_corrected_bilinear_bound` (`#L89`)], [Thm. 2.2(b), Rem. 2.3], [$sum_(k=1)^M k dot 2^(M-k+1) <= (M + 1) 2^M - 2$ ($22 <= 30$ at $M = 3$)],
+      [5], [`kkt_increment_convexity_k_ge_4` (`#L111`)], [Lemma 2.4], [$16 k^2 + 2(k^2 - 9) = 18(k^2 - 1)$ and $16 k^2 < 18(k^2 - 1)$ for $k >= 4$],
+      [6], [`binary_subblock_variance_refinement` (`#L128`)], [Thm. 2.5(b), 2.11(c)], [$2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + |S_1 - S_2|^2 >= (S_1 + S_2)^2$],
+      [7], [`discrete_legendre_fenchel_excess` (`#L216`)], [Thm. 2.6(a)], [$(B - r)q(q - 1) + r(q + 1)q = B q(q - 1) + 2 r q$],
+      [8], [`legendre_fenchel_squared_identity` (`#L235`)], [Thm. 2.6(b)], [$B(B q^2 + 2 r q) + B r = (B q + r)^2 + r(B - r)$],
+      [9], [`robin_hood_pair_smoothing` (`#L258`)], [Thm. 2.6(c)], [Robin-Hood transfer reduces pair count by $2(x_1 - x_2 - 1) >= 2$],
+      [10], [`normalized_integrality_excess_bound` (`#L287`)], [Thm. 2.6(d), 2.11(c)], [$4 r(B - r) + |2 r - B|^2 = B^2$, proving $r(B - r)\/S^2 <= 1\/(4 mu^2)$],
+      [11], [`cesaro_fejer_order2_step` (`#L356`)], [Thm. 2.7(a)], [$m(m - 1) + 2 m = (m + 1) m$ (Order-2 Cesàro–Fejér recurrence)],
+      [12], [`scale_invariant_block_window_exponents` (`#L372`)], [Thm. 2.9(a)], [$(k - (s + r)) + ((s + r) - 1) = k - 1$ for $1 <= s + r <= k$],
+      [13], [`scale_invariant_block_window_product` (`#L383`)], [Thm. 2.9(b)], [$2^(k-(s+r)) dot 2^((s+r)-1) = 2^(k-1) = |I_k|$ across all scales],
+      [14], [`hyperfactorial_sawtooth_abel_step` (`#L397`)], [Thm. 2.11(b)], [$m(m + 1) - (m - 1) m = 2 m$ (hyperfactorial Abel telescoping)],
+      [15], [`bitshift_sidon_difference_index` (`#L412`)], [Section 4], [$(63 - a) - (63 - x) = x - a$ for $a < x <= 63$],
+      [16], [`mianChowlaPrefix10_is_sidon` (`#L440`)], [Section 4 / Table 1], [Kernel `decide` proof for 10-term Mian–Chowla prefix ($45$ diffs)],
+      [17], [`maximinWitnessN32_is_sidon` (`#L452`)], [Section 4 / Table 2], [Kernel `decide` proof for maximin witness $[1,2,5,7,14,22,32]$],
     )
   ],
   caption: [Chronological catalog of the 17 zero-`sorry` Lean 4 theorems in `Erdos1191/Proofs.lean`.],
