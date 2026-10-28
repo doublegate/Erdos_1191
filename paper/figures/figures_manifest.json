@@ -1,26 +1,30 @@
 {
   "fig1": [
-    "/home/parobek/Code/Local_Only-Projects/erdos/erdos1191/paper/figures/fig1_envelope_comparison.pdf",
-    "/home/parobek/Code/Local_Only-Projects/erdos/erdos1191/paper/figures/fig1_envelope_comparison.png"
+    "/home/parobek/Code/OSS_Public-Projects/Erdos_1191/paper/figures/fig1_envelope_comparison.pdf",
+    "/home/parobek/Code/OSS_Public-Projects/Erdos_1191/paper/figures/fig1_envelope_comparison.png"
   ],
   "fig2": [
-    "/home/parobek/Code/Local_Only-Projects/erdos/erdos1191/paper/figures/fig2_harmonic_dyadic_certificates.pdf",
-    "/home/parobek/Code/Local_Only-Projects/erdos/erdos1191/paper/figures/fig2_harmonic_dyadic_certificates.png"
+    "/home/parobek/Code/OSS_Public-Projects/Erdos_1191/paper/figures/fig2_harmonic_dyadic_certificates.pdf",
+    "/home/parobek/Code/OSS_Public-Projects/Erdos_1191/paper/figures/fig2_harmonic_dyadic_certificates.png"
   ],
   "fig3": [
-    "/home/parobek/Code/Local_Only-Projects/erdos/erdos1191/paper/figures/fig3_maximin_lower_envelope.pdf",
-    "/home/parobek/Code/Local_Only-Projects/erdos/erdos1191/paper/figures/fig3_maximin_lower_envelope.png"
+    "/home/parobek/Code/OSS_Public-Projects/Erdos_1191/paper/figures/fig3_maximin_lower_envelope.pdf",
+    "/home/parobek/Code/OSS_Public-Projects/Erdos_1191/paper/figures/fig3_maximin_lower_envelope.png"
   ],
   "fig4": [
-    "/home/parobek/Code/Local_Only-Projects/erdos/erdos1191/paper/figures/fig4_gpu_sidon_scaling.pdf",
-    "/home/parobek/Code/Local_Only-Projects/erdos/erdos1191/paper/figures/fig4_gpu_sidon_scaling.png"
+    "/home/parobek/Code/OSS_Public-Projects/Erdos_1191/paper/figures/fig4_gpu_sidon_scaling.pdf",
+    "/home/parobek/Code/OSS_Public-Projects/Erdos_1191/paper/figures/fig4_gpu_sidon_scaling.png"
   ],
   "fig5": [
-    "/home/parobek/Code/Local_Only-Projects/erdos/erdos1191/paper/figures/fig5_cross_shell_qp_envelope.pdf",
-    "/home/parobek/Code/Local_Only-Projects/erdos/erdos1191/paper/figures/fig5_cross_shell_qp_envelope.png"
+    "/home/parobek/Code/OSS_Public-Projects/Erdos_1191/paper/figures/fig5_cross_shell_qp_envelope.pdf",
+    "/home/parobek/Code/OSS_Public-Projects/Erdos_1191/paper/figures/fig5_cross_shell_qp_envelope.png"
   ],
   "fig6": [
-    "/home/parobek/Code/Local_Only-Projects/erdos/erdos1191/paper/figures/fig6_subwindow_multires_spectrum.pdf",
-    "/home/parobek/Code/Local_Only-Projects/erdos/erdos1191/paper/figures/fig6_subwindow_multires_spectrum.png"
+    "/home/parobek/Code/OSS_Public-Projects/Erdos_1191/paper/figures/fig6_subwindow_multires_spectrum.pdf",
+    "/home/parobek/Code/OSS_Public-Projects/Erdos_1191/paper/figures/fig6_subwindow_multires_spectrum.png"
+  ],
+  "fig7": [
+    "/home/parobek/Code/OSS_Public-Projects/Erdos_1191/paper/figures/fig7_we_solve_remediation_diagnostics.pdf",
+    "/home/parobek/Code/OSS_Public-Projects/Erdos_1191/paper/figures/fig7_we_solve_remediation_diagnostics.png"
   ]
 }

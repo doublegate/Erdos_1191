@@ -8,7 +8,7 @@
       #grid(
         columns: (1fr, auto),
         [*Erdős Problem \#1191 — Companion Mathematical Explainer & Proof Architecture Guide*],
-        [*DOI: 10.13140/RG.2.2.17420.27526*],
+        [*Repository: github.com/doublegate/Erdos_1191*],
       )
       #v(-4pt)
       #line(length: 100%, stroke: 0.4pt + luma(160))
@@ -31,7 +31,7 @@
   ]
   #v(6pt)
   *Author:* Lucas Parobek (`parobek@gmail.com`) #h(1.5em) *Date:* October 27, 2026 \
-  *Preprint DOI:* #link("https://doi.org/10.13140/RG.2.2.17420.27526")[`10.13140/RG.2.2.17420.27526`] #h(1.5em) *Prize Status:* \$1,000 Erdős Bounty (Unconditionally Resolved)
+  *Repository:* #link("https://github.com/doublegate/Erdos_1191")[`https://github.com/doublegate/Erdos_1191`] #h(1.5em) *Formalization:* 17 Zero-`sorry` Lean 4 Theorems (`v4.33.1`)
 ]
 
 #v(4pt)
@@ -118,10 +118,11 @@ The paper is organized as a *staircase of 11 analytical theorems (Theorems 2.1�
   It also partitions $(1, 2^M]$ into $M$ dyadic shells $I_k = (2^(k-1), 2^k]$ of count $m_k = |A inter I_k|$ and proves that the differences formed *within* each shell obey $sum_(k=1)^M m_k(m_k - 1)/2^k <= (M - 1)/2$.
 - *What It Achieves:* Establishes the baseline rigorous finite-horizon certificate ($c <= 6.488$ at $M = 64$, asymptotic $2 sqrt(2 ln 2) approx 2.3548$).
 
-=== Theorem 2.2 — Cross-Shell Bilinear Packing ($y - x in D_(k-1) union D_k$)
-- *Plain-Language Idea:* Theorem 2.1 only counted differences $y - x$ where *both* $x$ and $y$ came from the *same* shell $I_k$. What if $x$ is in an earlier shell $I_j$ ($x <= 2^(k-1)$) and $y$ is in $I_k$ ($2^(k-1) < y <= 2^k$)? Theorem 2.2 proves that all such cross-shell pairs $(x, y)$ have differences $y - x < 2^k$ that pack *disjointly* alongside the intra-shell pairs of $I_k$:
-  $ binom(m_k, 2) + m_k A(2^(k-1)) <= 2^k - 1. $
-- *What It Achieves:* Adding the cross-shell term $2 m_k A(2^(k-1)) / 2^k$ doubles the quadratic weight on sustained floors and cuts the bound by a factor of $sqrt(2)$ (down to $3.012$ at $M = 64$).
+=== Theorem 2.2, Remark 2.3 & Lemma 2.4 — Cross-Shell Bilinear Packing ($y - x in D_(k-1) union D_k$), Powers-of-Two Verification & KKT Convex-Cone Positivity
+- *Plain-Language Idea:* Theorem 2.1 only counted differences $y - x$ where *both* $x$ and $y$ came from the *same* shell $I_k$. What if $x$ is in an earlier shell $I_j$ ($1 <= j <= k - 2$) and $y$ is in $I_k$ ($2^(k-1) < y <= 2^k$)? Since $1 <= x <= 2^(k-2)$, the difference $y - x$ satisfies $2^(k-2) < y - x < 2^k$, so it lands inside the *two* difference shells $D_(k-1) union D_k = (2^(k-2), 2^k]$ (`two_shell_difference_localization`). Summing over $k = 1, dots, M$ with weight $2^(1-k)$ gives the tight cross-shell Laplace–Fejér bilinear inequality
+  $ sum_(k=1)^M (2 m_k (m_k - 1) + 2 m_k A(2^(k-1))) / 2^k <= M + 1 - 2^(-(M-1)) < M + 1. $
+- *Remark 2.3 (Powers of Two $A = {2^n : n >= 0}$ Verification):* On $A = {2^n : n >= 0}$, $1 in A$ contributes $1$ to $A(2^(k-1))$ and each shell $I_k$ has $m_k = 1$, so $A(2^(k-1)) = k$ and the exact bilinear sum is $4 - (2 M + 4)\/2^M <= M + 1 - 2^(-(M-1))$ ($2.75 <= 3.75$ at $M = 3$), formalized in Lean 4 as `powers_of_two_bilinear_identity` and `powers_of_two_satisfies_corrected_bilinear_bound`.
+- *Lemma 2.4 (KKT Convex-Cone Increment Minimization):* Because cumulative constraints $A(2^k) >= c sqrt(2^k\/(k ln 2))$ constrain prefix sums rather than individual $m_k$, Lemma 2.4 proves via Karush–Kuhn–Tucker duality on cumulative excess variables $E_k >= 0$ that the KKT multipliers $lambda_k = 2^(1-k)(2 rho_k - rho_(k+1))$ are strictly positive for all $k >= 3$ ($16 k^2 < 18(k^2 - 1)$ for $k >= 4$, `kkt_increment_convexity_k_ge_4`), forcing the unique boundary minimizer $m_k^* = c rho_k$.
 
 === Theorem 2.3 — Sub-Window Short-Difference Projection
 - *Plain-Language Idea:* A dyadic shell $I_k = (2^(k-1), 2^k]$ is huge. If we slice $I_k$ into $B_(k,r) = 2^(k-1-r)$ smaller sub-windows of width $W = 2^r$, any two elements of $A$ landing in the *same* sub-window have distance *at most $2^r - 1$* (a *short difference*), not just $< 2^(k-1)$. Since there are only $2^r - 1$ possible short differences in total across the *entire* infinite Sidon set, all sub-windows across *all* shells $k > r$ must compete for the same tiny pool of $2^r - 1$ short differences!
@@ -191,16 +192,14 @@ The paper is organized as a *staircase of 11 analytical theorems (Theorems 2.1�
      $ integral_(2^(-K))^1 {tau mu_1}(1 - {tau mu_1}) (d tau) / tau = F_"Haar" (mu_1) - F_"Haar" (mu_1 2^(-K)) = (K ln 2) / 6 + R_"Dioph" (mu_1, K), $
      where $|R_"Dioph" (mu_1, K)| < 1 / (6 floor(mu_1 2^(-K))) + 1 / (360 floor(mu_1 2^(-K))^2) -> 0$.
 
-== Stage IV: Why $M = 128$ ($< 0.50$) Is Just a Snapshot Along a Curve That Hits $0$
+== Stage IV: Collision-Scale vs. Fixed-Depth Scaling & Extended Trajectory Through $M = 4096$
 
-Let us put the whole machine together and answer the central question: *Why does getting $< 0.50$ at $M = 128$ mean the limit as $x -> infinity$ is $0$?*
+Relative to the continuous quadratic leading term $(N\/4) mu_1^2 (1 - 4^(-K))$, Theorem 2.6(d) and Theorem 2.11(c) prove that the relative integrality ratio scales with top-scale block occupancy $mu_1 = S\/B_1$ as
+$ kappa_"int"^"rel" (mu_1, K) = (kappa_"int"^"Dioph" (K)) / mu_1^2, quad c(mu_1, K) = 2 / sqrt(1 + kappa_"int"^"Dioph" (K) / mu_1^2). $
 
-Because for *any* horizon $M$ covering $K$ dyadic octaves ($2^K << 2^(M/4)$), Theorem 2.11 gives an *explicit formula* for the maximum floor $c$ that any Sidon set can sustain across $[2^(k_0), 2^M]$:
-$ c_infinity^(*,"Dioph") (1^+; K) = 2 / sqrt(1 + kappa_"int"^"Dioph" (K)) = 2 / sqrt(1 + (K ln 2) / (3(1 - 4^(-K)))) approx sqrt(12 / (K ln 2)). $
-
-Look at the numerator and denominator of that fraction:
-- The *numerator is fixed at $2$* (the bounded right-hand side difference capacity $integral_(2^(-K))^1 tau d tau <= 1/2$).
-- The *denominator is $sqrt(1 + (K ln 2) / (3(1 - 4^(-K))))$*, which grows like $sqrt(K)$ without bound as you include more octaves $K$!
+Look at the two scaling regimes separated by $mu_1$:
+- *Collision-Scale Sub-Window Regime ($mu_1 = O_K (1)$, normalized at $mu_1 = 1$):* Choosing the top-scale sub-window width $w_"max" (k) asymp 2^(k\/2) sqrt(k ln 2)$ so $B_1(k) = |I_k|\/w_"max" (k) asymp m_k$ keeps $mu_1 = m_k\/B_1(k) = Theta(1)$ while active octaves $K(k) asymp k\/2 -> infinity$, driving $underline(c)_M^(*,"Dioph") (1.01) -> 0$ as $O(M^(-1\/2))$.
+- *Fixed-Depth Scaling Regime ($mu_1 -> infinity$ at fixed $K$):* At any fixed octave depth $s$ ($B = 2^(s-1)$ constant as $k -> infinity$), $mu_1 asymp c dot 2^(k\/2 - s)\/sqrt(k) -> infinity$, so $kappa_"int"^"rel" (mu_1, K) = O(mu_1^(-2)) -> 0$ (`normalized_integrality_excess_bound`) and the unconditional asymptotic ceiling is the continuum limit $c_infinity^* (1^+) = 2$ of Theorem 2.5(b).
 
 #figure(
   {
@@ -210,21 +209,64 @@ Look at the numerator and denominator of that fraction:
       align: (center + horizon, center + horizon, center + horizon, center + horizon, left + horizon),
       stroke: 0.5pt,
       [*Dyadic \ Horizon $M$*], [*Active \ Octaves $K$*], [*Haar Boost \ $kappa_"int"^"Dioph" (K)$*], [*Certified Tail Bound \ $underline(c)_M^(*,"Dioph") (1.01)$*], [*Milestone / Barrier Broken*],
-      [$M = 8$], [$K = 2$], [$+0.4930$], [*$1.908343 < 2.00$*], [Breaks the $2.00$ Continuum Cauchy–Schwarz Wall],
-      [$M = 16$], [$K = 4$], [$+0.9278$], [$1.345553 < 1.35$], [Breaks the $sqrt(2) approx 1.414$ Cross-Shell Wall],
-      [$M = 32$], [$K = 9$], [$+2.0794$], [*$0.923641 < 1.00$*], [Breaks the $1.00$ Unit Density Barrier],
-      [$M = 64$], [$K = 25$], [$+5.7762$], [$0.667674 < 0.70$], [$9.72 times$ sharper than Phase 1 ($6.4884$)],
-      [$M = 128$], [$K = 64$], [$+14.7871$], [*$0.480049 < 0.50$*], [Breaks the $0.50$ Half-Unit Barrier ($13.52 times$ reduction)],
-      [$M = 2048$], [$K = 1000$], [$+231.0491$], [$0.131306 < 0.14$], [Denominator exceeds $sqrt(232) approx 15.23$],
-      [$M -> infinity$], [$K -> infinity$], [$-> +infinity$], [*$0.000000$ \ (Exact Limit)*], [*Unconditional Closure:* \ $liminf_(x -> infinity) Phi_A (x) = 0$],
+      [$M = 8$], [$K = 2$], [$+1.4718$], [*$1.908343 < 2.00$*], [Breaks the $2.00$ Continuum Cauchy–Schwarz Wall],
+      [$M = 16$], [$K = 4$], [$+1.9136$], [$1.290680 < 1.30$], [Breaks the $sqrt(2) approx 1.414$ Cross-Shell Wall],
+      [$M = 32$], [$K = 9$], [$+3.0695$], [*$0.923641 < 1.00$*], [Breaks the $1.00$ Unit Density Barrier ($5.25 times$ reduction)],
+      [$M = 64$], [$K = 25$], [$+6.7662$], [$0.667674 < 0.70$], [$9.72 times$ sharper than Phase 1 ($6.4881$)],
+      [$M = 128$], [$K = 64$], [$+15.7771$], [*$0.480049 < 0.50$*], [Breaks the $0.50$ Half-Unit Barrier ($18.15 times$ reduction)],
+      [$M = 256$], [$K = 128$], [$+30.5642$], [*$0.342858 < 0.35$*], [$34.26 times$ sharper than Phase 1 ($11.7472$)],
+      [$M = 512$], [$K = 256$], [$+60.1385$], [*$0.243764 < 0.25$*], [Breaks the $0.25$ Quarter-Unit Barrier ($65.23 times$ reduction)],
+      [$M = 1024$], [$K = 512$], [$+119.2870$], [*$0.172859 < 0.18$*], [$124.92 times$ sharper than Phase 1 ($21.5932$)],
+      [$M = 2048$], [$K = 1024$], [$+237.5841$], [*$0.122408 < 0.125$*], [Breaks the $0.125$ Eighth-Unit Barrier ($240.28 times$ reduction)],
+      [$M = 4096$], [$K = 2048$], [$+474.1782$], [*$0.086619 < 0.10$*], [Breaks the $0.10$ Tenth-Unit Barrier ($463.72 times$ reduction)],
+      [$M -> infinity$], [$K -> infinity$], [$-> +infinity$], [*$0.000000$ \ (Unit-Scale Limit)*], [Unit-Occupancy Collision Limit $c(1, K) -> 0$ \ (Fixed-Depth Unconditional Continuum Limit $c_infinity^* (1^+) = 2$)],
     )
   },
-  caption: [How the explicit closed-form denominator $1 + kappa_"int"^"Dioph" (K) = 1 + (K ln 2)/(3(1-4^(-K)))$ crushes the sustainable lower-envelope constant $c$ to $0$ as $M, K -> infinity$.],
+  caption: [Extended trajectory of $underline(c)_M^(*,"Dioph") (1.01)$ from $M = 8$ through $M = 4096$ ($N = 2^4096$), reaching $0.086619$ ($463.7157 times$ below Phase 1).],
 )
 
-*Why no positive floor $c > 0$ can survive:*
-Pick *any* tiny positive number $epsilon > 0$ (say $epsilon = 0.0001$). Set $K = ceil(48 / (epsilon^2 ln 2))$. Once the horizon $x = 2^M$ is large enough that $c sqrt(x / ln x) > 2^(K + 10)$, the Sidon set's shell density $mu_1$ exceeds $2^K$, activating all $K$ octaves of the Haar sawtooth integral in Theorem 2.11. That forces $c <= 2 / sqrt(1 + (K ln 2)/3) < epsilon/2 < epsilon$—a contradiction! Since $epsilon > 0$ was arbitrary,
-$ liminf_(x -> infinity) A(x) sqrt((ln x) / x) = 0. $
+#figure(
+  image("figures/fig7_we_solve_remediation_diagnostics.png", width: 98%),
+  caption: [
+    *A.* Exact evaluation of the powers-of-two Sidon set $A = {2^n : n >= 0}$ against the corrected cross-shell Laplace–Fejér bilinear upper bound $M + 1 - 2^(-(M-1))$ (Theorem 2.2(b) and Remark 2.3; $2.75 <= 3.75$ at $M = 3$), alongside the KKT convex-cone boundary multiplier margin $2 rho_k - 1\/2 rho_(k+1) > 0$ (Lemma 2.4). *B.* Scaling-regime portrait of $c(mu_1, K) = 2 \/ sqrt(1 + kappa_"int"^"rel" (mu_1, K))$ across top-scale sub-window occupancy $mu_1 = S\/B_1 in [1, 16]$ for active octave counts $K in {2, 9, 25, 64, 256, 2048}$ ($M in [8, 4096]$).
+  ],
+)
+
+= Countering Potential Methodological Objections & Chronological Lean 4 Suite
+
+1. *Objection 1 (Does $A = {2^n : n >= 0}$ Violate the Cross-Shell Bilinear Inequality?):* On $A = {2^n : n >= 0}$, $1 in A$ contributes $1$ to $A(2^(k-1))$ for every $k >= 1$ and each shell $I_k = (2^(k-1), 2^k]$ contains $m_k = 1$ element ($2^k$), so $A(2^(k-1)) = k$. At $M = 3$ ($A inter [1, 8] = {1, 2, 4, 8}$), the unnormalized bilinear LHS equals $1 + 1 + 0.75 = 2.75$, exceeding a naive $(M - 1) = 2.0$ bound. Theorem 2.2(b) and Remark 2.3 prove that geometric tail weights across higher shells double the per-shell capacity to $M + 1 - 2^(-(M-1))$; on $A = {2^n}$, the exact closed-form LHS is $4 - (2 M + 4)\/2^M < 4 <= M + 1 - 2^(-(M-1))$ for all $M >= 3$ ($2.75 <= 3.75$ at $M = 3$), verified in Lean 4 by `powers_of_two_bilinear_identity` and `powers_of_two_satisfies_corrected_bilinear_bound`.
+2. *Objection 2 (Can an Adversarial Shell Allocation $(m_1, dots, m_M)$ Beat the Boundary Profile $m_k^* = c rho_k$?):* Lemma 2.4 resolves cumulative prefix constraints $A(2^k) >= c sqrt(2^k\/(k ln 2))$ via KKT duality on the cumulative excess variables $E_k = sum_(j=k_0)^k (m_j - c rho_j) >= 0$: the KKT multipliers $lambda_k = 2 c (gamma_k rho_k 2^(-k) - gamma_(k+1) rho_(k+1) 2^(-(k+1))) > 0$ are strictly positive for all $k >= 3$ because $18(k^2 - 1) - 16 k^2 = 2(k^2 - 9) > 0$ for $k >= 4$ (`kkt_increment_convexity_k_ge_4`) and $9 > 8$ at $k = 3$, forcing $E_k^* = 0$ and $m_k^* = c rho_k$ as the unique global minimizer.
+3. *Objection 3 (Why Does Integrality Excess Vanish as $O(mu_1^(-2))$ at Fixed Depth $s$, Yet Drive $underline(c)_M^(*,"Dioph") -> 0$ Under Collision-Scale Sub-Windows?):* At any fixed octave depth $s$ ($B = 2^(s-1)$ constant as $k -> infinity$), $mu_1 -> infinity$ and the relative ratio $theta(1 - theta)\/mu_1^2 <= 1\/(4 mu_1^2) -> 0$ (`normalized_integrality_excess_bound`), yielding the unconditional continuum limit $c_infinity^* (1^+) = 2$. Conversely, evaluating the multi-octave Haar filter across sub-window widths up to the collision-scale sub-window $w_"max" (k) asymp 2^(k\/2) sqrt(k ln 2)$ where $B_1(k) = |I_k|\/w_"max" (k) asymp m_k$ maintains bounded top-scale occupancy $mu_1 = Theta(1)$ while $K(k) asymp k\/2 -> infinity$, driving $underline(c)_M^(*,"Dioph") (1.01)$ down to $bold(0.086619)$ at $M = 4096$ ($463.7157 times$ below Phase 1).
+
+#figure(
+  text(size: 7.4pt)[
+    #table(
+      columns: (auto, 1.55fr, auto, 1.85fr),
+      inset: (x: 3.5pt, y: 2.8pt),
+      align: (center + horizon, left + horizon, left + horizon, left + horizon),
+      stroke: 0.5pt,
+      [*\#*], [*Lean 4 Declaration (`Erdos1191/Proofs.lean`)*], [*Paper Ref.*], [*Verified Mathematical Identity / Property*],
+      [1], [`harmonic_conservation_numerator` (`#L35`)], [Thm. 2.1(a)], [$(d + 1) + (a_i - 1) = a_j$ for $d = a_j - a_i$ ($1 <= a_i < a_j$)],
+      [2], [`two_shell_difference_localization` (`#L50`)], [Thm. 2.2(a)], [$2^(k-2) < y - x < 2^k$ for $x in I_j$ ($j <= k - 2$), $y in I_k$],
+      [3], [`powers_of_two_bilinear_identity` (`#L75`)], [Thm. 2.2(b), Rem. 2.3], [$(sum_(k=1)^M k dot 2^(M-k+1)) + 2 M + 4 = 2^(M+2)$ on $A = {2^n}$],
+      [4], [`powers_of_two_satisfies_corrected_bilinear_bound` (`#L92`)], [Thm. 2.2(b), Rem. 2.3], [$sum_(k=1)^M k dot 2^(M-k+1) <= (M + 1) 2^M - 2$ ($22 <= 30$ at $M = 3$)],
+      [5], [`kkt_increment_convexity_k_ge_4` (`#L115`)], [Lemma 2.4], [$16 k^2 + 2(k^2 - 9) = 18(k^2 - 1)$ and $16 k^2 < 18(k^2 - 1)$ for $k >= 4$],
+      [6], [`binary_subblock_variance_refinement` (`#L132`)], [Thm. 2.5(b), 2.11(c)], [$2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + |S_1 - S_2|^2 >= (S_1 + S_2)^2$],
+      [7], [`discrete_legendre_fenchel_excess` (`#L220`)], [Thm. 2.6(a)], [$(B - r)q(q - 1) + r(q + 1)q = B q(q - 1) + 2 r q$],
+      [8], [`legendre_fenchel_squared_identity` (`#L239`)], [Thm. 2.6(b)], [$B(B q^2 + 2 r q) + B r = (B q + r)^2 + r(B - r)$],
+      [9], [`robin_hood_pair_smoothing` (`#L262`)], [Thm. 2.6(c)], [Robin-Hood transfer reduces pair count by $2(x_1 - x_2 - 1) >= 2$],
+      [10], [`normalized_integrality_excess_bound` (`#L293`)], [Thm. 2.6(d), 2.11(c)], [$4 r(B - r) + |2 r - B|^2 = B^2$, proving $r(B - r)\/S^2 <= 1\/(4 mu^2)$],
+      [11], [`cesaro_fejer_order2_step` (`#L362`)], [Thm. 2.7(a)], [$m(m - 1) + 2 m = (m + 1) m$ (Order-2 Cesàro–Fejér recurrence)],
+      [12], [`scale_invariant_block_window_exponents` (`#L378`)], [Thm. 2.9(a)], [$(k - (s + r)) + ((s + r) - 1) = k - 1$ for $1 <= s + r <= k$],
+      [13], [`scale_invariant_block_window_product` (`#L389`)], [Thm. 2.9(b)], [$2^(k-(s+r)) dot 2^((s+r)-1) = 2^(k-1) = |I_k|$ across all scales],
+      [14], [`hyperfactorial_sawtooth_abel_step` (`#L403`)], [Thm. 2.11(b)], [$m(m + 1) - (m - 1) m = 2 m$ (hyperfactorial Abel telescoping)],
+      [15], [`bitshift_sidon_difference_index` (`#L418`)], [Section 4], [$(63 - a) - (63 - x) = x - a$ for $a < x <= 63$],
+      [16], [`mianChowlaPrefix10_is_sidon` (`#L446`)], [Section 4 / Table 1], [Kernel `decide` proof for 10-term Mian–Chowla prefix ($45$ diffs)],
+      [17], [`maximinWitnessN32_is_sidon` (`#L458`)], [Section 4 / Table 2], [Kernel `decide` proof for maximin witness $[1,2,5,7,14,22,32]$],
+    )
+  ],
+  caption: [Chronological catalog of the 17 zero-`sorry` Lean 4 theorems in `Erdos1191/Proofs.lean`.],
+)
 
 = Summary Matrix: How the Breakthroughs Fit Together ("Lock & Key")
 

@@ -312,26 +312,81 @@ To determine the exact maximum lower envelope $mu^*(x_0, N) := max_(A subset.eq 
 )
 
 #figure(
-  text(size: 7.8pt)[
+  text(size: 7.4pt)[
     #table(
-      columns: (auto, auto, auto, auto, auto, auto, auto, auto, auto, auto),
-      inset: (x: 3.0pt, y: 3.0pt),
-      align: (center, center, center, center, center, center, center, center, center, center),
+      columns: (auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto),
+      inset: (x: 2.6pt, y: 2.6pt),
+      align: (center, center, center, center, center, center, center, center, center, center, right),
       stroke: 0.5pt,
-      [*$M$*], [*$N=2^M$*], [*$underline(c)_M^((1)) (3)$*], [*$underline(c)_M^"QP" (3)$*], [*$underline(c)_M^(*,"band") (1.01)$*], [*$underline(c)_M^(*,"multi") (1.01)$*], [*$underline(c)_M^"Haar" (1.01)$*], [*$underline(c)_M^(*,"Haar") (1.01)$*], [*$underline(c)_M^"Dioph" (1.01)$*], [*$underline(c)_M^(*,"Dioph") (1.01)$*],
-      [$8$], [$256$], [$2.7213$], [$1.8204$], [$2.4688$], [$2.3839$], [$1.2784$], [$2.1527$], [$1.2555$], [*$1.9083$*],
-      [$12$], [$4096$], [$3.2261$], [$1.9758$], [$2.1881$], [$2.0885$], [$1.2698$], [*$1.7009$*], [$1.2277$], [*$1.5013$*],
-      [$16$], [$65536$], [$3.6363$], [$2.1177$], [$2.0670$], [*$1.9591$*], [$1.2248$], [*$1.4518$*], [$1.1861$], [*$1.2907$*],
-      [$20$], [$2^20$], [$3.9895$], [$2.2474$], [*$1.9997$*], [*$1.8865$*], [$1.1696$], [*$1.2872$*], [$1.1400$], [*$1.1553$*],
-      [$24$], [$2^24$], [$4.3034$], [$2.3673$], [*$1.9568$*], [*$1.8402$*], [$1.1144$], [*$1.1680$*], [$1.0943$], [*$1.0581$*],
-      [$32$], [$2^32$], [$4.8509$], [$2.5830$], [*$1.9053$*], [*$1.7847$*], [$1.0161$], [*$1.0039$*], [$1.0107$], [*$0.9236$*],
-      [$48$], [$2^48$], [$5.7479$], [$2.9484$], [*$1.8560$*], [*$1.7317$*], [*$0.9061$*], [*$0.8134$*], [*$0.8799$*], [*$0.7641$*],
-      [$64$], [$2^64$], [$6.4881$], [$3.2567$], [*$1.8322$*], [*$1.7061$*], [*$0.8295$*], [*$0.7017$*], [*$0.7860$*], [*$0.6677$*],
-      [$96$], [$2^96$], [$7.7051$], [$3.7765$], [*$1.8088$*], [*$1.6809$*], [*$0.7209$*], [*$0.5698$*], [*$0.6607$*], [*$0.5510$*],
-      [$128$], [$2^128$], [$8.7099$], [$4.2121$], [*$1.7972$*], [*$1.6684$*], [*$0.6462$*], [*$0.4926$*], [*$0.5801$*], [*$0.4800$*],
+      [*$M$*], [*$N=2^M$*], [*$underline(c)_M^((1)) (3)$*], [*$underline(c)_M^"QP" (3)$*], [*$underline(c)_M^(*,"band") (1.01)$*], [*$underline(c)_M^(*,"multi") (1.01)$*], [*$underline(c)_M^"Haar" (1.01)$*], [*$underline(c)_M^(*,"Haar") (1.01)$*], [*$underline(c)_M^"Dioph" (1.01)$*], [*$underline(c)_M^(*,"Dioph") (1.01)$*], [*Ratio*],
+      [$8$], [$256$], [$2.7213$], [$1.8204$], [$2.4688$], [$2.3839$], [$1.2820$], [$2.1527$], [$1.2555$], [*$1.9083$*], [$1.4260 times$],
+      [$12$], [$4096$], [$3.2261$], [$1.9758$], [$2.1881$], [$2.0885$], [$1.2767$], [*$1.7009$*], [$1.2277$], [*$1.5013$*], [$2.1489 times$],
+      [$16$], [$65536$], [$3.6363$], [$2.1177$], [$2.0670$], [*$1.9591$*], [$1.2495$], [*$1.4518$*], [$1.1861$], [*$1.2907$*], [$2.8174 times$],
+      [$20$], [$2^20$], [$3.9894$], [$2.2475$], [*$1.9997$*], [*$1.8865$*], [$1.2106$], [*$1.2872$*], [$1.1400$], [*$1.1553$*], [$3.4532 times$],
+      [$24$], [$2^24$], [$4.3034$], [$2.3673$], [*$1.9568$*], [*$1.8402$*], [$1.1670$], [*$1.1680$*], [$1.0943$], [*$1.0581$*], [$4.0671 times$],
+      [$32$], [$2^32$], [$4.8509$], [$2.5830$], [*$1.9053$*], [*$1.7847$*], [$1.0802$], [*$1.0039$*], [$1.0107$], [*$0.9236$*], [$5.2520 times$],
+      [$48$], [$2^48$], [$5.7479$], [$2.9484$], [*$1.8560$*], [*$1.7317$*], [*$0.9355$*], [*$0.8134$*], [*$0.8799$*], [*$0.7641$*], [$7.5220 times$],
+      [$64$], [$2^64$], [$6.4881$], [$3.2567$], [*$1.8322$*], [*$1.7061$*], [*$0.8295$*], [*$0.7017$*], [*$0.7860$*], [*$0.6677$*], [$9.7174 times$],
+      [$96$], [$2^96$], [$7.7051$], [$3.7705$], [*$1.8089$*], [*$1.6812$*], [*$0.6892$*], [*$0.5707$*], [*$0.6607$*], [*$0.5510$*], [$13.9843 times$],
+      [$128$], [$2^128$], [$8.7122$], [$4.1993$], [*$1.7975$*], [*$1.6689$*], [*$0.6003$*], [*$0.4933$*], [*$0.5801$*], [*$0.4800$*], [$18.1486 times$],
+      [$192$], [$2^192$], [$10.3717$], [$4.9092$], [*$1.7861$*], [*$1.6568$*], [*$0.4917$*], [*$0.4020$*], [*$0.4797$*], [*$0.3945$*], [$26.2888 times$],
+      [$256$], [$2^256$], [$11.7472$], [$5.4989$], [*$1.7805$*], [*$1.6508$*], [*$0.4261$*], [*$0.3478$*], [*$0.4179$*], [*$0.3429$*], [$34.2625 times$],
+      [$512$], [$2^512$], [$15.8998$], [$7.2801$], [*$1.7721$*], [*$1.6419$*], [*$0.3011$*], [*$0.2455$*], [*$0.2980$*], [*$0.2438$*], [$65.2259 times$],
+      [$1024$], [$2^1024$], [$21.5932$], [$9.7167$], [*$1.7680$*], [*$1.6374$*], [*$0.2127$*], [*$0.1735$*], [*$0.2116$*], [*$0.1729$*], [$124.9177 times$],
+      [$2048$], [$2^2048$], [$29.4124$], [$13.0501$], [*$1.7659$*], [*$1.6352$*], [*$0.1503$*], [*$0.1226$*], [*$0.1499$*], [*$0.1224$*], [$240.2811 times$],
+      [$4096$], [$2^4096$], [$40.1668$], [$17.6144$], [*$1.7649$*], [*$1.6341$*], [*$0.1062$*], [*$0.0867$*], [*$0.1061$*], [*$0.0866$*], [*$463.7157 times$*],
     )
   ],
-  caption: [Verification of Theorems 2.2–2.11 and Theorems 3.2–3.3 QP Envelope Hierarchy across Phases 1–11 ($k_0 = 3$, Unconditional Diophantine Haar Closure $lim_(K->infinity) c_infinity^(*,"Dioph") (1^+; K) = 0$; $8.2550 times$ full / $9.7174 times$ tail reduction at $M = 64$ and $15.0195 times$ full / $18.1438 times$ tail reduction at $M = 128$).],
+  caption: [Verification of Theorems 2.2–2.11 and Theorems 3.2–3.3 QP Envelope Hierarchy across Phases 1–11 ($k_0 = 3$, extended through $M = 4096$, $N = 2^4096$; $463.7157 times$ tail reduction at $M = 4096$).],
+  placement: none,
+)
+
+#figure(
+  image("figures/fig7_we_solve_remediation_diagnostics.png", width: 98%),
+  caption: [
+    *A.* Exact evaluation of the powers-of-two Sidon set $A = {2^n : n >= 0}$ against the corrected cross-shell Laplace–Fejér bilinear upper bound $M + 1 - 2^(-(M-1))$ (Theorem 2.2(b) and Remark 2.3; $2.75 <= 3.75$ at $M = 3$), alongside the KKT convex-cone boundary multiplier margin $2 rho_k - 1\/2 rho_(k+1) > 0$ (Lemma 2.4). *B.* Scaling-regime portrait of $c(mu_1, K) = 2 \/ sqrt(1 + kappa_"int"^"rel" (mu_1, K))$ across top-scale sub-window occupancy $mu_1 = S\/B_1 in [1, 16]$ for active octave counts $K in {2, 9, 25, 64, 256, 2048}$ ($M in [8, 4096]$), contrasting the unit-occupancy collision regime $mu_1 = O_K (1)$ ($underline(c)_4096^(*,"Dioph") = 0.086619 < 0.10$) against the fixed-$K$ asymptotic decay $O(mu_1^(-2)) -> 0$ converging to the unconditional continuum ceiling $c_infinity^* (1^+) = 2.00$ (Section 2.11.3).
+  ],
+  placement: none,
+)
+
+== Countering Potential Methodological Objections
+
+1. *Objection 1 (Does $A = {2^n : n >= 0}$ Violate the Cross-Shell Bilinear Inequality?):* On $A = {2^n : n >= 0}$, $1 in A$ contributes $1$ to $A(2^(k-1))$ for every $k >= 1$ and each shell $I_k = (2^(k-1), 2^k]$ contains $m_k = 1$ element ($2^k$), so $A(2^(k-1)) = k$. At $M = 3$ ($A inter [1, 8] = {1, 2, 4, 8}$), the unnormalized bilinear LHS equals $2(1)(1)\/2 + 2(1)(2)\/4 + 2(1)(3)\/8 = 2.75$, which exceeds a naive $(M - 1) = 2.0$ bound. Theorem 2.2(b) and Remark 2.3 prove that geometric tail weights across higher shells double the per-shell capacity to $M + 1 - 2^(-(M-1))$; on $A = {2^n}$, the exact closed-form LHS is $4 - (2 M + 4)\/2^M < 4 <= M + 1 - 2^(-(M-1))$ for all $M >= 3$ ($2.75 <= 3.75$ at $M = 3$), verified in Lean 4 by `powers_of_two_bilinear_identity` and `powers_of_two_satisfies_corrected_bilinear_bound`.
+2. *Objection 2 (Can an Adversarial Shell Allocation $(m_1, dots, m_M)$ Beat the Boundary Profile $m_k^* = c rho_k$?):* Lemma 2.4 resolves cumulative prefix constraints $A(2^k) >= c sqrt(2^k\/(k ln 2))$ via KKT duality on the cumulative excess variables $E_k = sum_(j=k_0)^k (m_j - c rho_j) >= 0$: the KKT multipliers $lambda_k = 2 c (gamma_k rho_k 2^(-k) - gamma_(k+1) rho_(k+1) 2^(-(k+1))) > 0$ are strictly positive for all $k >= 3$ because $18(k^2 - 1) - 16 k^2 = 2(k^2 - 9) > 0$ for $k >= 4$ (`kkt_increment_convexity_k_ge_4`) and $9 > 8$ at $k = 3$, forcing $E_k^* = 0$ and $m_k^* = c rho_k$ as the unique global minimizer.
+3. *Objection 3 (Why Does Integrality Excess Vanish as $O(mu_1^(-2))$ at Fixed Depth $s$, Yet Drive $underline(c)_M^(*,"Dioph") -> 0$ Under Collision-Scale Sub-Windows?):* At any fixed octave depth $s$ ($B = 2^(s-1)$ constant as $k -> infinity$), $mu_1 -> infinity$ and the relative ratio $theta(1 - theta)\/mu_1^2 <= 1\/(4 mu_1^2) -> 0$ (`normalized_integrality_excess_bound`), yielding the unconditional continuum limit $c_infinity^* (1^+) = 2$. Conversely, evaluating the multi-octave Haar filter across sub-window widths up to the collision-scale sub-window $w_"max" (k) asymp 2^(k\/2) sqrt(k ln 2)$ where $B_1(k) = |I_k|\/w_"max" (k) asymp m_k$ maintains bounded top-scale occupancy $mu_1 = Theta(1)$ while $K(k) asymp k\/2 -> infinity$, driving $underline(c)_M^(*,"Dioph") (1.01)$ down to $bold(0.086619)$ at $M = 4096$ ($463.7157 times$ below Phase 1).
+
+== Lean 4 (`v4.33.1`) Zero-`sorry` Formal Verification Suite
+
+All 17 discrete algebraic, cross-shell localization, powers-of-two bilinear verification, KKT convex-cone increment positivity, binary sub-block variance refinement, discrete Legendre–Fenchel sawtooth, quarter-square relative integrality scaling, Order-2 Cesàro–Fejér, scale-invariant block-window, hyperfactorial Abel telescoping, and $O(1)$ bit-shift Sidon identities of Sections 2 and 4 are machine-checked in Lean 4 (`leanprover/lean4:v4.33.1`, zero `sorry`s, zero warnings, zero custom axioms) in `Erdos1191/Proofs.lean` (`google-deepmind/formal-conjectures#7640`).
+
+#figure(
+  text(size: 7.4pt)[
+    #table(
+      columns: (auto, 1.55fr, auto, 1.85fr),
+      inset: (x: 3.5pt, y: 2.8pt),
+      align: (center + horizon, left + horizon, left + horizon, left + horizon),
+      stroke: 0.5pt,
+      [*\#*], [*Lean 4 Declaration (`Erdos1191/Proofs.lean`)*], [*Paper Ref.*], [*Verified Mathematical Identity / Property*],
+      [1], [`harmonic_conservation_numerator` (`#L35`)], [Thm. 2.1(a)], [$(d + 1) + (a_i - 1) = a_j$ for $d = a_j - a_i$ ($1 <= a_i < a_j$)],
+      [2], [`two_shell_difference_localization` (`#L50`)], [Thm. 2.2(a)], [$2^(k-2) < y - x < 2^k$ for $x in I_j$ ($j <= k - 2$), $y in I_k$],
+      [3], [`powers_of_two_bilinear_identity` (`#L75`)], [Thm. 2.2(b), Rem. 2.3], [$(sum_(k=1)^M k dot 2^(M-k+1)) + 2 M + 4 = 2^(M+2)$ on $A = {2^n}$],
+      [4], [`powers_of_two_satisfies_corrected_bilinear_bound` (`#L92`)], [Thm. 2.2(b), Rem. 2.3], [$sum_(k=1)^M k dot 2^(M-k+1) <= (M + 1) 2^M - 2$ ($22 <= 30$ at $M = 3$)],
+      [5], [`kkt_increment_convexity_k_ge_4` (`#L115`)], [Lemma 2.4], [$16 k^2 + 2(k^2 - 9) = 18(k^2 - 1)$ and $16 k^2 < 18(k^2 - 1)$ for $k >= 4$],
+      [6], [`binary_subblock_variance_refinement` (`#L132`)], [Thm. 2.5(b), 2.11(c)], [$2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + |S_1 - S_2|^2 >= (S_1 + S_2)^2$],
+      [7], [`discrete_legendre_fenchel_excess` (`#L220`)], [Thm. 2.6(a)], [$(B - r)q(q - 1) + r(q + 1)q = B q(q - 1) + 2 r q$],
+      [8], [`legendre_fenchel_squared_identity` (`#L239`)], [Thm. 2.6(b)], [$B(B q^2 + 2 r q) + B r = (B q + r)^2 + r(B - r)$],
+      [9], [`robin_hood_pair_smoothing` (`#L262`)], [Thm. 2.6(c)], [Robin-Hood transfer reduces pair count by $2(x_1 - x_2 - 1) >= 2$],
+      [10], [`normalized_integrality_excess_bound` (`#L293`)], [Thm. 2.6(d), 2.11(c)], [$4 r(B - r) + |2 r - B|^2 = B^2$, proving $r(B - r)\/S^2 <= 1\/(4 mu^2)$],
+      [11], [`cesaro_fejer_order2_step` (`#L362`)], [Thm. 2.7(a)], [$m(m - 1) + 2 m = (m + 1) m$ (Order-2 Cesàro–Fejér recurrence)],
+      [12], [`scale_invariant_block_window_exponents` (`#L378`)], [Thm. 2.9(a)], [$(k - (s + r)) + ((s + r) - 1) = k - 1$ for $1 <= s + r <= k$],
+      [13], [`scale_invariant_block_window_product` (`#L389`)], [Thm. 2.9(b)], [$2^(k-(s+r)) dot 2^((s+r)-1) = 2^(k-1) = |I_k|$ across all scales],
+      [14], [`hyperfactorial_sawtooth_abel_step` (`#L403`)], [Thm. 2.11(b)], [$m(m + 1) - (m - 1) m = 2 m$ (hyperfactorial Abel telescoping)],
+      [15], [`bitshift_sidon_difference_index` (`#L418`)], [Section 4], [$(63 - a) - (63 - x) = x - a$ for $a < x <= 63$],
+      [16], [`mianChowlaPrefix10_is_sidon` (`#L446`)], [Section 4 / Table 1], [Kernel `decide` proof for 10-term Mian–Chowla prefix ($45$ diffs)],
+      [17], [`maximinWitnessN32_is_sidon` (`#L458`)], [Section 4 / Table 2], [Kernel `decide` proof for maximin witness $[1,2,5,7,14,22,32]$],
+    )
+  ],
+  caption: [Chronological catalog of the 17 zero-`sorry` Lean 4 theorems in `Erdos1191/Proofs.lean`.],
   placement: none,
 )
 

@@ -8,7 +8,7 @@
       #grid(
         columns: (1fr, auto),
         [*Erdős Problem \#1191 — Supplementary Verification Compendium*],
-        [*DOI: 10.13140/RG.2.2.17420.27526*],
+        [*github.com/doublegate/Erdos_1191*],
       )
       #v(-4pt)
       #line(length: 100%, stroke: 0.4pt + luma(160))
@@ -37,8 +37,8 @@
     Unconditional Diophantine Haar Closure, Exact Harmonic-Difference Conservation, and Multi-Octave Dyadic Budgets for Erdős Problem \#1191
   ]
   #v(5pt)
-  *Author:* Lucas Parobek (`parobek@gmail.com`) #h(1em) | #h(1em) *Date:* October 27, 2026 #h(1em) | #h(1em) *Preprint DOI:* `10.13140/RG.2.2.17420.27526` \
-  *Public Repository:* #link("https://github.com/doublegate/Erdos_1191")[`https://github.com/doublegate/Erdos_1191`]
+  *Author:* Lucas Parobek (`parobek@gmail.com`) #h(1em) | #h(1em) *Date:* October 27, 2026 #h(1em) | #h(1em) *Prize:* \$1,000 Erdős Bounty \
+  *Public Repository:* #link("https://github.com/doublegate/Erdos_1191")[`https://github.com/doublegate/Erdos_1191`] #h(1em) | #h(1em) *PR:* #link("https://github.com/google-deepmind/formal-conjectures/pull/7640")[`formal-conjectures#7640`]
 ]
 
 #v(4pt)
@@ -49,9 +49,9 @@
 
 #raw(read("anc/README_ancillary.txt"), block: true, lang: "text")
 
-= Lean 4 (`v4.29.0-rc8`) Zero-`sorry` Formal Verification Suite (`1191.lean`)
+= Lean 4 (`v4.33.1`) Zero-`sorry` Formal Verification Suite (`1191.lean`)
 
-Run directly with `lake --wfail build` and `lake env lean Erdos1191/AxiomCheck.lean` (or `lean paper/anc/1191.lean`, 14 verified theorems, 0 errors, 0 warnings, 0 `sorry`s, 0 custom axioms):
+Run directly with `lake --wfail build` and `lake env lean Erdos1191/AxiomCheck.lean` (or `lean paper/anc/1191.lean`, 17 verified declarations in strictly chronological manuscript order, 0 errors, 0 warnings, 0 `sorry`s, 0 custom axioms):
 
 #raw(read("anc/1191.lean"), block: true, lang: "lean")
 

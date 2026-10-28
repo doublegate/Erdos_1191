@@ -1,5 +1,12 @@
 /target
 /.lake
+.ruff_cache/
+**/*.rs.bk
+*.ck.json
+records_*.json
+nohup.out
+CLAUDE.local.md
+.claude/settings.local.json
 __pycache__/
 *.pyc
 *.pyo
@@ -8,6 +15,7 @@ __pycache__/
 *.out
 *.toc
 *.bbl
+!paper/manuscript.bbl
 *.blg
 *.fls
 *.fdb_latexmk

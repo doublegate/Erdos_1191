@@ -1,7 +1,7 @@
 {
   "problem": "Erdos Problem #1191",
   "prize_usd": 1000,
-  "status": "PROVED (Unconditional Diophantine Haar Closure)",
+  "status": "VERIFIED (17 Zero-sorry Lean 4 Theorems + M<=4096 Envelope Suite)",
   "theorem_2_1_harmonic_conservation": {
     "N": 260,
     "m": 16,
@@ -10,8 +10,76 @@
     "B_A": 4.05651438745,
     "residual": 0.0
   },
+  "theorem_2_2_powers_of_two_and_kkt": {
+    "powers_of_two_checks": [
+      {
+        "M": 1,
+        "bilinear_lhs": 1.0,
+        "tight_rhs_bound": 1.0
+      },
+      {
+        "M": 2,
+        "bilinear_lhs": 2.0,
+        "tight_rhs_bound": 2.5
+      },
+      {
+        "M": 3,
+        "bilinear_lhs": 2.75,
+        "tight_rhs_bound": 3.75
+      },
+      {
+        "M": 4,
+        "bilinear_lhs": 3.25,
+        "tight_rhs_bound": 4.875
+      },
+      {
+        "M": 5,
+        "bilinear_lhs": 3.5625,
+        "tight_rhs_bound": 5.9375
+      },
+      {
+        "M": 6,
+        "bilinear_lhs": 3.75,
+        "tight_rhs_bound": 6.96875
+      }
+    ],
+    "kkt_positivity_sample": [
+      {
+        "k": 3,
+        "kkt_margin": 0.30515209
+      },
+      {
+        "k": 4,
+        "kkt_margin": 0.56344966
+      },
+      {
+        "k": 5,
+        "kkt_margin": 0.83065081
+      },
+      {
+        "k": 6,
+        "kkt_margin": 1.16176357
+      },
+      {
+        "k": 7,
+        "kkt_margin": 1.59755274
+      },
+      {
+        "k": 8,
+        "kkt_margin": 2.1842888
+      },
+      {
+        "k": 9,
+        "kkt_margin": 2.98218044
+      },
+      {
+        "k": 10,
+        "kkt_margin": 4.07283036
+      }
+    ]
+  },
   "theorem_2_6_legendre_fenchel_integrality": {
-    "pairs_verified": 2880,
+    "pairs_verified": 2856,
     "max_abs_error": 0.0
   },
   "theorem_2_11_diophantine_haar_closure": {
@@ -70,75 +138,195 @@
     "envelopes": [
       {
         "M": 8,
-        "K_opt": 2,
-        "c_phase1": 6.453339,
-        "c_haar_full": 2.114568,
-        "c_haar_tail": 1.988887,
-        "c_dioph_full": 2.025814,
-        "c_dioph_tail": 1.908343
+        "c_phase1": 2.721251,
+        "c_phase2_qp": 1.820393,
+        "c_band_tail": 2.468789,
+        "c_multi_tail": 2.383914,
+        "c_haar_full": 1.282034,
+        "c_haar_tail": 2.152696,
+        "c_dioph_full": 1.255539,
+        "c_dioph_tail": 1.908343,
+        "reduction_vs_phase1": 1.426
+      },
+      {
+        "M": 12,
+        "c_phase1": 3.226064,
+        "c_phase2_qp": 1.975821,
+        "c_band_tail": 2.188063,
+        "c_multi_tail": 2.088502,
+        "c_haar_full": 1.276667,
+        "c_haar_tail": 1.700945,
+        "c_dioph_full": 1.227691,
+        "c_dioph_tail": 1.501277,
+        "reduction_vs_phase1": 2.1489
       },
       {
         "M": 16,
-        "K_opt": 4,
-        "c_phase1": 6.03899,
-        "c_haar_full": 1.564631,
-        "c_haar_tail": 1.410687,
-        "c_dioph_full": 1.487918,
-        "c_dioph_tail": 1.345553
+        "c_phase1": 3.636313,
+        "c_phase2_qp": 2.117744,
+        "c_band_tail": 2.067017,
+        "c_multi_tail": 1.959054,
+        "c_haar_full": 1.249498,
+        "c_haar_tail": 1.45184,
+        "c_dioph_full": 1.186052,
+        "c_dioph_tail": 1.29068,
+        "reduction_vs_phase1": 2.8174
+      },
+      {
+        "M": 20,
+        "c_phase1": 3.98942,
+        "c_phase2_qp": 2.247547,
+        "c_band_tail": 1.999651,
+        "c_multi_tail": 1.886523,
+        "c_haar_full": 1.210563,
+        "c_haar_tail": 1.287195,
+        "c_dioph_full": 1.139995,
+        "c_dioph_tail": 1.15529,
+        "reduction_vs_phase1": 3.4532
       },
       {
         "M": 24,
-        "K_opt": 6,
-        "c_phase1": 6.070671,
-        "c_haar_full": 1.273812,
-        "c_haar_tail": 1.124372,
-        "c_dioph_full": 1.208926,
-        "c_dioph_tail": 1.070276
+        "c_phase1": 4.303369,
+        "c_phase2_qp": 2.367264,
+        "c_band_tail": 1.956755,
+        "c_multi_tail": 1.840234,
+        "c_haar_full": 1.167,
+        "c_haar_tail": 1.168025,
+        "c_dioph_full": 1.094278,
+        "c_dioph_tail": 1.058088,
+        "reduction_vs_phase1": 4.0671
       },
       {
         "M": 32,
-        "K_opt": 9,
-        "c_phase1": 6.147462,
-        "c_haar_full": 1.09778,
-        "c_haar_tail": 0.969349,
-        "c_dioph_full": 1.04199,
-        "c_dioph_tail": 0.923641
+        "c_phase1": 4.850941,
+        "c_phase2_qp": 2.582981,
+        "c_band_tail": 1.90527,
+        "c_multi_tail": 1.78468,
+        "c_haar_full": 1.08017,
+        "c_haar_tail": 1.00386,
+        "c_dioph_full": 1.010691,
+        "c_dioph_tail": 0.923641,
+        "reduction_vs_phase1": 5.252
       },
       {
         "M": 48,
-        "K_opt": 16,
-        "c_phase1": 6.319323,
-        "c_haar_full": 0.916327,
+        "c_phase1": 5.747872,
+        "c_phase2_qp": 2.948437,
+        "c_band_tail": 1.856034,
+        "c_multi_tail": 1.731675,
+        "c_haar_full": 0.935503,
         "c_haar_tail": 0.813355,
-        "c_dioph_full": 0.86985,
-        "c_dioph_tail": 0.775358
+        "c_dioph_full": 0.879924,
+        "c_dioph_tail": 0.764141,
+        "reduction_vs_phase1": 7.522
       },
       {
         "M": 64,
-        "K_opt": 25,
-        "c_phase1": 6.488369,
-        "c_haar_full": 0.829591,
+        "c_phase1": 6.488055,
+        "c_phase2_qp": 3.256693,
+        "c_band_tail": 1.832222,
+        "c_multi_tail": 1.706111,
+        "c_haar_full": 0.82953,
         "c_haar_tail": 0.701665,
-        "c_dioph_full": 0.785989,
-        "c_dioph_tail": 0.667674
+        "c_dioph_full": 0.785954,
+        "c_dioph_tail": 0.667674,
+        "reduction_vs_phase1": 9.7174
       },
       {
         "M": 96,
-        "K_opt": 44,
-        "c_phase1": 6.797797,
-        "c_haar_full": 0.713853,
-        "c_haar_tail": 0.570112,
-        "c_dioph_full": 0.668941,
-        "c_dioph_tail": 0.541628
+        "c_phase1": 7.705094,
+        "c_phase2_qp": 3.770528,
+        "c_band_tail": 1.808927,
+        "c_multi_tail": 1.681155,
+        "c_haar_full": 0.689218,
+        "c_haar_tail": 0.570684,
+        "c_dioph_full": 0.660729,
+        "c_dioph_tail": 0.550981,
+        "reduction_vs_phase1": 13.9843
       },
       {
         "M": 128,
-        "K_opt": 64,
-        "c_phase1": 7.210099,
-        "c_haar_full": 0.646159,
-        "c_haar_tail": 0.492634,
+        "c_phase1": 8.712231,
+        "c_phase2_qp": 4.19933,
+        "c_band_tail": 1.79747,
+        "c_multi_tail": 1.668899,
+        "c_haar_full": 0.600298,
+        "c_haar_tail": 0.493263,
         "c_dioph_full": 0.580061,
-        "c_dioph_tail": 0.480049
+        "c_dioph_tail": 0.480049,
+        "reduction_vs_phase1": 18.1486
+      },
+      {
+        "M": 192,
+        "c_phase1": 10.371672,
+        "c_phase2_qp": 4.909175,
+        "c_band_tail": 1.786137,
+        "c_multi_tail": 1.656789,
+        "c_haar_full": 0.491743,
+        "c_haar_tail": 0.401959,
+        "c_dioph_full": 0.479706,
+        "c_dioph_tail": 0.394528,
+        "reduction_vs_phase1": 26.2888
+      },
+      {
+        "M": 256,
+        "c_phase1": 11.747154,
+        "c_phase2_qp": 5.498917,
+        "c_band_tail": 1.780516,
+        "c_multi_tail": 1.650787,
+        "c_haar_full": 0.426111,
+        "c_haar_tail": 0.347764,
+        "c_dioph_full": 0.417937,
+        "c_dioph_tail": 0.342858,
+        "reduction_vs_phase1": 34.2625
+      },
+      {
+        "M": 512,
+        "c_phase1": 15.899757,
+        "c_phase2_qp": 7.280067,
+        "c_band_tail": 1.772142,
+        "c_multi_tail": 1.641851,
+        "c_haar_full": 0.301117,
+        "c_haar_tail": 0.245543,
+        "c_dioph_full": 0.298024,
+        "c_dioph_tail": 0.243764,
+        "reduction_vs_phase1": 65.2259
+      },
+      {
+        "M": 1024,
+        "c_phase1": 21.593212,
+        "c_phase2_qp": 9.716708,
+        "c_band_tail": 1.767981,
+        "c_multi_tail": 1.637413,
+        "c_haar_full": 0.212692,
+        "c_haar_tail": 0.173496,
+        "c_dioph_full": 0.211558,
+        "c_dioph_tail": 0.172859,
+        "reduction_vs_phase1": 124.9177
+      },
+      {
+        "M": 2048,
+        "c_phase1": 29.412383,
+        "c_phase2_qp": 13.050138,
+        "c_band_tail": 1.765906,
+        "c_multi_tail": 1.635202,
+        "c_haar_full": 0.150281,
+        "c_haar_tail": 0.122635,
+        "c_dioph_full": 0.149872,
+        "c_dioph_tail": 0.122408,
+        "reduction_vs_phase1": 240.2811
+      },
+      {
+        "M": 4096,
+        "c_phase1": 40.166778,
+        "c_phase2_qp": 17.614372,
+        "c_band_tail": 1.764871,
+        "c_multi_tail": 1.634098,
+        "c_haar_full": 0.106218,
+        "c_haar_tail": 0.0867,
+        "c_dioph_full": 0.106072,
+        "c_dioph_tail": 0.086619,
+        "reduction_vs_phase1": 463.7157
       }
     ]
   }

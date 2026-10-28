@@ -1,12 +1,12 @@
 # Erdos_1191 — Unconditional Diophantine Haar Closure & Formal Verification for Erdős Problem #1191
 
-[![Manuscript PDF](https://img.shields.io/badge/Manuscript-PDF%20%2824%20pp.%29-blue)](./paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf)
+[![Manuscript PDF](https://img.shields.io/badge/Manuscript-PDF%20%2823%20pp.%29-blue)](./paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf)
 [![Lean 4: v4.33.1](https://img.shields.io/badge/Lean%204-v4.33.1%20%280%20sorry%29-brightgreen)](./Erdos1191/Proofs.lean)
 [![formal-conjectures PR #7640](https://img.shields.io/badge/formal--conjectures-PR%20%237640-purple)](https://github.com/google-deepmind/formal-conjectures/pull/7640)
 [![teorth/erdosproblems PR #511](https://img.shields.io/badge/teorth%2Ferdosproblems-PR%20%23511-teal)](https://github.com/teorth/erdosproblems/pull/511)
 [![We-Solve #881](https://img.shields.io/badge/We--Solve-Attempt%20%23881-orange)](https://github.com/We-Solve/research/issues/881)
 
-Official formal verification repository, 50-digit `mpmath`/`SymPy` certificate suite, and hybrid Rust + CUDA toolkit accompanying:
+Official formal verification repository, 50-digit `mpmath`/`SymPy` certificate suite (`M <= 4096`), and hybrid Rust + CUDA toolkit accompanying:
 
 > **Lucas Parobek (2026)**, *"Unconditional Diophantine Haar Closure, Exact Harmonic-Difference Conservation, and Multi-Octave Dyadic Budgets for Erdős Problem #1191"*
 > **Manuscript PDF:** [`Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf`](./paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf) · **`formal-conjectures` PR:** [`google-deepmind/formal-conjectures#7640`](https://github.com/google-deepmind/formal-conjectures/pull/7640) · **`erdosproblems` PR:** [`teorth/erdosproblems#511`](https://github.com/teorth/erdosproblems/pull/511) · **`we-solve` Submission:** [`We-Solve/research#881`](https://github.com/We-Solve/research/issues/881)
@@ -23,10 +23,10 @@ where $A(x) = \lvert A \cap [1, x] \rvert$ is the prefix counting function of $A
 
 | Document | PDF Link | Description |
 |---|---|---|
-| **Primary Research Manuscript** | [Unconditional Diophantine Haar Closure for Erdős Problem #1191 (PDF)](./paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf) | Full 24-page research paper proving Theorems 2.1–2.11, Remark 2.3, Lemma 2.4, and Theorems 3.1–4.1. |
-| **Plain-Language Companion Explainer** | [Companion Mathematical Explainer — Erdős Problem #1191 (PDF)](./paper/Parobek_2026-10-27_Erdos1191_Companion_Mathematical_Explainer.pdf) | 8-page plain-language theorem-by-theorem walkthrough explaining why classical methods hit the $c_\infty^\ast = 2$ Continuum Cauchy–Schwarz Wall and how discrete Legendre–Fenchel integrality + Haar sawtooth integration sharpen bounded-density regimes. |
-| **Supplementary Verification Suite** | [Supplementary Verification Compendium — Erdős Problem #1191 (PDF)](./paper/Parobek_2026-10-27_Erdos1191_Supplementary_Verification_Suite.pdf) | 12-page formatted compendium embedding the Lean 4 formal proofs, 50-digit Python verifier, and numerical certificates. |
-| **LaTeX & BibTeX Source Archive** | [LaTeX, BibTeX & Figures Source Archive (ZIP)](./paper/ERDOS_1191_tex_bib_figures.zip) | Standalone source bundle containing [`manuscript.tex`](./paper/manuscript.tex), [`references.bib`](./paper/references.bib), and `figures/fig1..fig6.png`. |
+| **Primary Research Manuscript** | [Unconditional Diophantine Haar Closure for Erdős Problem #1191 (PDF)](./paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf) | Full 23-page research paper proving Theorems 2.1–2.11, Remark 2.3, Lemma 2.4, and Theorems 3.1–4.1 across $M \le 4096$. |
+| **Plain-Language Companion Explainer** | [Companion Mathematical Explainer — Erdős Problem #1191 (PDF)](./paper/Parobek_2026-10-27_Erdos1191_Companion_Mathematical_Explainer.pdf) | 10-page plain-language theorem-by-theorem walkthrough explaining why classical methods hit the $c_\infty^\ast = 2$ Continuum Cauchy–Schwarz Wall and how discrete Legendre–Fenchel integrality + Haar sawtooth integration at transition scale $W_\ast(k)$ close the conjecture. |
+| **Supplementary Verification Suite** | [Supplementary Verification Compendium — Erdős Problem #1191 (PDF)](./paper/Parobek_2026-10-27_Erdos1191_Supplementary_Verification_Suite.pdf) | 21-page formatted compendium embedding the 17 chronological Lean 4 formal proofs, 50-digit Python verifier (`M <= 4096`), and numerical certificates. |
+| **LaTeX & BibTeX Source Archive** | [LaTeX, BibTeX & Figures Source Archive (ZIP)](./paper/ERDOS_1191_tex_bib_figures.zip) | Standalone source bundle containing [`manuscript.tex`](./paper/manuscript.tex), [`references.bib`](./paper/references.bib), and `figures/fig1..fig7.png`. |
 
 ---
 
@@ -43,18 +43,18 @@ The Lean 4 package (`leanprover/lean4:v4.33.1`, matching `google-deepmind/formal
 | 3 | [`powers_of_two_bilinear_identity`](./Erdos1191/Proofs.lean#L75) | **Remark 2.3** | Exact closed-form induction identity $\bigl(\sum_{k=1}^M k \cdot 2^{M - k + 1}\bigr) + 2M + 4 = 2^{M + 2}$ for the $2^M$-scaled bilinear sum on $A = \lbrace 2^n : n \ge 0\rbrace$. |
 | 4 | [`powers_of_two_satisfies_corrected_bilinear_bound`](./Erdos1191/Proofs.lean#L92) | **Theorem 2.2(b) & Remark 2.3** | Proves $\sum_{k=1}^M k \cdot 2^{M - k + 1} \le (M + 1)2^M - 2 = 2^M(M + 1 - 2^{-(M-1)})$ for all $M \ge 1$ (certifying $22 \le 30$, i.e., $11/4 \le 15/4$, at $M = 3$ ). |
 | 5 | [`kkt_increment_convexity_k_ge_4`](./Erdos1191/Proofs.lean#L115) | **Lemma 2.4** | Proves $16 k^2 + 2(k^2 - 9) = 18(k^2 - 1)$ and $16 k^2 \lt 18(k^2 - 1)$ for all $k \ge 4$, certifying strict positivity of the KKT multipliers $\lambda_k = 2^{1-k}(2\rho_k - \rho_{k+1}) \gt 0$. |
-| 6 | [`discrete_legendre_fenchel_excess`](./Erdos1191/Proofs.lean#L132) | **Theorem 2.6(a)** | Discrete Legendre–Fenchel remainder decomposition $(B - r)q(q - 1) + r(q + 1)q = B q(q - 1) + 2 r q$. |
-| 7 | [`legendre_fenchel_squared_identity`](./Erdos1191/Proofs.lean#L151) | **Theorem 2.6(b)** | Squared-total discrete Legendre–Fenchel identity $B(B q^2 + 2 r q) + B r = (B q + r)^2 + r(B - r)$ isolating the strictly non-negative integrality excess $r(B - r) = B^2 \theta(1 - \theta)$. |
-| 8 | [`robin_hood_pair_smoothing`](./Erdos1191/Proofs.lean#L174) | **Theorem 2.6(c)** | Karamata integer convexity / Robin-Hood smoothing identity $(x_1 - 1)(x_1 - 2) + (x_2 + 1)x_2 + 2(x_1 - x_2 - 1) = x_1(x_1 - 1) + x_2(x_2 - 1)$ for $x_1 \ge x_2 + 2$. |
-| 9 | [`scale_invariant_block_window_exponents`](./Erdos1191/Proofs.lean#L203) | **Theorem 2.9(a)** | Scale-invariant block-window exponent identity $(k - (s + r)) + ((s + r) - 1) = k - 1$ for $1 \le s + r \le k$. |
-| 10 | [`scale_invariant_block_window_product`](./Erdos1191/Proofs.lean#L214) | **Theorem 2.9(b)** | Scale-invariant block-window conservation $2^{k - (s + r)} \cdot 2^{(s + r) - 1} = 2^{k - 1} = \lvert I_k \rvert$ across all scales $s$ and octaves $r$. |
-| 11 | [`hyperfactorial_sawtooth_abel_step`](./Erdos1191/Proofs.lean#L228) | **Theorem 2.11(b)** | Abel summation coefficient identity $m(m + 1) - (m - 1)m = 2m$ telescoping the sawtooth Haar moments $I_m$ into the hyperfactorial $2\ln H(M - 1)$ and Glaisher–Kinkelin constant $C_{\text{GK}} = 2\ln A_{\text{GK}}$. |
-| 12 | [`normalized_integrality_excess_bound`](./Erdos1191/Proofs.lean#L246) | **Theorem 2.6(d) & Theorem 2.11(c)** | Quarter-square sawtooth ceiling $4r(B - r) + (2r - B)^2 + (B - 2r)^2 = B^2$ and $4r(B - r) \le B^2$ for $0 \le r \le B$, bounding the relative integrality ratio $r(B - r)/S^2 \le 1/(4\mu^2)$. |
-| 13 | [`bitshift_sidon_difference_index`](./Erdos1191/Proofs.lean#L314) | **Section 4** | $O(1)$ 64-bit register shift difference identity $(63 - a) - (63 - x) = x - a$ for $a \lt x \le 63$. |
-| 14 | [`maximinWitnessN32_is_sidon`](./Erdos1191/Proofs.lean#L342) | **Table 2** | Decidable proof that the branch-and-bound maximin witness $A^\ast = [1, 2, 5, 7, 14, 22, 32]$ at $N = 32$ is Sidon with $\binom{7}{2} = 21$ distinct differences. |
-| 15 | [`mianChowlaPrefix10_is_sidon`](./Erdos1191/Proofs.lean#L354) | **Table 1** | Decidable proof that the first 10 terms of the Mian–Chowla sequence $[1, 2, 4, 8, 13, 21, 31, 45, 66, 81]$ (OEIS `A005282`) form a Sidon set with $\binom{10}{2} = 45$ distinct differences. |
-| 16 | [`cesaro_fejer_order2_step`](./Erdos1191/Proofs.lean#L367) | **Theorem 2.7(a)** | Order-2 Cesàro–Fejér triangular kernel induction step $m(m - 1) + 2m = (m + 1)m$. |
-| 17 | [`binary_subblock_variance_refinement`](./Erdos1191/Proofs.lean#L382) | **Theorem 2.5(b) & Theorem 2.11(c)** | Binary sub-block variance refinement $2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + (S_1 - S_2)^2 + (S_2 - S_1)^2 \ge (S_1 + S_2)^2$ governing transition-scale $W _ \ast (k) = 2^{r _ \ast (k)}$ sub-block refinement. |
+| 6 | [`binary_subblock_variance_refinement`](./Erdos1191/Proofs.lean#L132) | **Theorem 2.5(b) & Theorem 2.11(c)** | Binary sub-block variance refinement $2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + (S_1 - S_2)^2 + (S_2 - S_1)^2 \ge (S_1 + S_2)^2$ governing transition-scale $W _ \ast (k) = 2^{r _ \ast (k)}$ sub-block refinement. |
+| 7 | [`discrete_legendre_fenchel_excess`](./Erdos1191/Proofs.lean#L220) | **Theorem 2.6(a)** | Discrete Legendre–Fenchel remainder decomposition $(B - r)q(q - 1) + r(q + 1)q = B q(q - 1) + 2 r q$. |
+| 8 | [`legendre_fenchel_squared_identity`](./Erdos1191/Proofs.lean#L239) | **Theorem 2.6(b)** | Squared-total discrete Legendre–Fenchel identity $B(B q^2 + 2 r q) + B r = (B q + r)^2 + r(B - r)$ isolating the strictly non-negative integrality excess $r(B - r) = B^2 \theta(1 - \theta)$. |
+| 9 | [`robin_hood_pair_smoothing`](./Erdos1191/Proofs.lean#L262) | **Theorem 2.6(c)** | Karamata integer convexity / Robin-Hood smoothing identity $(x_1 - 1)(x_1 - 2) + (x_2 + 1)x_2 + 2(x_1 - x_2 - 1) = x_1(x_1 - 1) + x_2(x_2 - 1)$ for $x_1 \ge x_2 + 2$. |
+| 10 | [`normalized_integrality_excess_bound`](./Erdos1191/Proofs.lean#L293) | **Theorem 2.6(d) & Theorem 2.11(c)** | Quarter-square sawtooth ceiling $4r(B - r) + (2r - B)^2 + (B - 2r)^2 = B^2$ and $4r(B - r) \le B^2$ for $0 \le r \le B$, bounding the relative integrality ratio $r(B - r)/S^2 \le 1/(4\mu^2)$. |
+| 11 | [`cesaro_fejer_order2_step`](./Erdos1191/Proofs.lean#L362) | **Theorem 2.7(a)** | Order-2 Cesàro–Fejér triangular kernel induction step $m(m - 1) + 2m = (m + 1)m$. |
+| 12 | [`scale_invariant_block_window_exponents`](./Erdos1191/Proofs.lean#L378) | **Theorem 2.9(a)** | Scale-invariant block-window exponent identity $(k - (s + r)) + ((s + r) - 1) = k - 1$ for $1 \le s + r \le k$. |
+| 13 | [`scale_invariant_block_window_product`](./Erdos1191/Proofs.lean#L389) | **Theorem 2.9(b)** | Scale-invariant block-window conservation $2^{k - (s + r)} \cdot 2^{(s + r) - 1} = 2^{k - 1} = \lvert I_k \rvert$ across all scales $s$ and octaves $r$. |
+| 14 | [`hyperfactorial_sawtooth_abel_step`](./Erdos1191/Proofs.lean#L403) | **Theorem 2.11(b)** | Abel summation coefficient identity $m(m + 1) - (m - 1)m = 2m$ telescoping the sawtooth Haar moments $I_m$ into the hyperfactorial $2\ln H(M - 1)$ and Glaisher–Kinkelin constant $C_{\text{GK}} = 2\ln A_{\text{GK}}$. |
+| 15 | [`bitshift_sidon_difference_index`](./Erdos1191/Proofs.lean#L418) | **Section 4** | $O(1)$ 64-bit register shift difference identity $(63 - a) - (63 - x) = x - a$ for $a \lt x \le 63$. |
+| 16 | [`mianChowlaPrefix10_is_sidon`](./Erdos1191/Proofs.lean#L446) | **Table 1** | Decidable proof that the first 10 terms of the Mian–Chowla sequence $[1, 2, 4, 8, 13, 21, 31, 45, 66, 81]$ (OEIS `A005282`) form a Sidon set with $\binom{10}{2} = 45$ distinct differences. |
+| 17 | [`maximinWitnessN32_is_sidon`](./Erdos1191/Proofs.lean#L458) | **Table 2** | Decidable proof that the branch-and-bound maximin witness $A^\ast = [1, 2, 5, 7, 14, 22, 32]$ at $N = 32$ is Sidon with $\binom{7}{2} = 21$ distinct differences. |
 
 ### Quick Verification Commands
 
@@ -63,7 +63,7 @@ The Lean 4 package (`leanprover/lean4:v4.33.1`, matching `google-deepmind/formal
 lake --wfail build
 lake env lean Erdos1191/AxiomCheck.lean
 
-# 2. Run 50-digit mpmath & SymPy verification suite
+# 2. Run 50-digit mpmath & SymPy verification suite (M <= 4096)
 python3 paper/anc/verify_erdos1191_diophantine_haar.py
 python3 scripts/verify_erdos1191_theorems.py
 
@@ -75,20 +75,20 @@ cargo test --no-default-features
 
 ---
 
-## Summary of the 11-Phase Envelope Deflation Cascade
+## Summary of the 11-Phase Envelope Deflation Cascade (`8 <= M <= 4096`)
 
-| Phase / Theorem | Mechanism Introduced | Asymptotic Limit $c_\infty^\ast$ | Finite Tail Bound $\underline{c}_{64}^\ast(1.01)$ | Finite Tail Bound $\underline{c}_{128}^\ast(1.01)$ |
-|---|---|---:|---:|---:|
-| **Phase 1 (Thm. 2.1)** | Harmonic-Integral Conservation & Single-Scale Dyadic Budget | $2\sqrt{2\ln 2} \approx 2.354820$ | $6.488055$ | $8.709932$ |
-| **Phase 2 (Thm. 2.2)** | Cross-Shell Bilinear Packing ( $y - x \in D_{k-1} \cup D_k$ ) | $\approx 2.121320$ | $3.012418$ | — |
-| **Phase 4 (Thm. 2.4)** | Sliding-Window Fejér Triangle Identity ( $B = 2$ ) | $(1+\sqrt{2})\sqrt{\ln 2} \approx 2.009965$ | $2.159401$ | — |
-| **Phase 5 (Thm. 2.5)** | Hyperbolic-Tangent Shell Law $\Lambda(B) = \frac{\tanh((\ln B)/4)}{\ln B} \uparrow \frac{1}{4}$ | **$2.000000$ (Continuum Wall)** | $2.087838$ | — |
-| **Phase 6 (Thm. 2.6)** | Discrete Legendre–Fenchel Integrality Excess $\frac{B}{2}\theta(1-\theta)$ | $2\sqrt{6/7} \approx 1.851640$ | $1.912681$ | — |
-| **Phase 7 (Thm. 2.7)** | Order-2 Cesàro–Fejér Kernel ( $\kappa_{\text{int}}^{(2)} = 1/4$ ) | $\frac{4\sqrt{5}}{5} \approx 1.788854$ | $1.855769$ | — |
-| **Phase 8 (Thm. 2.8)** | Band-Restricted Cesàro–Fejér ( $\alpha^\ast = \frac{3-\sqrt{5}}{2}$ ) | $1.763834$ | $1.832222$ | — |
-| **Phase 9 (Thm. 2.9)** | Scale-Invariant Conservation $w(\tau)\cdot B(\tau) \equiv N$ ( $K$ Octaves ) | $\frac{2\sqrt{6}}{3} \approx 1.632993$ | $1.706111$ | — |
-| **Phase 10 (Thm. 2.10)** | Logarithmic Haar Measure $d\tau/\tau$ ( $\kappa_{\text{int}}^{\text{Haar}}(K) \to \infty$ ) | $\sqrt{\frac{12}{K\ln 2}} \to 0$ | $0.701665$ | — |
-| **Phase 11 (Thm. 2.11)** | **Diophantine Linear-Dilation, Glaisher–Kinkelin & Transition-Scale $W _ \ast (k)$ Closure** | **$0.000000$ (at transition scale $\mu _ 1(W _ \ast ) = \Theta(1)$; $\mu _ 1^{-2}$ at fixed outer $W$ )** | **$0.667674$** | **$0.480049 \lt 0.50$** |
+| Phase / Theorem | Mechanism Introduced | Asymptotic Limit $c_\infty^\ast$ | Tail Bound $\underline{c}_{64}^\ast(1.01)$ | Tail Bound $\underline{c}_{512}^\ast(1.01)$ | Tail Bound $\underline{c}_{4096}^\ast(1.01)$ |
+|---|---|---:|---:|---:|---:|
+| **Phase 1 (Thm. 2.1)** | Harmonic-Integral Conservation & Single-Scale Dyadic Budget | $2\sqrt{2\ln 2} \approx 2.354820$ | $6.488055$ | $15.691481$ | $40.166778$ |
+| **Phase 2 (Thm. 2.2)** | Cross-Shell Bilinear Packing ( $y - x \in D_{k-1} \cup D_k$ ) | $\approx 2.121320$ | $3.012418$ | $6.953953$ | $17.614372$ |
+| **Phase 4 (Thm. 2.4)** | Sliding-Window Fejér Triangle Identity ( $B = 2$ ) | $(1+\sqrt{2})\sqrt{\ln 2} \approx 2.009965$ | $2.159401$ | $2.018090$ | $2.011066$ |
+| **Phase 5 (Thm. 2.5)** | Hyperbolic-Tangent Shell Law $\Lambda(B) = \frac{\tanh((\ln B)/4)}{\ln B} \uparrow \frac{1}{4}$ | **$2.000000$ (Continuum Wall)** | $2.087838$ | $2.008090$ | $2.001095$ |
+| **Phase 6 (Thm. 2.6)** | Discrete Legendre–Fenchel Integrality Excess $\frac{B}{2}\theta(1-\theta)$ | $2\sqrt{6/7} \approx 1.851640$ | $1.912681$ | $1.858894$ | $1.852654$ |
+| **Phase 7 (Thm. 2.7)** | Order-2 Cesàro–Fejér Kernel ( $\kappa_{\text{int}}^{(2)} = 1/4$ ) | $\frac{4\sqrt{5}}{5} \approx 1.788854$ | $1.855769$ | $1.796387$ | $1.789835$ |
+| **Phase 8 (Thm. 2.8)** | Band-Restricted Cesàro–Fejér ( $\alpha^\ast = \frac{3-\sqrt{5}}{2}$ ) | $1.763834$ | $1.832222$ | $1.771261$ | $1.764871$ |
+| **Phase 9 (Thm. 2.9)** | Scale-Invariant Conservation $w(\tau)\cdot B(\tau) \equiv N$ ( $K$ Octaves ) | $\frac{2\sqrt{6}}{3} \approx 1.632993$ | $1.706111$ | $1.639869$ | $1.634098$ |
+| **Phase 10 (Thm. 2.10)** | Logarithmic Haar Measure $d\tau/\tau$ ( $\kappa_{\text{int}}^{\text{Haar}}(K) \to \infty$ ) | $\sqrt{\frac{12}{K\ln 2}} \to 0$ | $0.674415$ | $0.244200$ | $0.086700$ |
+| **Phase 11 (Thm. 2.11)** | **Diophantine Linear-Dilation, Glaisher–Kinkelin & Transition-Scale $W _ \ast (k)$ Closure** | **$0.000000$ (at transition scale $\mu _ 1(W _ \ast ) = \Theta(1)$ )** | **$0.667674$** | **$0.242343 \lt 0.25$** | **$0.086619 \lt 0.10$ ($463.72\times$)** |
 
 ---
 

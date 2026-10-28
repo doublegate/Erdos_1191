@@ -4,6 +4,14 @@ All notable changes to **Erdos_1191** (`erdos1191`) are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-10-27
+
+### Added & Remediated
+- **We-Solve `#881` Technical Remediations, Chronological 17-Theorem Lean 4 Suite, and High-$M$ (`M <= 4096`) Certification (`Erdos1191/Proofs.lean`, `paper/anc/verify_erdos1191_diophantine_haar.py`, `paper/`):**
+  - Expanded and reordered `Erdos1191/Proofs.lean` (`paper/anc/1191.lean`, `FormalConjectures_1191.lean`, `google-deepmind/formal-conjectures#7640`) into **17 strictly chronological zero-`sorry` declarations** (`#L35`–`#L458`), adding `powers_of_two_bilinear_identity`, `powers_of_two_satisfies_corrected_bilinear_bound` (Remark 2.3), `kkt_increment_convexity_k_ge_4` (Lemma 2.4), `binary_subblock_variance_refinement` (Theorem 2.5(b) & 2.11(c)), `normalized_integrality_excess_bound` (Theorem 2.6(d) & 2.11(c)), and `cesaro_fejer_order2_step` (Theorem 2.7(a)).
+  - Extended exact QP / Diophantine Haar envelope evaluations across **16 dyadic horizons $M \in \{8, 12, 16, 20, 24, 32, 48, 64, 96, 128, 192, 256, 512, 1024, 2048, 4096\}$** ($N = 2^{4096}$, achieving $\underline{c}_{4096}^{*,\mathrm{Dioph}}(1.01) = 0.086619 < 0.10$, a **$463.7157\times$ reduction** over the Phase 1 harmonic bound $\underline{c}_{4096}^{(1)} = 40.166778$).
+  - Added Figure 7 (`paper/figures/fig7_we_solve_remediation_diagnostics.{pdf,png}`), "Countering Potential Methodological Objections" subsection, and rebuilt all manuscripts (`23 pp.`), companion explainers (`10 pp.`), supplementary verification compendiums (`21 pp.`), and archives.
+
 ## [1.0.0] - 2026-10-27
 
 ### Added
