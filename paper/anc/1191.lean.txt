@@ -12,11 +12,10 @@ Paper: "Unconditional Diophantine Haar Closure, Exact Harmonic-Difference Conser
 Repo:  https://github.com/doublegate/Erdos_1191
 
 This self-contained Lean 4 module (zero `sorry`s, zero custom axioms) machine-checks the
-discrete algebraic, dyadic cross-shell, corrected Laplace–Fejér bilinear inequality (verified on
-powers of two $A = \{2^n : n \ge 0\}$), Karush–Kuhn–Tucker (KKT) convex-cone increment minimization,
-binary sub-block variance refinement, Legendre–Fenchel sawtooth, Karamata integer convexity,
-normalized integrality-excess scaling, Order-2 Cesàro–Fejér kernel, scale-invariant block-window,
-hyperfactorial Abel telescoping, and O(1) bit-shift Sidon identities of [Pa26].
+discrete arithmetic lemmas, dyadic interval bounds, powers-of-two recursive sum identity and
+bound, KKT integer quadratic inequality, binary sub-block variance identity, discrete
+Legendre–Fenchel remainder identities, Order-2 Cesàro–Fejér recurrence step, exponent/power
+conservation identities, and finite Sidon set witness checks used in [Pa26].
 -/
 
 namespace Erdos1191
@@ -26,11 +25,11 @@ local notation "ℕ" => Nat
 /-! ## 1. Theorem 2.1(a): Exact Harmonic-Integral Conservation Algebraic Kernel -/
 
 /--
-**Theorem 2.1(a) (Harmonic-Difference Partial-Fraction Identity):**
-For any positive integers $1 \le a_i < a_j$ with difference $d = a_j - a_i$,
-$(d + 1) + (a_i - 1) = a_j$. Dividing by $(d + 1) a_j$ yields the exact identity
-$\frac{1}{a_j} + \frac{a_i - 1}{(a_j - a_i + 1) a_j} = \frac{1}{a_j - a_i + 1}$
-that closes the non-asymptotic Harmonic-Integral Conservation Law.
+**Arithmetic Lemma for Theorem 2.1(a) (Harmonic-Difference Numerator Identity):**
+For any natural numbers $1 \le a_i < a_j$ with difference $d = a_j - a_i$,
+the numerator identity $(d + 1) + (a_i - 1) = a_j$ holds on $\mathbb{N}$ (used to derive the
+partial-fraction decomposition $\frac{1}{a_j} + \frac{a_i - 1}{(a_j - a_i + 1) a_j} = \frac{1}{a_j - a_i + 1}$
+in Theorem 2.1(a) of [Pa26]).
 -/
 theorem erdos_1191.variants.harmonic_conservation_numerator (a_i a_j d : ℕ)
     (h_pos : 1 ≤ a_i) (h_lt : a_i < a_j) (h_diff : d = a_j - a_i) :
@@ -40,12 +39,11 @@ theorem erdos_1191.variants.harmonic_conservation_numerator (a_i a_j d : ℕ)
 /-! ## 2. Theorem 2.2(a)–(b), Remark 2.3 & Lemma 2.4: Cross-Shell Localization, Powers-of-Two Verification & KKT Convexity -/
 
 /--
-**Theorem 2.2(a) (Two-Shell Difference Localization):**
-Let $I_j = (2^{j-1}, 2^j]$ and $I_k = (2^{k-1}, 2^k]$ with $1 \le j \le k - 2$, so that
-$1 \le x \le 2^{k-2}$ (`pow_km2`) and $2 \cdot 2^{k-2} < y \le 4 \cdot 2^{k-2}$.
-Then the cross-shell difference $y - x$ is strictly bounded by
-$2^{k-2} < y - x < 4 \cdot 2^{k-2} = 2^k$,
-proving that every distant cross-shell difference lies exclusively in $D_{k-1} \cup D_k$.
+**Arithmetic Lemma for Theorem 2.2(a) (Two-Shell Difference Localization Bound):**
+For natural numbers $x, y, \text{pow\_km2}$ satisfying $1 \le x \le \text{pow\_km2}$ and
+$2 \cdot \text{pow\_km2} < y \le 4 \cdot \text{pow\_km2}$, the difference $y - x$ satisfies
+$\text{pow\_km2} < y - x < 4 \cdot \text{pow\_km2}$ (used to localize cross-shell differences
+into $D_{k-1} \cup D_k$ when $\text{pow\_km2} = 2^{k-2}$ in Theorem 2.2(a) of [Pa26]).
 -/
 theorem erdos_1191.variants.two_shell_difference_localization (x y pow_km2 : ℕ)
     (hx_pos : 1 ≤ x)
@@ -56,21 +54,20 @@ theorem erdos_1191.variants.two_shell_difference_localization (x y pow_km2 : ℕ
   omega
 
 /--
-Scaled bilinear sum for the powers-of-two Sidon set $A = \{2^n : n \ge 0\}$, where $m_k = 1$
-and $A(2^{k-1}) = k$ for every $k \ge 1$. Multiplying $\sum_{k=1}^M \frac{2 m_k(m_k-1) + 2 m_k A(2^{k-1})}{2^k}$
-by $2^M$ yields the integer sum $\sum_{k=1}^M k \cdot 2^{M - k + 1}$, defined recursively by
-$S(0) = 0$ and $S(M + 1) = 2 S(M) + 2(M + 1)$.
+Recursive integer sum $S(0) = 0$, $S(M + 1) = 2 S(M) + 2(M + 1)$, representing the
+$2^M$-scaled sum $\sum_{k=1}^M k \cdot 2^{M - k + 1}$ evaluated on the powers-of-two
+sequence $A = \{2^n : n \ge 0\}$ ($m_k = 1, A(2^{k-1}) = k$) in Remark 2.3 of [Pa26].
 -/
 def powersOfTwoScaledBilinear : ℕ → ℕ
   | 0 => 0
   | M + 1 => 2 * powersOfTwoScaledBilinear M + 2 * (M + 1)
 
 /--
-**Remark 2.3 (Exact Closed-Form Bilinear Identity on $A = \{2^n : n \ge 0\}$):**
-For every $M \ge 0$, the $2^M$-scaled bilinear sum on $A = \{2^n : n \ge 0\}$ satisfies the
-exact closed-form identity
-$\left(\sum_{k=1}^M k \cdot 2^{M - k + 1}\right) + 2M + 4 = 2^{M + 2}$,
-i.e., $\sum_{k=1}^M \frac{2 k}{2^k} = 4 - \frac{2M + 4}{2^M}$ (evaluating to $11/4 = 2.75$ at $M = 3$).
+**Arithmetic Lemma for Remark 2.3 (Closed-Form Identity for `powersOfTwoScaledBilinear`):**
+For every $M \ge 0$, the recursively defined integer sum `powersOfTwoScaledBilinear M`
+satisfies the exact closed-form identity
+$\text{powersOfTwoScaledBilinear}(M) + 2M + 4 = 2^{M + 2}$
+(used to evaluate the powers-of-two bilinear sum in Remark 2.3 of [Pa26]).
 -/
 theorem erdos_1191.variants.powers_of_two_bilinear_identity (M : ℕ) :
     powersOfTwoScaledBilinear M + 2 * M + 4 = 2 ^ (M + 2) := by
@@ -84,10 +81,10 @@ theorem erdos_1191.variants.powers_of_two_bilinear_identity (M : ℕ) :
     omega
 
 /--
-**Theorem 2.2(b) & Remark 2.3 (Verification of Corrected Bilinear Bound on $A = \{2^n : n \ge 0\}$):**
-For every $M \ge 1$, the $2^M$-scaled bilinear sum on the powers-of-two Sidon set $A = \{2^n : n \ge 0\}$
-is bounded above by the $2^M$-scaled tight upper bound $(M + 1) 2^M - 2 = 2^M(M + 1 - 2^{-(M-1)})$.
-At $M = 3$, this certifies $22 \le 30$ (i.e., $11/4 = 2.75 \le 15/4 = 3.75$).
+**Arithmetic Lemma for Theorem 2.2(b) & Remark 2.3 (Upper Bound on `powersOfTwoScaledBilinear`):**
+For every $M \ge 1$, the recursively defined sum `powersOfTwoScaledBilinear M` satisfies
+$\text{powersOfTwoScaledBilinear}(M) \le (M + 1) 2^M - 2$
+(certifying $22 \le 30$ at $M = 3$ for the $2^M$-scaled powers-of-two sum in Remark 2.3 of [Pa26]).
 -/
 theorem erdos_1191.variants.powers_of_two_satisfies_corrected_bilinear_bound (M : ℕ) (hM : 1 ≤ M) :
     powersOfTwoScaledBilinear M ≤ (M + 1) * 2 ^ M - 2 := by
@@ -104,13 +101,12 @@ theorem erdos_1191.variants.powers_of_two_satisfies_corrected_bilinear_bound (M 
       omega
 
 /--
-**Lemma 2.4 (KKT Convex-Cone Increment Positivity for $k \ge 4$):**
-For every shell index $k \ge 4$, $16 k^2 + 2(k^2 - 9) = 18(k^2 - 1)$ and $16 k^2 < 18(k^2 - 1)$.
-Together with $9 > 8$ at $k = 3$, this certifies that $\frac{1}{\sqrt{k-1}} + \frac{1}{\sqrt{k+1}} < \frac{3}{\sqrt{2k}}$
-for all $k \ge 3$, proving that the KKT multipliers $\lambda_k = 2^{1-k}(2\rho_k - \rho_{k+1})$ of the
-convex quadratic envelope program are strictly positive and that the cumulative lower bound
-$A(2^k) \ge c\sqrt{2^k / \ln(2^k)}$ attains its unique global minimum on the boundary
-$m_k^* = c \rho_k$.
+**Arithmetic Lemma for Lemma 2.4 (Quadratic Polynomial Inequality for $k \ge 4$):**
+For every natural number $k \ge 4$, $16 k^2 + 2(k^2 - 9) = 18(k^2 - 1)$ and
+$16 k^2 < 18(k^2 - 1)$. In Lemma 2.4 of [Pa26], this integer inequality is used to verify
+that $\frac{1}{\sqrt{k-1}} + \frac{1}{\sqrt{k+1}} < \frac{3}{\sqrt{2k}}$ for all $k \ge 4$
+(alongside $9 > 8$ at $k = 3$) when establishing positivity of the KKT multipliers
+$\lambda_k = 2^{1-k}(2\rho_k - \rho_{k+1})$.
 -/
 theorem erdos_1191.variants.kkt_increment_convexity_k_ge_4 (k : ℕ) (hk : 4 ≤ k) :
     16 * (k * k) + 2 * (k * k - 9) = 18 * (k * k - 1) ∧
@@ -123,11 +119,11 @@ theorem erdos_1191.variants.kkt_increment_convexity_k_ge_4 (k : ℕ) (hk : 4 ≤
 /-! ## 3. Theorem 2.5(b): Binary Sub-Block Variance Refinement -/
 
 /--
-**Theorem 2.5(b) & Theorem 2.11(c) (Binary Sub-Block Variance Refinement Identity):**
-Splitting a block of sum $S = S_1 + S_2$ into two equal sub-blocks satisfies
-$2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + (S_1 - S_2)^2 + (S_2 - S_1)^2$,
-so $2(S_1^2 + S_2^2) \ge (S_1 + S_2)^2$, proving the monotone refinement inequality
-$L(S_1, B) + L(S_2, B) \ge L(S_1 + S_2, 2B)$ of Theorem 2.5(b).
+**Arithmetic Lemma for Theorem 2.5(b) & Theorem 2.11(c) (Binary Sub-Block Variance Refinement Identity):**
+For any natural numbers $S_1, S_2 \in \mathbb{N}$, $2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + |S_1 - S_2|^2$
+(encoded in Lean via truncated subtraction on $\mathbb{N}$ as $(S_1 - S_2)^2 + (S_2 - S_1)^2$),
+and hence $(S_1 + S_2)^2 \le 2(S_1^2 + S_2^2)$. This provides the arithmetic step used in the
+sub-block refinement bound $L(S_1, B) + L(S_2, B) \ge L(S_1 + S_2, 2B)$ of [Pa26].
 -/
 theorem erdos_1191.variants.binary_subblock_variance_refinement (S1 S2 : ℕ) :
     2 * (S1 * S1 + S2 * S2) =
@@ -281,14 +277,12 @@ theorem erdos_1191.variants.robin_hood_pair_smoothing (x1 x2 : ℕ) (h_gap : x2 
   omega
 
 /--
-**Theorem 2.6(d) & Theorem 2.11(c) (Exact Quarter-Square Sawtooth Ceiling & Relative Integrality Scaling):**
-For any bucket count $B \ge 1$ and remainder $0 \le r \le B$, the scaled discrete Legendre–Fenchel
-integrality excess $4 r(B - r)$ plus the square $(2r - B)^2$ (represented on $\mathbb{N}$ via
-$|2r - B|^2 = (2r - B)^2 + (B - 2r)^2$) equals $B^2$, so $4 r(B - r) \le B^2$.
-Consequently, for $S = B q + r$, the relative ratio of the integrality excess $r(B - r)$ to the
-leading quadratic term $S^2$ is bounded above by $\frac{B^2}{4 S^2} = \frac{1}{4 \mu^2}$ where $\mu = S/B$:
-it is strictly of order unity ($\Theta(1)$) in the bounded-occupancy collision regime $\mu = O(1)$
-and decays as $O(\mu^{-2}) \to 0$ as $\mu \to \infty$.
+**Arithmetic Lemma for Theorem 2.6(d) & Theorem 2.11(c) (Quarter-Square Identity & Bound):**
+For any natural numbers $B, r \in \mathbb{N}$ with $r \le B$, the scaled product $4 r(B - r)$
+plus the single square $(2r - B)^2$ (encoded in Lean via truncated subtraction on $\mathbb{N}$
+as $(2r - B)^2 + (B - 2r)^2$) equals $B^2$, and hence $4 r(B - r) \le B^2$.
+This provides the arithmetic bound $r(B - r) \le B^2 / 4$ used to bound the relative
+integrality excess $r(B - r)/S^2 \le 1/(4\mu^2)$ ($\mu = S/B$) in [Pa26].
 -/
 theorem erdos_1191.variants.normalized_integrality_excess_bound (B r : ℕ) (hr : r ≤ B) :
     4 * (r * (B - r)) + (2 * r - B) * (2 * r - B) + (B - 2 * r) * (B - 2 * r) = B * B ∧
@@ -354,10 +348,10 @@ theorem erdos_1191.variants.normalized_integrality_excess_bound (B r : ℕ) (hr 
 /-! ## 5. Theorem 2.7(a): Order-2 Cesàro–Fejér Triangular Kernel Recurrence -/
 
 /--
-**Theorem 2.7(a) (Order-2 Cesàro–Fejér Hockey-Stick Recurrence):**
-For every positive difference margin $m = w - d \ge 0$,
-$m(m - 1) + 2 m = (m + 1) m$,
-which telescopes $\sum_{w=d+1}^W (w - d) = \binom{W - d + 1}{2}$ in the Order-2 Cesàro–Fejér identity.
+**Arithmetic Lemma for Theorem 2.7(a) (Order-2 Cesàro–Fejér Hockey-Stick Recurrence):**
+For every $m \in \mathbb{N}$, $m(m - 1) + 2 m = (m + 1) m$, giving the arithmetic recurrence step
+for the unweighted Order-2 Cesàro–Fejér sum $\sum_{w=1}^W \max(w - d, 0) = \binom{W - d + 1}{2}$
+(with $d = |x - y| < W$) in Theorem 2.7(a) of [Pa26].
 -/
 theorem erdos_1191.variants.cesaro_fejer_order2_step (m : ℕ) :
     m * (m - 1) + 2 * m = (m + 1) * m := by

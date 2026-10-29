@@ -190,20 +190,20 @@ $$\kappa_{\mathrm{int}}^{\mathrm{rel}}(\mu_1, K) = \frac{\kappa_{\mathrm{int}}^{
 
 | # | Lean 4 Declaration (`Erdos1191/Proofs.lean`) | Paper Reference | Verified Mathematical Identity / Property |
 |---|---|---|---|
-| 1 | `erdos_1191.variants.harmonic_conservation_numerator` (`#L35`) | Theorem 2.1(a) | $(d + 1) + (a_i - 1) = a_j$ for $d = a_j - a_i$ ($1 \le a_i \lt a_j$) |
-| 2 | `erdos_1191.variants.two_shell_difference_localization` (`#L50`) | Theorem 2.2(a) | $2^{k-2} \lt y - x \lt 2^k$ for $x \in I_j$ ($j \le k - 2$), $y \in I_k$ |
-| 3 | `erdos_1191.variants.powers_of_two_bilinear_identity` (`#L75`) | Thm. 2.2(b), Rem. 2.3 | $\bigl(\sum_{k=1}^M k \cdot 2^{M-k+1}\bigr) + 2M + 4 = 2^{M+2}$ on $A = \lbrace 2^n \rbrace$ |
-| 4 | `erdos_1191.variants.powers_of_two_satisfies_corrected_bilinear_bound` (`#L92`) | Thm. 2.2(b), Rem. 2.3 | $\sum_{k=1}^M k \cdot 2^{M-k+1} \le (M + 1)2^M - 2$ ($22 \le 30$ at $M = 3$) |
-| 5 | `erdos_1191.variants.kkt_increment_convexity_k_ge_4` (`#L115`) | Lemma 2.4 | $16k^2 + 2(k^2 - 9) = 18(k^2 - 1)$ and $16k^2 \lt 18(k^2 - 1)$ for $k \ge 4$ |
-| 6 | `erdos_1191.variants.binary_subblock_variance_refinement` (`#L132`) | Thm. 2.5(b), 2.11(c) | $2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + \lvert S_1 - S_2 \rvert^2 \ge (S_1 + S_2)^2$ |
-| 7 | `erdos_1191.variants.discrete_legendre_fenchel_excess` (`#L220`) | Theorem 2.6(a) | $(B - r)q(q - 1) + r(q + 1)q = Bq(q - 1) + 2rq$ |
-| 8 | `erdos_1191.variants.legendre_fenchel_squared_identity` (`#L239`) | Theorem 2.6(b) | $B(Bq^2 + 2rq) + Br = (Bq + r)^2 + r(B - r)$ |
-| 9 | `erdos_1191.variants.robin_hood_pair_smoothing` (`#L262`) | Theorem 2.6(c) | Robin-Hood transfer reduces pair count by $2(x_1 - x_2 - 1) \ge 2$ |
-| 10 | `erdos_1191.variants.normalized_integrality_excess_bound` (`#L293`) | Thm. 2.6(d), 2.11(c) | $4r(B - r) + \lvert 2r - B \rvert^2 = B^2$, proving $r(B - r)/S^2 \le 1/(4\mu^2)$ |
-| 11 | `erdos_1191.variants.cesaro_fejer_order2_step` (`#L362`) | Theorem 2.7(a) | $m(m - 1) + 2m = (m + 1)m$ (Order-2 Cesàro–Fejér recurrence) |
-| 12 | `erdos_1191.variants.scale_invariant_block_window_exponents` (`#L378`) | Theorem 2.9(a) | $(k - (s + r)) + ((s + r) - 1) = k - 1$ for $1 \le s + r \le k$ |
-| 13 | `erdos_1191.variants.scale_invariant_block_window_product` (`#L389`) | Theorem 2.9(b) | $2^{k-(s+r)} \cdot 2^{(s+r)-1} = 2^{k-1} = \lvert I_k \rvert$ across all scales |
-| 14 | `erdos_1191.variants.hyperfactorial_sawtooth_abel_step` (`#L403`) | Theorem 2.11(b) | $m(m + 1) - (m - 1)m = 2m$ (hyperfactorial Abel telescoping) |
-| 15 | `erdos_1191.variants.bitshift_sidon_difference_index` (`#L418`) | Section 4 | $(63 - a) - (63 - x) = x - a$ for $a \lt x \le 63$ |
-| 16 | `mianChowlaPrefix10_is_sidon` (`#L446`) | Section 4 / Table 1 | Kernel `decide` proof for 10-term Mian–Chowla prefix ($45$ diffs) |
-| 17 | `maximinWitnessN32_is_sidon` (`#L458`) | Section 4 / Table 2 | Kernel `decide` proof for maximin witness $[1,2,5,7,14,22,32]$ |
+| 1 | `erdos_1191.variants.harmonic_conservation_numerator` (`#L34`) | Theorem 2.1(a) | $(d + 1) + (a_i - 1) = a_j$ for $d = a_j - a_i$ ($1 \le a_i \lt a_j$) |
+| 2 | `erdos_1191.variants.two_shell_difference_localization` (`#L48`) | Theorem 2.2(a) | $2^{k-2} \lt y - x \lt 2^k$ for $x \in I_j$ ($j \le k - 2$), $y \in I_k$ |
+| 3 | `erdos_1191.variants.powers_of_two_bilinear_identity` (`#L72`) | Thm. 2.2(b), Rem. 2.3 | $\bigl(\sum_{k=1}^M k \cdot 2^{M-k+1}\bigr) + 2M + 4 = 2^{M+2}$ on $A = \lbrace 2^n \rbrace$ |
+| 4 | `erdos_1191.variants.powers_of_two_satisfies_corrected_bilinear_bound` (`#L89`) | Thm. 2.2(b), Rem. 2.3 | $\sum_{k=1}^M k \cdot 2^{M-k+1} \le (M + 1)2^M - 2$ ($22 \le 30$ at $M = 3$) |
+| 5 | `erdos_1191.variants.kkt_increment_convexity_k_ge_4` (`#L111`) | Lemma 2.4 | $16k^2 + 2(k^2 - 9) = 18(k^2 - 1)$ and $16k^2 \lt 18(k^2 - 1)$ for $k \ge 4$ |
+| 6 | `erdos_1191.variants.binary_subblock_variance_refinement` (`#L128`) | Thm. 2.5(b), 2.11(c) | $2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + \lvert S_1 - S_2 \rvert^2 \ge (S_1 + S_2)^2$ |
+| 7 | `erdos_1191.variants.discrete_legendre_fenchel_excess` (`#L216`) | Theorem 2.6(a) | $(B - r)q(q - 1) + r(q + 1)q = Bq(q - 1) + 2rq$ |
+| 8 | `erdos_1191.variants.legendre_fenchel_squared_identity` (`#L235`) | Theorem 2.6(b) | $B(Bq^2 + 2rq) + Br = (Bq + r)^2 + r(B - r)$ |
+| 9 | `erdos_1191.variants.robin_hood_pair_smoothing` (`#L258`) | Theorem 2.6(c) | Robin-Hood transfer reduces pair count by $2(x_1 - x_2 - 1) \ge 2$ |
+| 10 | `erdos_1191.variants.normalized_integrality_excess_bound` (`#L287`) | Thm. 2.6(d), 2.11(c) | $4r(B - r) + \lvert 2r - B \rvert^2 = B^2$, proving $r(B - r)/S^2 \le 1/(4\mu^2)$ |
+| 11 | `erdos_1191.variants.cesaro_fejer_order2_step` (`#L356`) | Theorem 2.7(a) | $m(m - 1) + 2m = (m + 1)m$ (unweighted Order-2 sum $\binom{W - d + 1}{2}$) |
+| 12 | `erdos_1191.variants.scale_invariant_block_window_exponents` (`#L372`) | Theorem 2.9(a) | $(k - (s + r)) + ((s + r) - 1) = k - 1$ for $1 \le s + r \le k$ |
+| 13 | `erdos_1191.variants.scale_invariant_block_window_product` (`#L383`) | Theorem 2.9(b) | $2^{k-(s+r)} \cdot 2^{(s+r)-1} = 2^{k-1} = \lvert I_k \rvert$ across all scales |
+| 14 | `erdos_1191.variants.hyperfactorial_sawtooth_abel_step` (`#L397`) | Theorem 2.11(b) | $m(m + 1) - (m - 1)m = 2m$ (hyperfactorial Abel telescoping) |
+| 15 | `erdos_1191.variants.bitshift_sidon_difference_index` (`#L412`) | Section 4 | $(63 - a) - (63 - x) = x - a$ for $a \lt x \le 63$ |
+| 16 | `mianChowlaPrefix10_is_sidon` (`#L440`) | Section 4 / Table 1 | Kernel `decide` proof for 10-term Mian–Chowla prefix ($45$ diffs) |
+| 17 | `maximinWitnessN32_is_sidon` (`#L452`) | Section 4 / Table 2 | Kernel `decide` proof for maximin witness $[1,2,5,7,14,22,32]$ |

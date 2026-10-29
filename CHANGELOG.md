@@ -4,6 +4,13 @@ All notable changes to **Erdos_1191** (`erdos1191`) are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-10-29
+
+### Fixed & Remediated
+- **`formal-conjectures#7640` Commit-Permalink Pinning & Companion Line-Anchor Sync (`FormalConjectures_1191.lean`, `submissions/formal_conjectures_lean4/1191.lean`, `paper/`):**
+  - Replaced all 14 `formal_proof` `blob/main` URLs in `FormalConjectures/ErdosProblems/1191.lean` (`google-deepmind/formal-conjectures#7640`) with immutable commit permalinks (`faf0ce94febe33568b6b08e4a07a6ca593b83288`) per `PROOFS.md` and `bocowgill`'s review.
+  - Synchronized all 17 Lean declaration line anchors (`#L34`–`#L452`) across `paper/Companion_Explainer_Erdos1191.typ`, `paper/Companion_Explainer_Erdos1191.md`, `paper/manuscript.md`, `paper/anc/1191.lean.txt`, and `ERDOS_1191_COMPLETE_SESSION_AND_PROJECT_ARCHIVE.md`, and recompiled all PDFs and `.zip`/`.tar.gz` bundles.
+
 ## [1.1.0] - 2026-10-27
 
 ### Added & Remediated
