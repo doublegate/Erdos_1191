@@ -26,9 +26,9 @@ local notation "ℕ" => Nat
 
 /--
 **Arithmetic Lemma for Theorem 2.1(a) (Harmonic-Difference Numerator Identity):**
-For any natural numbers $1 \le a_i < a_j$ with difference $d = a_j - a_i$,
-the numerator identity $(d + 1) + (a_i - 1) = a_j$ holds on $\mathbb{N}$ (used to derive the
-partial-fraction decomposition $\frac{1}{a_j} + \frac{a_i - 1}{(a_j - a_i + 1) a_j} = \frac{1}{a_j - a_i + 1}$
+For any natural numbers `1 ≤ a_i < a_j` with difference `d = a_j - a_i`,
+the numerator identity `(d + 1) + (a_i - 1) = a_j` holds on `ℕ` (used to derive the
+partial-fraction decomposition `1/a_j + (a_i - 1)/((a_j - a_i + 1) a_j) = 1/(a_j - a_i + 1)`
 in Theorem 2.1(a) of [Pa26]).
 -/
 theorem erdos_1191.variants.harmonic_conservation_numerator (a_i a_j d : ℕ)
@@ -40,10 +40,10 @@ theorem erdos_1191.variants.harmonic_conservation_numerator (a_i a_j d : ℕ)
 
 /--
 **Arithmetic Lemma for Theorem 2.2(a) (Two-Shell Difference Localization Bound):**
-For natural numbers $x, y, \text{pow\_km2}$ satisfying $1 \le x \le \text{pow\_km2}$ and
-$2 \cdot \text{pow\_km2} < y \le 4 \cdot \text{pow\_km2}$, the difference $y - x$ satisfies
-$\text{pow\_km2} < y - x < 4 \cdot \text{pow\_km2}$ (used to localize cross-shell differences
-into $D_{k-1} \cup D_k$ when $\text{pow\_km2} = 2^{k-2}$ in Theorem 2.2(a) of [Pa26]).
+For natural numbers `x, y, pow_km2` satisfying `1 ≤ x ≤ pow_km2` and
+`2 · pow_km2 < y ≤ 4 · pow_km2`, the difference `y - x` satisfies
+`pow_km2 < y - x < 4 · pow_km2` (used to localize cross-shell differences
+into `D_k-1 ∪ D_k` when `pow_km2 = 2^k-2` in Theorem 2.2(a) of [Pa26]).
 -/
 theorem erdos_1191.variants.two_shell_difference_localization (x y pow_km2 : ℕ)
     (hx_pos : 1 ≤ x)
@@ -54,9 +54,9 @@ theorem erdos_1191.variants.two_shell_difference_localization (x y pow_km2 : ℕ
   omega
 
 /--
-Recursive integer sum $S(0) = 0$, $S(M + 1) = 2 S(M) + 2(M + 1)$, representing the
-$2^M$-scaled sum $\sum_{k=1}^M k \cdot 2^{M - k + 1}$ evaluated on the powers-of-two
-sequence $A = \{2^n : n \ge 0\}$ ($m_k = 1, A(2^{k-1}) = k$) in Remark 2.3 of [Pa26].
+Recursive integer sum `S(0) = 0`, `S(M + 1) = 2 S(M) + 2(M + 1)`, representing the
+`2^M`-scaled sum `sum_{k=1..M} k · 2^{M - k + 1}` evaluated on the powers-of-two
+sequence `A = {2^n : n ≥ 0}` (`m_k = 1, A(2^k-1) = k`) in Remark 2.3 of [Pa26].
 -/
 def powersOfTwoScaledBilinear : ℕ → ℕ
   | 0 => 0
@@ -64,9 +64,9 @@ def powersOfTwoScaledBilinear : ℕ → ℕ
 
 /--
 **Arithmetic Lemma for Remark 2.3 (Closed-Form Identity for `powersOfTwoScaledBilinear`):**
-For every $M \ge 0$, the recursively defined integer sum `powersOfTwoScaledBilinear M`
+For every `M ≥ 0`, the recursively defined integer sum `powersOfTwoScaledBilinear M`
 satisfies the exact closed-form identity
-$\text{powersOfTwoScaledBilinear}(M) + 2M + 4 = 2^{M + 2}$
+`powersOfTwoScaledBilinear(M) + 2M + 4 = 2^{M + 2}`
 (used to evaluate the powers-of-two bilinear sum in Remark 2.3 of [Pa26]).
 -/
 theorem erdos_1191.variants.powers_of_two_bilinear_identity (M : ℕ) :
@@ -82,9 +82,9 @@ theorem erdos_1191.variants.powers_of_two_bilinear_identity (M : ℕ) :
 
 /--
 **Arithmetic Lemma for Theorem 2.2(b) & Remark 2.3 (Upper Bound on `powersOfTwoScaledBilinear`):**
-For every $M \ge 1$, the recursively defined sum `powersOfTwoScaledBilinear M` satisfies
-$\text{powersOfTwoScaledBilinear}(M) \le (M + 1) 2^M - 2$
-(certifying $22 \le 30$ at $M = 3$ for the $2^M$-scaled powers-of-two sum in Remark 2.3 of [Pa26]).
+For every `M ≥ 1`, the recursively defined sum `powersOfTwoScaledBilinear M` satisfies
+`powersOfTwoScaledBilinear(M) ≤ (M + 1) 2^M - 2`
+(certifying `22 ≤ 30` at `M = 3` for the `2^M`-scaled powers-of-two sum in Remark 2.3 of [Pa26]).
 -/
 theorem erdos_1191.variants.powers_of_two_satisfies_corrected_bilinear_bound (M : ℕ) (hM : 1 ≤ M) :
     powersOfTwoScaledBilinear M ≤ (M + 1) * 2 ^ M - 2 := by
@@ -101,12 +101,12 @@ theorem erdos_1191.variants.powers_of_two_satisfies_corrected_bilinear_bound (M 
       omega
 
 /--
-**Arithmetic Lemma for Lemma 2.4 (Quadratic Polynomial Inequality for $k \ge 4$):**
-For every natural number $k \ge 4$, $16 k^2 + 2(k^2 - 9) = 18(k^2 - 1)$ and
-$16 k^2 < 18(k^2 - 1)$. In Lemma 2.4 of [Pa26], this integer inequality is used to verify
-that $\frac{1}{\sqrt{k-1}} + \frac{1}{\sqrt{k+1}} < \frac{3}{\sqrt{2k}}$ for all $k \ge 4$
-(alongside $9 > 8$ at $k = 3$) when establishing positivity of the KKT multipliers
-$\lambda_k = 2^{1-k}(2\rho_k - \rho_{k+1})$.
+**Arithmetic Lemma for Lemma 2.4 (Quadratic Polynomial Inequality for `k ≥ 4`):**
+For every natural number `k ≥ 4`, `16 k^2 + 2(k^2 - 9) = 18(k^2 - 1)` and
+`16 k^2 < 18(k^2 - 1)`. In Lemma 2.4 of [Pa26], this integer inequality is used to verify
+that `1/(sqrt(k-1)) + 1/(sqrt(k+1)) < 3/sqrt(2k)` for all `k ≥ 4`
+(alongside `9 > 8` at `k = 3`) when establishing positivity of the KKT multipliers
+`λ_k = 2^1-k(2ρ_k - ρ_k+1)`.
 -/
 theorem erdos_1191.variants.kkt_increment_convexity_k_ge_4 (k : ℕ) (hk : 4 ≤ k) :
     16 * (k * k) + 2 * (k * k - 9) = 18 * (k * k - 1) ∧
@@ -120,10 +120,10 @@ theorem erdos_1191.variants.kkt_increment_convexity_k_ge_4 (k : ℕ) (hk : 4 ≤
 
 /--
 **Arithmetic Lemma for Theorem 2.5(b) & Theorem 2.11(c) (Binary Sub-Block Variance Refinement Identity):**
-For any natural numbers $S_1, S_2 \in \mathbb{N}$, $2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + |S_1 - S_2|^2$
-(encoded in Lean via truncated subtraction on $\mathbb{N}$ as $(S_1 - S_2)^2 + (S_2 - S_1)^2$),
-and hence $(S_1 + S_2)^2 \le 2(S_1^2 + S_2^2)$. This provides the arithmetic step used in the
-sub-block refinement bound $L(S_1, B) + L(S_2, B) \ge L(S_1 + S_2, 2B)$ of [Pa26].
+For any natural numbers `S_1, S_2 ∈ ℕ`, `2(S_1^2 + S_2^2) = (S_1 + S_2)^2 + |S_1 - S_2|^2`
+(encoded in Lean via truncated subtraction on `ℕ` as `(S_1 - S_2)^2 + (S_2 - S_1)^2`),
+and hence `(S_1 + S_2)^2 ≤ 2(S_1^2 + S_2^2)`. This provides the arithmetic step used in the
+sub-block refinement bound `L(S_1, B) + L(S_2, B) ≥ L(S_1 + S_2, 2B)` of [Pa26].
 -/
 theorem erdos_1191.variants.binary_subblock_variance_refinement (S1 S2 : ℕ) :
     2 * (S1 * S1 + S2 * S2) =
@@ -208,10 +208,10 @@ theorem erdos_1191.variants.binary_subblock_variance_refinement (S1 S2 : ℕ) :
 
 /--
 **Theorem 2.6(a) (Discrete Legendre–Fenchel Remainder Decomposition):**
-For any bucket count $B \ge 1$ and total occupancy $S = B q + r$ with integer quotient $q$
-and remainder $r \le B$, the minimum ordered-pair sum over $B$ integer buckets summing to $S$
+For any bucket count `B ≥ 1` and total occupancy `S = B q + r` with integer quotient `q`
+and remainder `r ≤ B`, the minimum ordered-pair sum over `B` integer buckets summing to `S`
 satisfies the exact algebraic decomposition
-$(B - r) q(q - 1) + r(q + 1) q = B q(q - 1) + 2 r q$.
+`(B - r) q(q - 1) + r(q + 1) q = B q(q - 1) + 2 r q`.
 -/
 theorem erdos_1191.variants.discrete_legendre_fenchel_excess (B q r : ℕ)
     (hr : r ≤ B) :
@@ -227,10 +227,10 @@ theorem erdos_1191.variants.discrete_legendre_fenchel_excess (B q r : ℕ)
 
 /--
 **Theorem 2.6(b) (Squared-Total Discrete Legendre–Fenchel Integrality Identity):**
-Multiplying the minimum ordered-pair count by $B$ yields the exact additive identity
-$B(B q^2 + 2 r q) + B r = (B q + r)^2 + r(B - r)$,
-separating the smooth quadratic term $(B q + r)^2$ from the strictly non-negative
-discrete integrality excess $r(B - r) = B^2 \theta(1 - \theta)$.
+Multiplying the minimum ordered-pair count by `B` yields the exact additive identity
+`B(B q^2 + 2 r q) + B r = (B q + r)^2 + r(B - r)`,
+separating the smooth quadratic term `(B q + r)^2` from the strictly non-negative
+discrete integrality excess `r(B - r) = B^2 θ(1 - θ)`.
 -/
 theorem erdos_1191.variants.legendre_fenchel_squared_identity (B q r : ℕ)
     (hr : r ≤ B) :
@@ -251,9 +251,9 @@ theorem erdos_1191.variants.legendre_fenchel_squared_identity (B q r : ℕ)
 
 /--
 **Theorem 2.6(c) (Karamata Integer Convexity / Robin-Hood Smoothing Step):**
-Whenever two buckets have occupancies $x_1 \ge x_2 + 2$, transferring one element from the
-heavier bucket ($x_1 - 1$) to the lighter bucket ($x_2 + 1$) preserves the sum and strictly
-reduces the ordered-pair count $x_1(x_1 - 1) + x_2(x_2 - 1)$ by $2(x_1 - x_2 - 1) \ge 2$.
+Whenever two buckets have occupancies `x_1 ≥ x_2 + 2`, transferring one element from the
+heavier bucket (`x_1 - 1`) to the lighter bucket (`x_2 + 1`) preserves the sum and strictly
+reduces the ordered-pair count `x_1(x_1 - 1) + x_2(x_2 - 1)` by `2(x_1 - x_2 - 1) ≥ 2`.
 -/
 theorem erdos_1191.variants.robin_hood_pair_smoothing (x1 x2 : ℕ) (h_gap : x2 + 2 ≤ x1) :
     (x1 - 1) * (x1 - 2) + (x2 + 1) * x2 + 2 * (x1 - x2 - 1) =
@@ -278,11 +278,11 @@ theorem erdos_1191.variants.robin_hood_pair_smoothing (x1 x2 : ℕ) (h_gap : x2 
 
 /--
 **Arithmetic Lemma for Theorem 2.6(d) & Theorem 2.11(c) (Quarter-Square Identity & Bound):**
-For any natural numbers $B, r \in \mathbb{N}$ with $r \le B$, the scaled product $4 r(B - r)$
-plus the single square $(2r - B)^2$ (encoded in Lean via truncated subtraction on $\mathbb{N}$
-as $(2r - B)^2 + (B - 2r)^2$) equals $B^2$, and hence $4 r(B - r) \le B^2$.
-This provides the arithmetic bound $r(B - r) \le B^2 / 4$ used to bound the relative
-integrality excess $r(B - r)/S^2 \le 1/(4\mu^2)$ ($\mu = S/B$) in [Pa26].
+For any natural numbers `B, r ∈ ℕ` with `r ≤ B`, the scaled product `4 r(B - r)`
+plus the single square `(2r - B)^2` (encoded in Lean via truncated subtraction on `ℕ`
+as `(2r - B)^2 + (B - 2r)^2`) equals `B^2`, and hence `4 r(B - r) ≤ B^2`.
+This provides the arithmetic bound `r(B - r) ≤ B^2 / 4` used to bound the relative
+integrality excess `r(B - r)/S^2 ≤ 1/(4μ^2)` (`μ = S/B`) in [Pa26].
 -/
 theorem erdos_1191.variants.normalized_integrality_excess_bound (B r : ℕ) (hr : r ≤ B) :
     4 * (r * (B - r)) + (2 * r - B) * (2 * r - B) + (B - 2 * r) * (B - 2 * r) = B * B ∧
@@ -349,9 +349,9 @@ theorem erdos_1191.variants.normalized_integrality_excess_bound (B r : ℕ) (hr 
 
 /--
 **Arithmetic Lemma for Theorem 2.7(a) (Order-2 Cesàro–Fejér Hockey-Stick Recurrence):**
-For every $m \in \mathbb{N}$, $m(m - 1) + 2 m = (m + 1) m$, giving the arithmetic recurrence step
-for the unweighted Order-2 Cesàro–Fejér sum $\sum_{w=1}^W \max(w - d, 0) = \binom{W - d + 1}{2}$
-(with $d = |x - y| < W$) in Theorem 2.7(a) of [Pa26].
+For every `m ∈ ℕ`, `m(m - 1) + 2 m = (m + 1) m`, giving the arithmetic recurrence step
+for the unweighted Order-2 Cesàro–Fejér sum `sum_{w=1..W} max(w - d, 0) = C(W - d + 1, 2)`
+(with `d = |x - y| < W`) in Theorem 2.7(a) of [Pa26].
 -/
 theorem erdos_1191.variants.cesaro_fejer_order2_step (m : ℕ) :
     m * (m - 1) + 2 * m = (m + 1) * m := by
@@ -365,9 +365,9 @@ theorem erdos_1191.variants.cesaro_fejer_order2_step (m : ℕ) :
 
 /--
 **Theorem 2.9(a) (Scale-Invariant Block-Window Exponent Identity):**
-For any shell index $k$, scale depth $s$, and octave offset $r$ with $1 \le s + r \le k$,
-the sliding-window width exponent $k - (s + r)$ and sub-block count exponent $(s + r) - 1$
-sum to $k - 1$ independently of $s$ and $r$.
+For any shell index `k`, scale depth `s`, and octave offset `r` with `1 ≤ s + r ≤ k`,
+the sliding-window width exponent `k - (s + r)` and sub-block count exponent `(s + r) - 1`
+sum to `k - 1` independently of `s` and `r`.
 -/
 theorem erdos_1191.variants.scale_invariant_block_window_exponents (k s r : ℕ)
     (hsr_pos : 1 ≤ s + r) (hsr_le : s + r ≤ k) :
@@ -376,9 +376,9 @@ theorem erdos_1191.variants.scale_invariant_block_window_exponents (k s r : ℕ)
 
 /--
 **Theorem 2.9(b) (Scale-Invariant Block-Window Product Identity):**
-For any shell index $k$, scale depth $s$, and octave offset $r$ with $1 \le s + r \le k$,
-the sliding-window width $w = 2^{k - s - r}$ and sub-block count $B = 2^{s + r - 1}$
-satisfy $w \cdot B = 2^{k - 1} = |I_k|$ identically across all scales $s$ and octaves $r$.
+For any shell index `k`, scale depth `s`, and octave offset `r` with `1 ≤ s + r ≤ k`,
+the sliding-window width `w = 2^{k - s - r}` and sub-block count `B = 2^{s + r - 1}`
+satisfy `w · B = 2^{k - 1} = |I_k|` identically across all scales `s` and octaves `r`.
 -/
 theorem erdos_1191.variants.scale_invariant_block_window_product (k s r : ℕ)
     (hsr_pos : 1 ≤ s + r) (hsr_le : s + r ≤ k) :
@@ -389,10 +389,10 @@ theorem erdos_1191.variants.scale_invariant_block_window_product (k s r : ℕ)
 
 /--
 **Theorem 2.11(b) (Hyperfactorial Sawtooth Abel Coefficient Identity):**
-For every integer period $m \ge 1$, $m(m + 1) - (m - 1)m = 2m$.
-This exact identity telescopes the piecewise logarithmic integrals of $\{u\}(1 - \{u\})/u$
-into the logarithm of the hyperfactorial $H(M - 1) = \prod_{m=1}^{M-1} m^m$, yielding the
-Glaisher–Kinkelin sawtooth constant $C_{\mathrm{GK}} = 2 \ln A_{\mathrm{GK}} = \frac{1}{6} - 2 \zeta'(-1)$.
+For every integer period `m ≥ 1`, `m(m + 1) - (m - 1)m = 2m`.
+This exact identity telescopes the piecewise logarithmic integrals of `{u}(1 - {u})/u`
+into the logarithm of the hyperfactorial `H(M - 1) = prod_{m=1..M-1} m^m`, yielding the
+Glaisher–Kinkelin sawtooth constant `C_GK = 2 ln A_GK = 1/6 - 2 ζ'(-1)`.
 -/
 theorem erdos_1191.variants.hyperfactorial_sawtooth_abel_step (m : ℕ) (hm : 1 ≤ m) :
     m * (m + 1) - (m - 1) * m = 2 * m := by
@@ -406,8 +406,8 @@ theorem erdos_1191.variants.hyperfactorial_sawtooth_abel_step (m : ℕ) (hm : 1 
 
 /--
 **Section 4 (Bit-Reversed Shift Difference Identity):**
-In a 64-bit register holding $\mathrm{rev\_mask} = \sum_{a \in A} 2^{63 - a}$, right-shifting by $63 - x$
-places the bit for $a < x \le 63$ at bit position $(63 - a) - (63 - x) = x - a$.
+In a 64-bit register holding `rev_mask = sum_{a ∈ A} 2^{63 - a}`, right-shifting by `63 - x`
+places the bit for `a < x ≤ 63` at bit position `(63 - a) - (63 - x) = x - a`.
 -/
 theorem erdos_1191.variants.bitshift_sidon_difference_index (a x : ℕ) (h_lt : a < x) (h_hi : x ≤ 63) :
     (63 - a) - (63 - x) = x - a := by
@@ -433,7 +433,7 @@ def isCertifiedSidon (A : List ℕ) : Bool :=
 /--
 **Table 1 (Mian–Chowla Greedy Prefix Verification):**
 Machine-checked proof that the first 10 terms of the Mian–Chowla sequence (OEIS `A005282`)
-$[1, 2, 4, 8, 13, 21, 31, 45, 66, 81]$ form a valid Sidon set with $45$ distinct differences.
+`[1, 2, 4, 8, 13, 21, 31, 45, 66, 81]` form a valid Sidon set with `45` distinct differences.
 -/
 def mianChowlaPrefix10 : List ℕ := [1, 2, 4, 8, 13, 21, 31, 45, 66, 81]
 
@@ -443,9 +443,9 @@ theorem mianChowlaPrefix10_is_sidon :
   decide
 
 /--
-**Table 2 (Exact Maximin Lower-Envelope Witness Verification at $N = 32$):**
-Machine-checked proof that the Maximin optimal witness $A^* = [1, 2, 5, 7, 14, 22, 32]$
-of cardinality $|A^*| = 7$ is a valid Sidon set with all $21$ positive differences distinct.
+**Table 2 (Exact Maximin Lower-Envelope Witness Verification at `N = 32`):**
+Machine-checked proof that the Maximin optimal witness `A^* = [1, 2, 5, 7, 14, 22, 32]`
+of cardinality `|A^*| = 7` is a valid Sidon set with all `21` positive differences distinct.
 -/
 def maximinWitnessN32 : List ℕ := [1, 2, 5, 7, 14, 22, 32]
 

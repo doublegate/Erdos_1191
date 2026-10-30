@@ -20,7 +20,7 @@ A set of positive integers $A = \lbrace a _ 1 \lt a _ 2 \lt a _ 3 \lt \dots\rbra
 
 Think of a Sidon set as placing marks on a ruler at integer positions $a _ 1, a _ 2, \dots$ such that **no two pairs of marks are the same distance apart**. Every distance $d = a _ j - a _ i$ can be used **at most once** in the entire infinite sequence.
 
-Let $A(x) = |A \cap [1, x]|$ denote how many elements of $A$ lie in the interval $[1, x]$.
+Let $A(x) = \lvert A \cap [1, x]\rvert$ denote how many elements of $A$ lie in the interval $[1, x]$.
 
 ### 1.1 Finite vs. Infinite Sidon Rulers: The Great Tension
 - **On a finite ruler $[1, N]$:** Singer (1938) and Erdős–Turán (1941) proved that you can pack about $\sqrt{N}$ marks into $[1, N]$ (specifically, $F _ 2(N) = (1 + o(1))\sqrt{N}$ ). Why $\sqrt{N}$? Because $m$ marks generate $\binom{m}{2} \approx m^2 / 2$ pairwise differences, and all of them must fit inside $\lbrace 1, 2, \dots, N-1\rbrace$. Setting $m^2 / 2 \le N$ gives $m \le \sqrt{2N}$.
@@ -53,7 +53,7 @@ One might initially hope that $A(x)$ is simply small everywhere. **That is false
 However, to avoid difference collisions between block $k$ and block $k+1$, those constructions must leave **enormous empty deserts** between $N _ k$ and $N _ {k+1}$—and in those deserts, $\Phi _ A(x)$ plunges toward $0$. Thus, any proof of Problem #1191 *cannot* forbid a Sidon set from being dense at isolated scales; it must prove that **sustaining** $A(t) \ge c\sqrt{t / \ln t}$ **simultaneously across all scales $t$ in a long horizon $[t _ 0, 2^M]$** is impossible!
 
 ### 2.2 Brick Wall 2: The "Continuum Cauchy–Schwarz Barrier" at $c _ \infty^\ast = 2$
-Suppose an adversary claims to have a Sidon set satisfying $A(t) \ge c\sqrt{t / \ln t}$ across all scales $t \in [t _ 0, 2^M]$. Every classical analytic number theory method (harmonic weights $1/d$, Fejér kernels, Fourier/exponential sums, or continuous convex optimization) treats the shell counts $m _ k = |A \cap I _ k|$ or sub-window averages $\mu = S / B$ as **continuous real variables**.
+Suppose an adversary claims to have a Sidon set satisfying $A(t) \ge c\sqrt{t / \ln t}$ across all scales $t \in [t _ 0, 2^M]$. Every classical analytic number theory method (harmonic weights $1/d$, Fejér kernels, Fourier/exponential sums, or continuous convex optimization) treats the shell counts $m _ k = \lvert A \cap I _ k\rvert$ or sub-window averages $\mu = S / B$ as **continuous real variables**.
 - When you relax integer counts $x _ r \in \mathbb{Z} _ {\ge 0}$ to continuous real numbers $x _ r \in \mathbb{R} _ {\ge 0}$, Cauchy–Schwarz says that distributing $S$ points across $B$ boxes of width $w$ creates at least $\frac{B}{2}\mu(\mu - 1)$ differences.
 - As we prove in **Theorem 2.5(b)**, even when you optimize over *all possible continuous shell bases* $B \gt 1$, *all backward lags*, and *exact unsplit Fejér sliding windows*, the continuous shell efficiency obeys the exact law
 
@@ -77,7 +77,7 @@ The paper is organized as a **staircase of 11 analytical theorems (Theorems 2.1�
    - **Plain-Language Idea:** Erdős's 1955 proof used rough asymptotic inequalities ( $O(\cdot)$ ) that threw away boundary terms and inter-shell interactions. Theorem 2.1 replaces Erdős's inequality with an **exact accounting identity** at every finite integer $N$:
 
      $\displaystyle \int _ 1^N \frac{A(t)(A(t)-1)}{2t^2}\thinspace dt + \frac{A(N)(A(N)-1)}{2N} + \sum _ {i \lt j} \frac{a _ i - 1}{(a _ j - a _ i + 1)a _ j} = \sum _ {d \in \mathcal{D} _ A(N)} \frac{1}{d + 1} \le H _ N - 1.$
-     It also partitions $(1, 2^M]$ into $M$ dyadic shells $I _ k = (2^{k-1}, 2^k]$ of count $m _ k = |A \cap I _ k|$ and proves that the differences formed *within* each shell obey $\sum _ {k=1}^M m _ k(m _ k - 1)/2^k \le (M - 1)/2$.
+     It also partitions $(1, 2^M]$ into $M$ dyadic shells $I _ k = (2^{k-1}, 2^k]$ of count $m _ k = \lvert A \cap I _ k\rvert$ and proves that the differences formed *within* each shell obey $\sum _ {k=1}^M m _ k(m _ k - 1)/2^k \le (M - 1)/2$.
    - **What It Achieves:** Establishes the baseline rigorous finite-horizon certificate ( $c \le 6.488$ at $M = 64$, asymptotic $2\sqrt{2\ln 2} \approx 2.3548$ ).
 
 2. **Theorem 2.2 — Cross-Shell Bilinear Packing ( $y - x \in D _ {k-1} \cup D _ k$ ):**
@@ -156,7 +156,7 @@ The paper is organized as a **staircase of 11 analytical theorems (Theorems 2.1�
       5. Subtracting $F _ {\mathrm{Haar}}(M _ 0)$ from $F _ {\mathrm{Haar}}(M _ 1)$ for $M _ 1 = \mu _ 1$ and $M _ 0 = \mu _ 1 2^{-K}$, the constant $2\ln A _ {\mathrm{GK}}$ and $\ln \mu _ 1$ **cancel out identically**:
 
          $\displaystyle \int _ {2^{-K}}^1 \lbrace \tau \mu _ 1\rbrace \bigl(1 - \lbrace \tau \mu _ 1\rbrace \bigr) \frac{d\tau}{\tau} = F _ {\mathrm{Haar}}(\mu _ 1) - F _ {\mathrm{Haar}}(\mu _ 1 2^{-K}) = \frac{K \ln 2}{6} + R _ {\mathrm{Dioph}}(\mu _ 1, K),$
-         where $|R _ {\mathrm{Dioph}}(\mu _ 1, K)| \lt \frac{1}{6\lfloor \mu _ 1 2^{-K}\rfloor} + \frac{1}{360\lfloor \mu _ 1 2^{-K}\rfloor^2} \to 0$.
+         where $\lvert R _ {\mathrm{Dioph}}(\mu _ 1, K)\rvert \lt \frac{1}{6\lfloor \mu _ 1 2^{-K}\rfloor} + \frac{1}{360\lfloor \mu _ 1 2^{-K}\rfloor^2} \to 0$.
 
 ---
 
@@ -164,7 +164,7 @@ The paper is organized as a **staircase of 11 analytical theorems (Theorems 2.1�
 
 Relative to the continuous quadratic leading term $\frac{N}{4}\mu_1^2(1 - 4^{-K})$, Theorem 2.6(d) and Theorem 2.11(c) prove that the relative integrality ratio scales with top-scale block occupancy $\mu_1 = S/B_1$ as
 
-$$\kappa_{\mathrm{int}}^{\mathrm{rel}}(\mu_1, K) = \frac{\kappa_{\mathrm{int}}^{\mathrm{Dioph}}(K)}{\mu_1^2}, \qquad c(\mu_1, K) = \frac{2}{\sqrt{1 + \kappa_{\mathrm{int}}^{\mathrm{Dioph}}(K)/\mu_1^2}}.$$
+$\displaystyle \kappa_{\mathrm{int}}^{\mathrm{rel}}(\mu_1, K) = \frac{\kappa_{\mathrm{int}}^{\mathrm{Dioph}}(K)}{\mu_1^2}, \qquad c(\mu_1, K) = \frac{2}{\sqrt{1 + \kappa_{\mathrm{int}}^{\mathrm{Dioph}}(K)/\mu_1^2}}.$
 
 | Dyadic Horizon $M$ | Active Octaves $K$ | Haar Boost $\kappa _ {\mathrm{int}}^{\mathrm{Dioph}}(K)$ | Certified Tail Bound $\underline{c} _ M^{\ast,\mathrm{Dioph}}(1.01)$ | Milestone / Barrier Broken |
 | :---: | :---: | :---: | :---: | :--- |
@@ -184,9 +184,9 @@ $$\kappa_{\mathrm{int}}^{\mathrm{rel}}(\mu_1, K) = \frac{\kappa_{\mathrm{int}}^{
 
 ## 5. Countering Potential Methodological Objections & Chronological Lean 4 Suite
 
-1. **Objection 1 (Does $A = \{2^n : n \ge 0\}$ Violate the Cross-Shell Bilinear Inequality?):** On $A = \{2^n : n \ge 0\}$, $1 \in A$ contributes $1$ to $A(2^{k-1})$ for every $k \ge 1$ and each shell $I_k = (2^{k-1}, 2^k]$ contains $m_k = 1$ element ($2^k$), so $A(2^{k-1}) = k$. At $M = 3$ ($A \cap [1, 8] = \{1, 2, 4, 8\}$), the unnormalized bilinear LHS equals $1 + 1 + 0.75 = 2.75$, exceeding a naive $(M - 1) = 2.0$ bound. Theorem 2.2(b) and Remark 2.3 prove that geometric tail weights across higher shells double the per-shell capacity to $M + 1 - 2^{-(M-1)}$; on $A = \{2^n\}$, the exact closed-form LHS is $4 - (2M + 4)/2^M \lt 4 \le M + 1 - 2^{-(M-1)}$ for all $M \ge 3$ ($2.75 \le 3.75$ at $M = 3$), verified in Lean 4 by `powers_of_two_bilinear_identity` and `powers_of_two_satisfies_corrected_bilinear_bound`.
+1. **Objection 1 (Does $A = \lbrace 2^n : n \ge 0\rbrace$ Violate the Cross-Shell Bilinear Inequality?):** On $A = \lbrace 2^n : n \ge 0\rbrace$, $1 \in A$ contributes $1$ to $A(2^{k-1})$ for every $k \ge 1$ and each shell $I_k = (2^{k-1}, 2^k]$ contains $m_k = 1$ element ($2^k$), so $A(2^{k-1}) = k$. At $M = 3$ ($A \cap [1, 8] = \lbrace 1, 2, 4, 8\rbrace$), the unnormalized bilinear LHS equals $1 + 1 + 0.75 = 2.75$, exceeding a naive $(M - 1) = 2.0$ bound. Theorem 2.2(b) and Remark 2.3 prove that geometric tail weights across higher shells double the per-shell capacity to $M + 1 - 2^{-(M-1)}$; on $A = \lbrace 2^n\rbrace$, the exact closed-form LHS is $4 - (2M + 4)/2^M \lt 4 \le M + 1 - 2^{-(M-1)}$ for all $M \ge 3$ ($2.75 \le 3.75$ at $M = 3$), verified in Lean 4 by `powers_of_two_bilinear_identity` and `powers_of_two_satisfies_corrected_bilinear_bound`.
 2. **Objection 2 (Can an Adversarial Shell Allocation $(m_1, \dots, m_M)$ Beat the Boundary Profile $m_k^* = c\rho_k$?):** Lemma 2.4 resolves cumulative prefix constraints $A(2^k) \ge c\sqrt{2^k/(k \ln 2)}$ via KKT duality on the cumulative excess variables $E_k = \sum_{j=k_0}^k (m_j - c\rho_j) \ge 0$: the KKT multipliers $\lambda_k = 2c(\gamma_k \rho_k 2^{-k} - \gamma_{k+1}\rho_{k+1} 2^{-(k+1)}) \gt 0$ are strictly positive for all $k \ge 3$ because $18(k^2 - 1) - 16k^2 = 2(k^2 - 9) \gt 0$ for $k \ge 4$ (`kkt_increment_convexity_k_ge_4`) and $9 \gt 8$ at $k = 3$, forcing $E_k^* = 0$ and $m_k^* = c\rho_k$ as the unique global minimizer.
-3. **Objection 3 (Why Does Integrality Excess Vanish as $O(\mu_1^{-2})$ at Fixed Depth $s$, Yet Drive $\underline{c}_M^{*,\mathrm{Dioph}} \to 0$ Under Collision-Scale Sub-Windows?):** At any fixed octave depth $s$ ($B = 2^{s-1}$ constant as $k \to \infty$), $\mu_1 \to \infty$ and the relative ratio $\theta(1-\theta)/\mu_1^2 \le 1/(4\mu_1^2) \to 0$ (`normalized_integrality_excess_bound`), yielding the unconditional continuum limit $c_\infty^*(1^+) = 2$. Conversely, evaluating the multi-octave Haar filter across sub-window widths up to the collision-scale sub-window $w_{\max}(k) \asymp 2^{k/2}\sqrt{k \ln 2}$ where $B_1(k) = |I_k|/w_{\max}(k) \asymp m_k$ maintains bounded top-scale occupancy $\mu_1 = \Theta(1)$ while $K(k) \asymp k/2 \to \infty$, driving $\underline{c}_M^{*,\mathrm{Dioph}}(1.01)$ down to **$0.086619$** at $M = 4096$ ($463.7157\times$ below Phase 1).
+3. **Objection 3 (Why Does Integrality Excess Vanish as $O(\mu_1^{-2})$ at Fixed Depth $s$, Yet Drive $\underline{c}_M^{*,\mathrm{Dioph}} \to 0$ Under Collision-Scale Sub-Windows?):** At any fixed octave depth $s$ ($B = 2^{s-1}$ constant as $k \to \infty$), $\mu_1 \to \infty$ and the relative ratio $\theta(1-\theta)/\mu_1^2 \le 1/(4\mu_1^2) \to 0$ (`normalized_integrality_excess_bound`), yielding the unconditional continuum limit $c_\infty^*(1^+) = 2$. Conversely, evaluating the multi-octave Haar filter across sub-window widths up to the collision-scale sub-window $w_{\max}(k) \asymp 2^{k/2}\sqrt{k \ln 2}$ where $B_1(k) = \lvert I_k\rvert/w_{\max}(k) \asymp m_k$ maintains bounded top-scale occupancy $\mu_1 = \Theta(1)$ while $K(k) \asymp k/2 \to \infty$, driving $\underline{c}_M^{*,\mathrm{Dioph}}(1.01)$ down to **$0.086619$** at $M = 4096$ ($463.7157\times$ below Phase 1).
 
 | # | Lean 4 Declaration (`Erdos1191/Proofs.lean`) | Paper Reference | Verified Mathematical Identity / Property |
 |---|---|---|---|
