@@ -11,6 +11,14 @@ Paper: "Unconditional Diophantine Haar Closure, Exact Harmonic-Difference Conser
         and Multi-Octave Dyadic Budgets for Erdős Problem #1191" (Parobek, 2026)
 Repo:  https://github.com/doublegate/Erdos_1191
 
+Status (2026-11-03): Erdős Problem #1191 is open. The manuscript [Pa26] has been withdrawn after an
+independent review found its decisive step invalid. For S points in B bins the minimal collision
+count L satisfies 2BL = S(S - B) + t(B - t) ≤ S², so no "integrality excess" can raise the
+quadratic coefficient, and its finite-horizon envelopes are contradicted by the Mian–Chowla
+sequence. See the repository README. No declaration below mentions an infinite Sidon set, the
+counting function A(x) or a liminf, so none of them verifies a manuscript theorem; the Section 4
+lemmas in particular do not support the withdrawn integrality-excess step.
+
 This self-contained Lean 4 module (zero `sorry`s, zero custom axioms) machine-checks the
 discrete arithmetic lemmas, dyadic interval bounds, powers-of-two recursive sum identity and
 bound, KKT integer quadratic inequality, binary sub-block variance identity, discrete
@@ -204,7 +212,7 @@ theorem erdos_1191.variants.binary_subblock_variance_refinement (S1 S2 : ℕ) :
             rw [h_s1]
     omega
 
-/-! ## 4. Theorem 2.6(a)–(d): Discrete Legendre–Fenchel Sawtooth Integrality Excess & Scaling -/
+/-! ## 4. Theorem 2.6(a)–(d): Discrete Legendre–Fenchel Remainder Identities (the "integrality excess" step they were meant to support is invalid) -/
 
 /--
 **Theorem 2.6(a) (Discrete Legendre–Fenchel Remainder Decomposition):**
