@@ -1,4 +1,14 @@
-# Erdos_1191 — Unconditional Diophantine Haar Closure & Formal Verification for Erdős Problem #1191
+# Erdos_1191 — Harmonic-Difference Identities, Dyadic Budgets & Lean 4 Arithmetic Checks for Erdős Problem #1191 (open)
+
+> [!WARNING]
+> **Status (2026-11-03): Erdős Problem #1191 remains open. The claimed resolution in this repository is withdrawn.**
+>
+> An independent review found that the main argument does not hold:
+> - **The "integrality excess" step (Theorems 2.6–2.11) cannot work.** For S points in B bins, the minimal pigeonhole collision count L satisfies 2BL = S(S−B) + t(B−t) ≤ S², where t = S mod B. Integrality therefore never raises the quadratic coefficient above the Cauchy–Schwarz value S²/(2B), and the cascade that drives the liminf toward 0 has no valid basis. The paper itself concedes c = 2 at fixed depth (Theorem 2.11(c)), and even that bound is not rigorously proved.
+> - **The finite-horizon envelopes of Theorem 3.1 are contradicted by an explicit Sidon set.** For the Mian–Chowla sequence (OEIS A005282), A(2^k)·sqrt(k ln 2 / 2^k) stays at or above 2.039 for k = 3..8, above the claimed ceiling of 1.8204. The 50-digit "certificates" only evaluate the paper's own formulas and never test a Sidon set.
+> - **The Lean 4 files check elementary arithmetic identities and finite Sidon examples.** No Lean statement asserts the conjecture or its decisive step.
+>
+> What stands: several finite identities and inequalities (Theorem 2.1(a)/(b), the corrected Theorem 2.2, Theorem 2.3(a), the closed form of the sawtooth integral) and the Lean-checked arithmetic facts. The manuscript, explainer, tables and scripts below are kept unchanged for reference. Read every "closure", "unconditional" or "resolution" claim in them as withdrawn.
 
 [![Manuscript PDF](https://img.shields.io/badge/Manuscript-PDF%20%2823%20pp.%29-blue)](./paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf)
 [![Lean 4: v4.33.1](https://img.shields.io/badge/Lean%204-v4.33.1%20%280%20sorry%29-brightgreen)](./Erdos1191/Proofs.lean)

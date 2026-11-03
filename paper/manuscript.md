@@ -1,5 +1,7 @@
 # Exact Harmonic-Difference Conservation, Dyadic Budget Certificates, and $O(1){}$ Bit-Shift GPU Branch-and-Bound for Erdős Problem #1191
 
+> **Status (2026-11-03): the claimed resolution of Erdős Problem #1191 described below is withdrawn; the problem remains open. See the status note in the repository [README](../README.md) for the specific errors and what still stands.**
+
 **Lucas Parobek** — Independent Researcher (`parobek@gmail.com` · `https://github.com/doublegate/Erdos_1191`)
 
 ## Abstract

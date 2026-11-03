@@ -1,5 +1,7 @@
 # How Erdős Problem #1191 Was Cracked: A Plain-Language Companion Explainer and Theorem-by-Theorem Architecture Guide
 
+> **Status (2026-11-03): the claimed resolution of Erdős Problem #1191 described below is withdrawn; the problem remains open. See the status note in the repository [README](../README.md) for the specific errors and what still stands.**
+
 - **Companion Expository Guide to:** *"Unconditional Diophantine Haar Closure, Exact Harmonic-Difference Conservation, and Multi-Octave Dyadic Budgets for Erdős Problem #1191"*
 - **Author:** Lucas Parobek (`parobek@gmail.com`)
 - **Date:** October 27, 2026

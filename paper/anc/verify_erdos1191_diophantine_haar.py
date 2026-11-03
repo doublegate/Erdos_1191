@@ -361,7 +361,7 @@ def main() -> None:
     cert = {
         "problem": "Erdos Problem #1191",
         "prize_usd": 1000,
-        "status": "VERIFIED (17 Zero-sorry Lean 4 Theorems + M<=4096 Envelope Suite)",
+        "status": "Formula evaluation only; the claimed resolution was withdrawn 2026-11-03 (see README)",
         "theorem_2_1_harmonic_conservation": thm2_1,
         "theorem_2_2_powers_of_two_and_kkt": thm2_2,
         "theorem_2_6_legendre_fenchel_integrality": thm2_6,
