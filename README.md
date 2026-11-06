@@ -9,6 +9,8 @@
 > - **The Lean 4 files check elementary arithmetic identities and finite Sidon examples.** No Lean statement asserts the conjecture or its decisive step.
 >
 > What stands: several finite identities and inequalities (Theorem 2.1(a)/(b), the corrected Theorem 2.2, Theorem 2.3(a), the closed form of the sawtooth integral) and the Lean-checked arithmetic facts. The manuscript, explainer, tables and scripts below are kept unchanged for reference. Read every "closure", "unconditional" or "resolution" claim in them as withdrawn.
+>
+> The 2026-10-27 ResearchGate preprint of the manuscript ([doi:10.13140/RG.2.2.17420.27526](https://doi.org/10.13140/RG.2.2.17420.27526)) has been replaced by a withdrawal version (2026-11-06): a one-page notice followed by the unchanged manuscript.
 
 [![Manuscript PDF](https://img.shields.io/badge/Manuscript-PDF%20%2823%20pp.%29-blue)](./paper/Parobek_2026-10-27_Erdos1191_Unconditional_Diophantine_Haar_Closure_Sidon_Sets.pdf)
 [![Lean 4: v4.33.1](https://img.shields.io/badge/Lean%204-v4.33.1%20%280%20sorry%29-brightgreen)](./Erdos1191/Proofs.lean)
